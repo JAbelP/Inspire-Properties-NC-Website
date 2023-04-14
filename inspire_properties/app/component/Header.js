@@ -1,4 +1,5 @@
 import React from "react";
+import Link from 'next/link';
 
 function Myheader() {
   return (
@@ -9,9 +10,11 @@ function Myheader() {
       </div>
       <div className="flex-grow flex-shrink-0">
         <div className="flex flex-row justify-end gap-x-9">
-          <div>
-            <HeaderButton label={"Home"} className={"bg-green-700 my-2"} />
-          </div>
+          <Link href={"/"}>
+            <div>
+              <HeaderButton label={"Home"} className={"bg-green-700 my-2"} />
+            </div>
+          </Link>
           <div>
             <HeaderButton label={"About Us"} />
           </div>
