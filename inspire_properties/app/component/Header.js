@@ -1,4 +1,5 @@
 import React from "react";
+import LogoSVG from "./icons/logo";
 import Link from 'next/link';
 
 function Myheader() {
@@ -6,7 +7,8 @@ function Myheader() {
 
     <div className="flex flex-row justify-between items-center mt-10 pr-10 text-2xl text-black bg-white h-25">
       <div>
-      <img src="/Logo.png" alt="Logo" className="h-15 w-40" />
+      {/* <img src="/Logo.png" alt="Logo" className="h-15 w-40" /> */}
+      <LogoSVG className={"ml-4"}/>
       </div>
       <div className="flex-grow flex-shrink-0">
         <div className="flex flex-row justify-end gap-x-9">
@@ -22,7 +24,7 @@ function Myheader() {
             <HeaderButton label={"Our Services"} />
           </div>
           <div>
-            <HeaderButton label={"More"} />
+            <HeaderButton label={"Finance"} />
           </div>
         </div>
       </div>
@@ -37,7 +39,7 @@ const HeaderButton = ({label, className}) =>(
     </button>
 )
 HeaderButton.defaultProps = {
-    className:"bg-white hover:bg-green-700 my-2 "
+    className:"bg-white hover:bg-greenLogo my-2 "
 }
 
 export default Myheader
