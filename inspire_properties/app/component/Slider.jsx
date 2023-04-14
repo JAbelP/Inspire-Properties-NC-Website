@@ -41,12 +41,6 @@ const ImageSlider = ({ slides }) => {
       </div>
       <div className="w-full h-full  bg-cover bg-center" 
              style={{ backgroundImage: `url(${slides[currentIndex].path})` }}>
-
-        {/* <div className="absolute bottom-0 right-0">
-        <button className="px-4 py-2 bg-blue-500 text-white rounded-full shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-opacity-50">
-        Button :)
-        </button>
-        </div> */}
         </div>
       <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 z-10">
         <div className="flex space-x-3">
