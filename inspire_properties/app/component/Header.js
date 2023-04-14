@@ -1,5 +1,6 @@
 import React from "react";
 import LogoSVG from "./icons/logo";
+import Link from 'next/link';
 
 function Myheader() {
   return (
@@ -10,10 +11,12 @@ function Myheader() {
       <LogoSVG className={"ml-4"}/>
       </div>
       <div className="flex-grow flex-shrink-0">
-        <div className="flex flex-row justify-end gap-x-3">
-          <div>
-            <HeaderButton label={"Home"} className={"bg-greenLogo my-2"} />
-          </div>
+        <div className="flex flex-row justify-end gap-x-9">
+          <Link href={"/"}>
+            <div>
+              <HeaderButton label={"Home"} className={"bg-green-700 my-2"} />
+            </div>
+          </Link>
           <div>
             <HeaderButton label={"About Us"} />
           </div>
