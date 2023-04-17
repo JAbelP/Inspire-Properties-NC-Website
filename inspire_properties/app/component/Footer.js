@@ -16,10 +16,9 @@ function Myfooter() {
             </div>
             <div className='break-words'>
                 <p className='flex-wrap'>
-                    <a href='https://www.google.com/maps/dir//120+Weathers+Street,+Youngsville,+NC/@35.8533979,-78.5509336,11z/data=!3m1!4b1!4m9!4m8!1m1!4e1!1m5!1m1!1s0x89ac52c07418d279:0xbbdd4a97b59d562a!2m2!1d-78.4981911!2d36.0347782' target='_blank' rel='noopener noreferrer'>
-                        120 Weather Street Suit D Youngsville NC 27596
-                    </a>
+                        120 Weather Street Suit D Youngsville NC 27596 
                 </p>
+                {/* <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3226.406735005507!2d-78.4981911!3d36.0347782!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89ac52c07418d279%3A0xbbdd4a97b59d562a!2s120%20Weathers%20St%2C%20Youngsville%2C%20NC%2027596!5e0!3m2!1sen!2sus!4v1681694903677!5m2!1sen!2sus" width="400" height="300" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" className='m-4'></iframe> */}
             </div>
 
         </div>

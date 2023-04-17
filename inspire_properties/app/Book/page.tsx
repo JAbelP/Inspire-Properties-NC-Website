@@ -1,44 +1,30 @@
-"use client"
-import * as React from 'react';
 
-function BookUs() {
-  const [value, setValue] = React.useState('fruit');
+import { Inter } from 'next/font/google';
+import { servicesWeOffer } from '../../data/services-data';
+import DropdownMenu from '../component/DropDownForBookings';
+import EmailInput from '../component/BookingComponents/EmailEntryBooking';
+import PhoneInput from '../component/BookingComponents/PhoneEntryBooking';
+import AddressInput from '../component/BookingComponents/AddressEntryBooking';
 
-  const handleChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
+export default function Book() {
 
-   setValue(event.target.value);
 
-  };
-
-  
-    return (
-      <div className='text-black'>
-        <div>
-
-        <label>
-
-          <p>What do we eat?</p>
-
-        <select value={value} onChange={handleChange}>
-
-          <option value="fruit">Fruit</option>
-
-          <option value="vegetable">Vegetable</option>
-
-          <option value="meat">Meat</option>
-
-        </select>
-
-      </label>
-
-<p>We eat {value}!</p>
-
-</div>
-  
+  return (
+    <div>
+      <div className="w-full h-full bg-gray-600 text-black  overflow-hidden p-4">
+        <PhoneInput />
+        <EmailInput/>
+        <AddressInput/>
+        <DropdownMenu services={servicesWeOffer}/>
+          <div className="flex justify-center">
+            <button className='bg-greenLogo text-2xl p-5'>
+              Press me
+            </button>
+        </div>
       </div>
-   
-  
-      )
-}
 
-export default BookUs
+    </div>
+ 
+
+    )
+}
