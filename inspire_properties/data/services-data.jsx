@@ -1,5 +1,4 @@
-export const servicesWeOffer ={
-    
+export const servicesWeOffer = {
 	"Home Maintenance & Repairs":[
 		"Water Heater Flush",
 		"Water Filter Change",

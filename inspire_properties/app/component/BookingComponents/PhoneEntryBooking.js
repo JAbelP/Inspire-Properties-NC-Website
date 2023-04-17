@@ -1,7 +1,7 @@
 "use client"
 import React, { useState } from 'react';
 
-function PhoneInput() {
+function PhoneInput(props) {
   const [phone, setPhone] = useState('');
 
   function handleChange(event) {
@@ -9,6 +9,7 @@ function PhoneInput() {
     const digitsOnly = input.replace(/\D/g, ''); // remove non-digits
     const formatted = formatPhoneNumber(digitsOnly); // format the phone number
     setPhone(formatted);
+    props.handlePhone(formatted)
   }
 
   function formatPhoneNumber(digits) {

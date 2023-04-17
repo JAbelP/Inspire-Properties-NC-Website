@@ -1,6 +1,6 @@
 "use client"
 import { useState } from "react";
-import TextBox from "./BookingComponents/MoreInformationBooking";
+import TextBox from "./MoreInformationBooking";
 
 function DropdownMenu( {services} ) {
     const [isOpen, setIsOpen] = useState(false);
