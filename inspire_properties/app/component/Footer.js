@@ -33,7 +33,7 @@ function Myfooter() {
                 <Facebook className={'mx-1'}/>
             </a>
 
-            <a href="tel:989-992-7950">
+            <a href="tel:919-600-8888">
                 <Phone className={'mx-1'}/>
             </a>
 

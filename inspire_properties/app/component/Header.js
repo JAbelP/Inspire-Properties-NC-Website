@@ -7,8 +7,10 @@ function Myheader() {
 
     <div className="flex flex-row justify-between items-center mt-10 pr-10 text-2xl text-black bg-white h-25">
       <div>
-      {/* <img src="/Logo.png" alt="Logo" className="h-15 w-40" /> */}
-      <LogoSVG className={"ml-4"}/>
+        <Link href={"/"}>
+          {/* <img src="/Logo.png" alt="Logo" className="h-15 w-40" /> */}
+          <LogoSVG className={"ml-4"}/>
+        </Link>
       </div>
       <div className="flex-grow flex-shrink-0">
         <div className="flex flex-row justify-end gap-x-9">
