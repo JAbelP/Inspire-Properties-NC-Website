@@ -1,4 +1,5 @@
 "use client"
+import Link from "next/link";
 import { useState } from "react";
 
 const ImageSlider = ({ slides }) => {
@@ -58,12 +59,14 @@ const ImageSlider = ({ slides }) => {
         </div>
 
       </div>   
-        <button className="bg-greenLogo hover:bg-green-400
-          absolute bottom-24 right-52 p-4 px-8 rounded-md border-4
-          text-4xl
-        border-black hover:border-green-600 ">
-          Book Us Today
-        </button>
+        <Link href={"/Book"}>
+          <button className="bg-greenLogo hover:bg-green-400
+            absolute bottom-24 right-52 p-4 px-8 rounded-md border-4
+            text-4xl
+          border-black hover:border-green-600 ">
+            Book Us Today
+          </button>
+        </Link>
     </div>
   );
 };
