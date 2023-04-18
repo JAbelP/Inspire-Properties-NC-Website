@@ -1,18 +1,30 @@
 "use client"
-import { useState } from "react";
+import { useState, useEffect  } from "react";
 import TextBox from "./MoreInformationBooking";
 
-function DropdownMenu( {services} ) {
+function DropdownMenu( props ) {
     const [isOpen, setIsOpen] = useState(false);
-    const [selectedService, setSelectedService] = useState('-----Please Select a Service-----');
-  
+    const [selectedService, setSelectedService] = useState(props.selectedService);
+    
+    useEffect(() => {
+      setSelectedService(props.selectedService);
+    }, [props.selectedService]);
+    
     function toggleDropdown() {
       setIsOpen((prevState) => !prevState);
     }
   
+
+    function changeServiceAtIndex(temp){
+      props.changeServiceAtIndex(temp)
+    }
+
     function handleSelectService(service) {
       setSelectedService(service);
       setIsOpen(false); // Close the dropdown after selecting a service
+      const tempArray = props.clientServicesAmount;
+      tempArray[props.index] = service;
+      changeServiceAtIndex(tempArray)
     }
   
     return (
@@ -44,11 +56,11 @@ function DropdownMenu( {services} ) {
           } absolute z-10 w-full mt-2 bg-white rounded-md shadow-lg max-h-60 overflow-y-auto`}
         >
           <div className="px-2 py-2 overflow-hidden">
-            {Object.entries(services).map(([category, services]) => (
+            {Object.entries(props.services).map(([category, services]) => (
               <div key={category}>
                 <p className="font-medium text-gray-900 ml-4">{category}</p>
                 <ul className="mt-1 space-y-1">
-                  {services.map((service) => (
+                  {(services).map((service) => (
                     <li key={service}>
                       <button
                         type="button"
