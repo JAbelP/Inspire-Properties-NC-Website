@@ -2,7 +2,6 @@ import { Inter } from 'next/font/google';
 import Slider from './component/Slider';
 
 
-const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
   const slides = [
@@ -15,7 +14,6 @@ export default function Home() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold mb-4">Hello monsterlessons</h1>
       <div className="w-full h-[35rem] bg-gray-300  overflow-hidden">
         <Slider slides={slides} />
       </div>

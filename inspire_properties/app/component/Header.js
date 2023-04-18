@@ -20,7 +20,9 @@ function Myheader() {
             </div>
           </Link>
           <div>
-            <HeaderButton label={"About Us"} />
+            <Link href={"/Book"}>
+              <HeaderButton label={"Book Us"} />
+            </Link>
           </div>
           <div>
             <HeaderButton label={"Our Services"} />
