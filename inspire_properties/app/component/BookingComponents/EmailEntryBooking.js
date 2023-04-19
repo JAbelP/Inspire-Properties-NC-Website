@@ -11,7 +11,7 @@ function EmailInput(props) {
   return (
     <div className="flex flex-col">
       <label htmlFor="email" className="mb-1 text-black">
-        Email
+      <span className="text-red-500">*</span> Email:
       </label>
       <input
         id="email"
