@@ -9,46 +9,63 @@ import { useState } from 'react';
 
 
 function SubmissionPage() {
+
     const [ clientEmail , setClientEmail ] = useState('');
     const [ clientPhone , setClientPhone ] = useState('');
     const [ clientAddress, setClientAddress ] = useState('');
     const [ clientServicesAmount, setClientServicesAmount ] = useState(['-----Please Select a Service-----']);
     
+    /**
+     * passed into the email input, this
+     * is the client's email
+     * @param {string} clientEmailResponse 
+     */
     const handleClientEmail = (clientEmailResponse) => {
         setClientEmail(clientEmailResponse);
     }
     
+    /**
+     * this is the client's phone number
+     * @param {string} clientPhoneResponse 
+     */
     const handleClientPhone = (clientPhoneResponse) => {
         setClientPhone(clientPhoneResponse);
     }
-
+    /**
+     * Client's address
+     * @param {string} clientAddressResponse 
+     */
     const handleClientAddress = (clientAddressResponse) => {
         setClientAddress(clientAddressResponse);
     }
-
-    const handleClickAlertTEST = () => {
-        alert(`Email: ${clientEmail} Phone: ${clientPhone} Address: ${clientAddress}`);
-    }
     
+    /**
+     * add a service component
+     */
     const addServiceButton = () => {
-        setClientServicesAmount([...clientServicesAmount, "-----Please Select a Service-----"]);
+        tempService = clientServicesAmount
+        tempService = [...tempService,"-----Please Select a Service-----"]
+        setClientServicesAmount(tempService);
     }
-
+    /**
+     * array passed up from the child component
+     * replaces the service at the index
+     * @param {array} temp 
+     */
     const changeServiceAtIndex = (temp) =>{
         setClientServicesAmount(temp)
-        console.log(" this is new ClientServicesAmount ", temp )
     }
 
+    /**
+     * deletes service at the index
+     * @param {int} index 
+     */
     const deleteServiceButton = (index) => {
-
-          // Make a copy of the current services array in state
+        // Make a copy of the current services array in state
         const updatedServices = [...clientServicesAmount];
         console.log(clientServicesAmount)
         updatedServices.splice(index,1)
-        console.log(updatedServices);
         setClientServicesAmount(updatedServices)
-
-
     }
 
 

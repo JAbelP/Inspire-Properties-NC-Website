@@ -6,19 +6,30 @@ function DropdownMenu( props ) {
     const [isOpen, setIsOpen] = useState(false);
     const [selectedService, setSelectedService] = useState(props.selectedService);
     
+   //updates the selected service
     useEffect(() => {
       setSelectedService(props.selectedService);
     }, [props.selectedService]);
     
+    /**
+     * toggles drop down
+     */
     function toggleDropdown() {
       setIsOpen((prevState) => !prevState);
     }
   
-
+    /**
+     * function goes back to the parent (SubmissionPage)
+     * @param {array} temp 
+     */
     function changeServiceAtIndex(temp){
       props.changeServiceAtIndex(temp)
     }
 
+    /**
+     * selects current service 
+     * @param {string} service 
+     */
     function handleSelectService(service) {
       setSelectedService(service);
       setIsOpen(false); // Close the dropdown after selecting a service
