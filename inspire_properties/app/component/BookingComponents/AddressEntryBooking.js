@@ -11,7 +11,7 @@ function AddressInput(props) {
   return (
     <div className="flex flex-col">
       <label htmlFor="address" className="mb-1 text-black">
-        Address
+      <span className="text-red-500">*</span> Address:
       </label>
       <input
         id="address"

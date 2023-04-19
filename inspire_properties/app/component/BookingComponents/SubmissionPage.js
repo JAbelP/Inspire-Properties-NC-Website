@@ -68,6 +68,31 @@ function SubmissionPage() {
         setClientServicesAmount(updatedServices)
     }
 
+    const handleSubmit = () =>{
+
+        if(!clientPhone || !clientEmail || !clientAddress){
+            let warning = 'please provide: '
+            if( !clientPhone){
+                warning = warning.concat(" ", "phone")
+            }
+            if ( !clientEmail){
+
+                warning = warning.concat(" ", "email")
+
+            }
+
+            if ( !clientAddress){
+                warning = warning.concat(" ", "address")
+
+            }
+            
+            if(!clientPhone && !clientEmail && !clientAddress){
+                warning = "Please provide a phone number, email, and address"
+            }
+            alert(warning)
+            return;
+        }
+    }
 
     return (
         <div>
@@ -92,6 +117,7 @@ function SubmissionPage() {
                         </div>
                     </div>
                 ))}
+            <button className='bg-greenLogo p-4 m-4' onClick={handleSubmit}> submit </button>
             </div>
         </div>
     )

@@ -24,7 +24,7 @@ function PhoneInput(props) {
   return (
     <div className="flex flex-col">
       <label htmlFor="phone" className="mb-1 text-black">
-        Phone
+      <span className="text-red-500">*</span> Phone:  {/* Add red asterisk */}
       </label>
       <input
         id="phone"
