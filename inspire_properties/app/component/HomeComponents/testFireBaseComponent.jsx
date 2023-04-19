@@ -4,9 +4,10 @@ import { getDatabase, ref, onValue, off} from "firebase/database";
 import app from '../../firebaseConfig'
 
 function TestFireBaseComponent() {
+    
     useEffect(() => {
         const db = getDatabase();
-        const clientRef = ref(db, '/');
+        const clientRef = ref(db, '/Clients');
         onValue(clientRef, (snapshot) => {
             const data = snapshot.val();
             console.log('Data:', data);
