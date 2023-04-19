@@ -7,6 +7,7 @@ import AddressInput from './AddressEntryBooking';
 import DropdownMenu from './DropDownForBookings';
 import { getDatabase, ref, onValue, off, set } from 'firebase/database';
 import app from '../../firebaseConfig'
+import { useRouter } from 'next/navigation';
 
 
 
@@ -18,6 +19,8 @@ function SubmissionPage() {
     const [ clientAddress, setClientAddress ] = useState('');
     const [ clientServicesAmount, setClientServicesAmount ] = useState(['-----Please Select a Service-----']);
     const [dataBasedata, setDataBasedata] = useState([]);
+    const router = useRouter();
+
     let db = null
     //getting database information
     useEffect(() => {
@@ -123,7 +126,11 @@ function SubmissionPage() {
         }
 
         writeData(clientEmail,clientPhone,clientAddress,clientServicesAmount);
-
+        return (
+            console.log("yolo"),
+            router.push('/Book/Success')
+          );
+        
 
     }
 
