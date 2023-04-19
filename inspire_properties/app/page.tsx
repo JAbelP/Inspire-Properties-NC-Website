@@ -1,9 +1,10 @@
+
 import { Inter } from 'next/font/google';
-import Slider from './component/Slider';
-
-
+import Slider from './component/HomeComponents/Slider';
+import TestFireBaseComponent from './component/HomeComponents/testFireBaseComponent';
 
 export default function Home() {
+
   const slides = [
     {path:"/testSliderImages/image-1.jpg",title:"Beach"},
     {path:"/testSliderImages/image-2.jpg",title:"Boat"},
@@ -17,7 +18,7 @@ export default function Home() {
       <div className="w-full h-[35rem] bg-gray-300  overflow-hidden">
         <Slider slides={slides} />
       </div>
-
+        <TestFireBaseComponent />
     </div>
  
 
