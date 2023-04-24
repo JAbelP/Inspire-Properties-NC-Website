@@ -126,8 +126,8 @@ function SubmissionPage() {
         }
 
         writeData(clientEmail,clientPhone,clientAddress,clientServicesAmount);
+        sendEmail(clientEmail,clientPhone,clientAddress,clientServicesAmount)
         return (
-            console.log("yolo"),
             router.push('/Book/Success')
           );
         
@@ -135,30 +135,62 @@ function SubmissionPage() {
     }
 
     /**
+     * method controls sending data to email
+     * @param {string} email 
+     * @param {string} phone 
+     * @param {string} address 
+     * @param {[string]} services 
+     */
+    const sendEmail = async (email, phone, address, services) => {
+        const emailBody = {
+          email,
+          phone,    
+          address,
+          services
+        };
+        
+        try {
+          const response = await fetch('/api/jobEmail', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(emailBody)
+          });
+      
+          if (response.ok) {
+            console.log('Email sent successfully');
+          } else {
+            console.error('Failed to send email');
+          }
+        } catch (error) {
+          console.error('Error sending email:', error);
+        }
+      };
+
+
+
+    /**
      * 
      * @param {string} email 
      * @param {string} phone 
      * @param {string}} address 
-     * @param {[]} services 
+     * @param {[string]} services 
      */
     const writeData = (email, phone, address, services) => {
         
-        console.log("DataBase 141:" , dataBasedata)
         if (dataBasedata !== null) {
-            console.log("not equal to null")
           const index = dataBasedata.findIndex(
               (item) =>
                 (item?.clientEmail === email && item?.clientPhone === phone) ||
                 (item?.clientEmail === email && item?.clientAddress === address) ||
                 (item?.clientPhone === phone && item?.clientAddress === address),
               );
-          console.log("index: ", index)
           const db = getDatabase();
           let clientID = dataBasedata.length;
           const clientRef = ref(db, '/Clients');
       
           if (index !== -1) {
-            console.log("it exists")
             // If data exists, update it
             const newData = [...dataBasedata];
             newData[index] = {
@@ -167,7 +199,7 @@ function SubmissionPage() {
               clientPhone: phone,
               clientAddress: address,
               services: services,
-              clientID: index + 1,
+            //   clientID: index + 1,
             };
             const filteredData = newData.filter((item) => item !== undefined);
             setDataBasedata(newData);
