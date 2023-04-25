@@ -10,6 +10,7 @@ import DateInput from './DateEntryBooking';
 import { getDatabase, ref, onValue, off, set } from 'firebase/database';
 import app from '../../firebaseConfig'
 import { useRouter } from 'next/navigation';
+import HCaptcha from '@hcaptcha/react-hcaptcha';
 
 
 
@@ -22,6 +23,7 @@ function SubmissionPage() {
     const [ clientDate, setClientDate ] = useState(new Date());
     const [ clientServicesAmount, setClientServicesAmount ] = useState(['-----Please Select a Service-----']);
     const [dataBasedata, setDataBasedata] = useState([]);
+    const [isHCaptchaVerified, setIsHCaptchaVerified] = useState(false);
     const router = useRouter();
 
     let db = null
@@ -41,6 +43,11 @@ function SubmissionPage() {
         };
 
     }, []);
+
+    const handleHCaptchaVerify = (response) =>{
+
+      setIsHCaptchaVerified(true);
+    }
 
 
     /**
@@ -359,6 +366,12 @@ function SubmissionPage() {
                         </div>
                     </div>
                 ))}
+            <HCaptcha sitekey={ process.env.NEXT_PUBLIC_HCAPTCHA_SITEKEY }onVerify={handleHCaptchaVerify}/>
+            {
+              isHCaptchaVerified? (<button className='bg-greenLogo p-4 m-4' onClick={handleSubmit}> submit </button>): 
+              (<button className='bg-greenLogo p-4 m-4' disabled> submit </button>)
+              
+            }
             <button className='bg-greenLogo p-4 m-4' onClick={handleSubmit}> submit </button>
             </div>
         </div>

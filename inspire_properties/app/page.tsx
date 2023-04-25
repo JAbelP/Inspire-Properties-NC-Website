@@ -6,11 +6,13 @@ import TestFireBaseComponent from './component/HomeComponents/testFireBaseCompon
 export default function Home() {
 
   const slides = [
-    {path:"/testSliderImages/image-1.jpg",title:"Beach"},
-    {path:"/testSliderImages/image-2.jpg",title:"Boat"},
-    {path:"/testSliderImages/image-3.jpg",title:"Forest"},
-    {path:"/testSliderImages/image-4.jpg",title:"city"},
-    {path:"/testSliderImages/image-5.jpg",title:"Italy"}
+    {path:"/SlideShow/1.jpg",title:"First"},
+    {path:"/SlideShow/2.jpg",title:"2nd"},
+    {path:"/SlideShow/3.jpg",title:"3rd"},
+    {path:"/SlideShow/4.jpg",title:"4th"},
+    {path:"/SlideShow/5.jpg",title:"5th"},
+    {path:"/SlideShow/6.jpg",title:"6th "}
+
   ]
 
   return (
@@ -18,7 +20,6 @@ export default function Home() {
       <div className="w-full h-[35rem] bg-gray-300  overflow-hidden">
         <Slider slides={slides} />
       </div>
-        <TestFireBaseComponent />
     </div>
  
 
