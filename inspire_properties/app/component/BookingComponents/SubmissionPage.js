@@ -3,8 +3,10 @@ import React, { useEffect, useState} from 'react'
 import { servicesWeOffer } from '../../../data/services-data';
 import PhoneInput from './PhoneEntryBooking';
 import EmailInput from './EmailEntryBooking';
+import NameInput from './NameEntryBooking';
 import AddressInput from './AddressEntryBooking';
 import DropdownMenu from './DropDownForBookings';
+import DateInput from './DateEntryBooking';
 import { getDatabase, ref, onValue, off, set } from 'firebase/database';
 import app from '../../firebaseConfig'
 import { useRouter } from 'next/navigation';
@@ -13,10 +15,11 @@ import { useRouter } from 'next/navigation';
 
 
 function SubmissionPage() {
-
     const [ clientEmail , setClientEmail ] = useState('');
     const [ clientPhone , setClientPhone ] = useState('');
     const [ clientAddress, setClientAddress ] = useState('');
+    const [ clientName, setClientName ] = useState('');
+    const [ clientDate, setClientDate ] = useState(new Date());
     const [ clientServicesAmount, setClientServicesAmount ] = useState(['-----Please Select a Service-----']);
     const [dataBasedata, setDataBasedata] = useState([]);
     const router = useRouter();
@@ -67,7 +70,14 @@ function SubmissionPage() {
     const handleClientAddress = (clientAddressResponse) => {
         setClientAddress(clientAddressResponse);
     }
+
+    const handleClientName = (clientNameResponse) => {
+      setClientName(clientNameResponse);
+    }
     
+    const handleClientDate = (clientDateResponse) => {
+      setClientDate(clientDateResponse);
+    }
     /**
      * add a service component
      */
@@ -106,6 +116,9 @@ function SubmissionPage() {
 
         if(!clientPhone || !clientEmail || !clientAddress){
             let warning = 'please provide: '
+            if( !clientName){
+              warning = warning.concat(" ", "Your Name")
+            }
             if( !clientPhone){
                 warning = warning.concat(" ", "phone")
             }
@@ -116,21 +129,27 @@ function SubmissionPage() {
             }
             if ( !clientAddress){
                 warning = warning.concat(" ", "address")
-
             }
             if(!clientPhone && !clientEmail && !clientAddress){
-                warning = "Please provide a phone number, email, and address"
+                warning = "Please provide your name, a phone number, email, and address"
             }
             alert(warning)
             return;
         }
+        //This needs to be fixed to take in the name and date.
+        if(clientDate === undefined){
 
-        writeData(clientEmail,clientPhone,clientAddress,clientServicesAmount);
-        sendEmail(clientEmail,clientPhone,clientAddress,clientServicesAmount)
+        writeData(clientName,clientEmail,clientPhone,clientAddress,clientServicesAmount);
+        sendEmail(clientName,clientEmail,clientPhone,clientAddress, clientServicesAmount)
+      }
+      else{
+        writeData(clientName,clientEmail,clientPhone,clientAddress,clientServicesAmount,clientDate);
+        sendEmail(clientName,clientEmail,clientPhone,clientAddress, clientServicesAmount,clientDate)
+      }
         return (
             router.push('/Book/Success')
           );
-        
+
 
     }
 
@@ -141,13 +160,30 @@ function SubmissionPage() {
      * @param {string} address 
      * @param {[string]} services 
      */
-    const sendEmail = async (email, phone, address, services) => {
+    const sendEmail = async (name,email, phone, address, services,dateAndTime = new Date()) => {
+      if (typeof dateAndTime === 'string') {
+        dateAndTime = new Date(dateAndTime);
+      };
+      //formatting date and all that jazz
+      const year = dateAndTime.getFullYear();
+      const month = dateAndTime.getMonth();
+      const day = dateAndTime.getDate();
+      const hours = dateAndTime.getHours();
+      const minutes = dateAndTime.getMinutes();
+
+      const formattedDateAndTime = new Date(year, month, day, hours, minutes).toString();
+
         const emailBody = {
-          email,
-          phone,    
-          address,
-          services
+          name:name,
+          email:email,
+          phone:phone,    
+          address:address,
+          dateAndTime:formattedDateAndTime,
+          services:services
         };
+
+        console.log(emailBody);
+        console.log(JSON.stringify(emailBody));
         
         try {
           const response = await fetch('/api/jobEmail', {
@@ -171,34 +207,58 @@ function SubmissionPage() {
 
 
     /**
+     *  Write to real time firebase database.
      * 
+     * @param {string} name 
      * @param {string} email 
      * @param {string} phone 
-     * @param {string}} address 
+     * @param {string} address 
      * @param {[string]} services 
+     * @param {dateTime} dateAndtime 
+     * 
+     * 
      */
-    const writeData = (email, phone, address, services) => {
-        
+    const writeData = (name, email, phone, address, services, dateAndTime = new Date()) => {
+      // If dateAndTime is a string, convert it to a Date object
+      if (typeof dateAndTime === 'string') {
+        dateAndTime = new Date(dateAndTime);
+      }
+    
+      // Get year, month, day, hours, and minutes from the dateAndTime object
+      const year = dateAndTime.getFullYear();
+      const month = dateAndTime.getMonth();
+      const day = dateAndTime.getDate();
+      const hours = dateAndTime.getHours();
+      const minutes = dateAndTime.getMinutes();
+    
+      // Create a new Date object with the desired format
+      const formattedDateAndTime = new Date(year, month, day, hours, minutes).toString();
+    
         if (dataBasedata !== null) {
           const index = dataBasedata.findIndex(
               (item) =>
-                (item?.clientEmail === email && item?.clientPhone === phone) ||
+                (item?.clientEmail === email && item?.clientPhone === phone)     ||
                 (item?.clientEmail === email && item?.clientAddress === address) ||
-                (item?.clientPhone === phone && item?.clientAddress === address),
+                (item?.clientEmail === email && item?.clientName === name)       ||
+                (item?.clientPhone === phone && item?.name === name)             ||
+                (item?.clientName === name && item?.address === address )        ||
+                (item?.clientPhone === phone && item?.address === address)
               );
           const db = getDatabase();
           let clientID = dataBasedata.length;
           const clientRef = ref(db, '/Clients');
-      
+            
           if (index !== -1) {
             // If data exists, update it
             const newData = [...dataBasedata];
             newData[index] = {
               ...newData[index],
+              clientName: name,
               clientEmail: email,
               clientPhone: phone,
               clientAddress: address,
-              services: services,
+              clientDate: formattedDateAndTime,
+              services: [...newData[index].services, ...services]
             //   clientID: index + 1,
             };
             const filteredData = newData.filter((item) => item !== undefined);
@@ -213,10 +273,12 @@ function SubmissionPage() {
             setDataBasedata((prevData) => [
               ...prevData,
               {
+                clientName: name,
                 clientEmail: email,
                 clientPhone: phone,
                 clientAddress: address,
                 services: services,
+                clientDate: formattedDateAndTime,
                 clientID: clientID + 1,
               },
             ]);
@@ -225,10 +287,12 @@ function SubmissionPage() {
               [
                 ...dataBasedata,
                 {
+                  clientName: name,
                   clientEmail: email,
                   clientPhone: phone,
                   clientAddress: address,
                   services: services,
+                  clientDate: formattedDateAndTime,
                   clientID: clientID + 1,
                 },
               ].filter((item) => item !== undefined)
@@ -243,20 +307,24 @@ function SubmissionPage() {
               clientRef,
               [
                 {
+                  clientName : name,
                   clientEmail: email,
                   clientPhone: phone,
                   clientAddress: address,
                   services: services,
+                  clientDate: formattedDateAndTime,
                   clientID: clientID + 1,
                 },
               ]
             ); // Update data in the database
             setDataBasedata([
                 {
+                    clientName : name,
                     clientEmail: email,
                     clientPhone: phone,
                     clientAddress: address,
                     services: services,
+                    clientDate: formattedDateAndTime,
                     clientID: clientID + 1,
                 }
             ]);
@@ -275,9 +343,11 @@ function SubmissionPage() {
     return (
         <div>
             <div className="w-full h-full bg-gray-600 text-black  overflow-hidden p-4">
+                <NameInput handleName={handleClientName} />
                 <PhoneInput handlePhone={handleClientPhone} />
                 <EmailInput handleEmail={handleClientEmail} />
                 <AddressInput handleAddress={handleClientAddress} />
+                <DateInput handleDate={handleClientDate} />
                 {clientServicesAmount.map((service, index) => (
                     <div key={`service-${index}`}>                        
                         <DropdownMenu selectedService={service} services={servicesWeOffer} index={index} clientServicesAmount={clientServicesAmount} changeServiceAtIndex={changeServiceAtIndex} />
