@@ -42,9 +42,6 @@ function SubmissionPage() {
 
     }, []);
 
-    useEffect(() => {
-        console.log("Database Boy1: ", dataBasedata);
-    }, [dataBasedata]);
 
     /**
      * passed into the email input, this
@@ -103,7 +100,6 @@ function SubmissionPage() {
     const deleteServiceButton = (index) => {
         // Make a copy of the current services array in state
         const updatedServices = [...clientServicesAmount];
-        console.log(clientServicesAmount)
         updatedServices.splice(index,1)
         setClientServicesAmount(updatedServices)
     }
@@ -182,8 +178,6 @@ function SubmissionPage() {
           services:services
         };
 
-        console.log(emailBody);
-        console.log(JSON.stringify(emailBody));
         
         try {
           const response = await fetch('/api/jobEmail', {

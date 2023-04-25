@@ -10,7 +10,6 @@ function TestFireBaseComponent() {
         const clientRef = ref(db, '/Clients');
         onValue(clientRef, (snapshot) => {
             const data = snapshot.val();
-            console.log('Data:', data);
             // You can access the data from the snapshot object and do whatever you want with it
         });
 
