@@ -3,7 +3,10 @@ sgMail.setApiKey(process.env.NEXT_PUBLIC_SENDGRID_API_KEY);
 
 export async function POST(request) {
   try {
+
+    
     const body = await request.json(); // Parse request body as JSON
+
 
     const message = `
       Name: ${body.name}\r\n
