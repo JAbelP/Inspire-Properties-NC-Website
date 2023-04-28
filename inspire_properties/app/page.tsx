@@ -18,7 +18,6 @@ export default function Home() {
       <div className="w-full h-[35rem] bg-gray-300  overflow-hidden">
         <Slider slides={slides} />
       </div>
-        <TestFireBaseComponent />
     </div>
  
 
