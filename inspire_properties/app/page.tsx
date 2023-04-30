@@ -15,10 +15,9 @@ export default function Home() {
 
   return (
     <div>
-      <div className="w-full h-[35rem] bg-gray-300  overflow-hidden">
+      <div className="w-full h-[50rem] bg-gray-300  overflow-hidden">
         <Slider slides={slides} />
       </div>
-        <TestFireBaseComponent />
     </div>
  
 

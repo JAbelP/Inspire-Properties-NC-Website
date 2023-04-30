@@ -337,14 +337,20 @@ function SubmissionPage() {
     return (
         <div>
             <div className="w-full h-full bg-gray-600 text-black  overflow-hidden p-4">
+            <div className="w-full h-full bg-gray-600 text-black  overflow-hidden p-4">
+              <div className="flex flex-col items-center">
                 <NameInput handleName={handleClientName} />
                 <PhoneInput handlePhone={handleClientPhone} />
                 <EmailInput handleEmail={handleClientEmail} />
                 <AddressInput handleAddress={handleClientAddress} />
                 <DateInput handleDate={handleClientDate} />
+              </div>
+                </div>
                 {clientServicesAmount.map((service, index) => (
-                    <div key={`service-${index}`}>                        
+                    <div key={`service-${index} `}>
+                    <div className='flex flex-col items-center'>
                         <DropdownMenu selectedService={service} services={servicesWeOffer} index={index} clientServicesAmount={clientServicesAmount} changeServiceAtIndex={changeServiceAtIndex} />
+                    </div>                        
                         <div className='flex'>
                             {index === (clientServicesAmount.length - 1) && (
                                 <button className='bg-greenLogo p-3' onClick={addServiceButton}> Add a service </button>
