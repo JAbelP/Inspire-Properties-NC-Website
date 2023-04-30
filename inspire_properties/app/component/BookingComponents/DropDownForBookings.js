@@ -43,9 +43,9 @@ function DropdownMenu( props ) {
         <button
           type="button"
           onClick={toggleDropdown}
-          className="flex items-center justify-between w-full px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          className="flex col justify-between w-96  px-4 py-2 text-3xl break-words font-medium text-gray-700 bg-white border border-gray-300 rounded-md h-auto  hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
         >
-          {selectedService || 'Select a Service'} {/* Show the selected service if there is one */}
+          {selectedService} {/* Show the selected service if there is one */}
           <svg
             className={`w-5 h-5 ml-2 transition-transform transform ${
               isOpen ? '-rotate-180' : ''
@@ -64,7 +64,7 @@ function DropdownMenu( props ) {
         <div
           className={`${
             isOpen ? 'block' : 'hidden'
-          } absolute z-10 w-full mt-2 bg-white rounded-md shadow-lg max-h-60 overflow-y-auto`}
+          } absolute z-10 w-full mt-2 bg-white rounded-md shadow-lg max-h-60 overflow-y-auto text-xl  `}
         >
           <div className="px-2 py-2 overflow-hidden">
             {Object.entries(props.services).map(([category, services]) => (
@@ -75,7 +75,7 @@ function DropdownMenu( props ) {
                     <li key={service}>
                       <button
                         type="button"
-                        className="w-full text-left rounded-md hover:bg-gray-100 ml-8"
+                        className="w-full text-left rounded-md ml-8 hover:bg-slate-500"
                         onClick={() => handleSelectService(service)}
                       >
                         {service}

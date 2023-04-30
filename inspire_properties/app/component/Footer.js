@@ -5,7 +5,7 @@ import {Facebook, Marker, Phone} from './icons'
 
 function Myfooter() {
   return (
-    <div className='grid grid-cols-3  place-content-stretch justify-items-center bg-black text-white'>
+    <div className='grid grid-row-3 justify-items-center sm:grid-cols-3  sm:place-content-stretch sm:justify-items-center bg-black text-white h-full text-xl'>
         {/* Location */}
         <div className='w-1/3'>
                 {/* Location SVG */}

@@ -27,12 +27,12 @@ const handleMenuClick = () =>{
     {/* ----------------LOGO-------------------------- */}
     
     {/* ------------------------- Full Sized Header-------------------- */}
-      <div className="invisible sm:visible">
-          <div className="flex-grow flex-shrink-0 sm:pl-6">
-            <div className="flex flex-row justify-end gap-x-9">
+      <div className="hidden sm:block ">
+          <div className="flex-grow flex-shrink-0 sm:pl-6 text-4xl">
+            <div className="flex flex-row justify-end gap-x-9 flex-shrink-1 flex-wrap">
               <Link href={"/"}>
                 <div>
-                  <HeaderButton label={"Home"} className={"bg-green-700 my-2"} />
+                  <HeaderButton label={"Home"} className={"bg-green-700 my-2 rounded-lg"} />
                 </div>
               </Link>
               <div>
@@ -61,9 +61,9 @@ const handleMenuClick = () =>{
 
 
         {/* ---------------------------- tray  ------------------------ */}
-      <div className={`${menuOpen ?("visible"):("invisible")}`}>
-          <div onClick={handleMenuClick} className={`bg-gray-700 w-1/2 h-[70rem] opacity-75 absolute top-0 left-0 ${menuOpen ?("z-30"):("-z-10")}`} />
-            <div className={`bg-green-100 text-black w-1/2 h-screen absolute top-0 right-0  text-4xl pl-4 pt-10 flex-col flex-wrap ${menuOpen ?("z-30"):("-z-10")} `}>
+      <div className={`${menuOpen ?("visible"):("hidden ")} overflow-hidden overflow-x-hidden ` }>
+          <div onClick={handleMenuClick} className={`${menuOpen ?("visible"):("hidden ")}  bg-gray-700 w-1/2 h-screen opacity-75 absolute top-0 left-0 ${menuOpen ?("z-30"):("-z-10")}`} style={{ transition: "transform 0.5s ease-in-out", transform: `translateX(${menuOpen ? "0" : "-100%"})` }} />
+            <div className={`${menuOpen ?("visible"):("hidden ")} bg-green-100 text-black w-1/2 h-screen absolute top-0 right-0  text-4xl pl-4 pt-10 flex-col flex-wrap ${menuOpen ?("z-30"):("-z-10")} `} style={{ transition: "transform 0.5s ease-in-out", transform: `translateX(${menuOpen ? "0" : "100%"})` }}>
               <Link href={"/"} className="block mb-4">
                 <p onClick={handleMenuClick}>
                   Home
@@ -82,14 +82,11 @@ const handleMenuClick = () =>{
       );
 
     }
-    const HeaderButton = ({label, className}) =>(
+    const HeaderButton = ({label, className = "bg-white hover:bg-greenLogo my-2 rounded-lg "}) =>(
       <button className={className}>
           <p className="p-3">{label}</p>
       </button>
   )
-  HeaderButton.defaultProps = {
-      className:"bg-white hover:bg-greenLogo my-2 "
-  }
 
 
 export default Myheader

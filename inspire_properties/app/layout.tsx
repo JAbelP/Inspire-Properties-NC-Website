@@ -17,12 +17,14 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className='bg-white min-h-screen'>
+      <body className='bg-white min-h-screen flex flex-col'>
         <MyHeader/>
+        <main className='flex-grow'>
         {children}
+        </main >
         <footer>
-          <Myfooter/>
-      </footer>        
+          <Myfooter />
+      </footer >        
       </body>
     </html>
   )
