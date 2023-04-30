@@ -10,8 +10,7 @@ import DateInput from './DateEntryBooking';
 import { getDatabase, ref, onValue, off, set } from 'firebase/database';
 import app from '../../firebaseConfig'
 import { useRouter } from 'next/navigation';
-
-
+import HCaptchaComponent from './HCaptcha';
 
 
 function SubmissionPage() {
@@ -22,6 +21,7 @@ function SubmissionPage() {
     const [ clientDate, setClientDate ] = useState(new Date());
     const [ clientServicesAmount, setClientServicesAmount ] = useState(['-----Please Select a Service-----']);
     const [dataBasedata, setDataBasedata] = useState([]);
+    const [isHuman, setIsHuman] = useState(false);
     const router = useRouter();
 
     let db = null
@@ -42,6 +42,29 @@ function SubmissionPage() {
 
     }, []);
 
+    useEffect(() => {
+      console.log('isHuman:', isHuman);
+    }, [isHuman]);
+
+    /**
+     * token to verify if human
+     * @param {token} token 
+     */
+    const handleHcaptchaVerify  = async (token) => {
+      const send = {token:token}
+      const response = await fetch('/api/humanVerify',{
+        method:'POST',
+        body:JSON.stringify(send)
+      })
+      if(response.ok){
+        setIsHuman(true);
+        return;
+      }
+      else{
+        return;
+      }
+      
+    }
 
     /**
      * passed into the email input, this
@@ -68,10 +91,18 @@ function SubmissionPage() {
         setClientAddress(clientAddressResponse);
     }
 
+    /**
+     * client's name
+     * @param {string} clientNameResponse 
+     */
     const handleClientName = (clientNameResponse) => {
       setClientName(clientNameResponse);
     }
     
+    /**
+     * prefered date to begin project
+     * @param {date} clientDateResponse 
+     */
     const handleClientDate = (clientDateResponse) => {
       setClientDate(clientDateResponse);
     }
@@ -109,8 +140,8 @@ function SubmissionPage() {
      * @returns null
      */
     const handleSubmit = () =>{
-
-        if(!clientPhone || !clientEmail || !clientAddress){
+      
+        if(!clientPhone || !clientEmail || !clientAddress || !isHuman){
             let warning = 'please provide: '
             if( !clientName){
               warning = warning.concat(" ", "Your Name")
@@ -126,8 +157,11 @@ function SubmissionPage() {
             if ( !clientAddress){
                 warning = warning.concat(" ", "address")
             }
-            if(!clientPhone && !clientEmail && !clientAddress){
-                warning = "Please provide your name, a phone number, email, and address"
+            if( !isHuman){
+              warning = warning.concat(" ","fufill captcha")
+            }
+            if(!clientPhone && !clientEmail && !clientAddress && !isHuman){
+                warning = "Please provide your name, a phone number, email, address, and captcha"
             }
             alert(warning)
             return;
@@ -135,15 +169,16 @@ function SubmissionPage() {
         //This needs to be fixed to take in the name and date.
         if(clientDate === undefined){
 
-        writeData(clientName,clientEmail,clientPhone,clientAddress,clientServicesAmount);
-        sendEmail(clientName,clientEmail,clientPhone,clientAddress, clientServicesAmount)
+        //writeData(clientName,clientEmail,clientPhone,clientAddress,clientServicesAmount);
+        //sendEmail(clientName,clientEmail,clientPhone,clientAddress, clientServicesAmount)
       }
       else{
-        writeData(clientName,clientEmail,clientPhone,clientAddress,clientServicesAmount,clientDate);
-        sendEmail(clientName,clientEmail,clientPhone,clientAddress, clientServicesAmount,clientDate)
+        //writeData(clientName,clientEmail,clientPhone,clientAddress,clientServicesAmount,clientDate);
+        //sendEmail(clientName,clientEmail,clientPhone,clientAddress, clientServicesAmount,clientDate)
       }
         return (
-            router.push('/Book/Success')
+            pass
+            //router.push('/Book/Success')
           );
 
 
@@ -365,7 +400,9 @@ function SubmissionPage() {
                         </div>
                     </div>
                 ))}
-            <button className='bg-greenLogo p-4 m-4' onClick={handleSubmit}> submit </button>
+
+            <HCaptchaComponent onVerify={handleHcaptchaVerify} />
+            <button className='bg-greenLogo p-4 m-4' onClick={handleSubmit} disabled={(isHuman?(false):(true))}> submit </button>
             </div>
         </div>
     )
