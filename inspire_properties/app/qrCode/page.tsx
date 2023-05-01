@@ -14,4 +14,5 @@ function Page() {
     return <div>Redirecting to Linktree...</div>;
 }
 
-export default Page
+
+export default Page 
