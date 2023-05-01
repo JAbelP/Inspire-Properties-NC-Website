@@ -43,11 +43,13 @@ function DropdownMenu( props ) {
         <button
           type="button"
           onClick={toggleDropdown}
-          className="flex col justify-between w-96  px-4 py-2 text-3xl break-words font-medium text-gray-700 bg-white border border-gray-300 rounded-md h-auto  hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          className="flex col justify-between w-80 lg:w-[88rem] lg:h-20 mx-6 px-4 lg:pl-[30rem] py-2 text-3xl break-words font-medium
+           text-gray-700 bg-white border border-gray-300 rounded-md h-auto  hover:bg-gray-50 
+           focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
         >
           {selectedService} {/* Show the selected service if there is one */}
           <svg
-            className={`w-5 h-5 ml-2 transition-transform transform ${
+            className={`w-5 h-5 ml-2 transition-transform transform visible lg:hidden ${
               isOpen ? '-rotate-180' : ''
             }`}
             viewBox="0 0 20 20"
@@ -64,18 +66,18 @@ function DropdownMenu( props ) {
         <div
           className={`${
             isOpen ? 'block' : 'hidden'
-          } absolute z-10 w-full mt-2 bg-white rounded-md shadow-lg max-h-60 overflow-y-auto text-xl  `}
+          } absolute z-10 w-full mt-2 bg-white rounded-md shadow-lg max-h-60 overflow-y-auto text-xl `}
         >
           <div className="px-2 py-2 overflow-hidden">
             {Object.entries(props.services).map(([category, services]) => (
               <div key={category}>
-                <p className="font-medium text-gray-900 ml-4">{category}</p>
+                <p className="font-medium text-gray-900 ml-4 ">{category}</p>
                 <ul className="mt-1 space-y-1">
                   {(services).map((service) => (
                     <li key={service}>
                       <button
                         type="button"
-                        className="w-full text-left rounded-md ml-8 hover:bg-slate-500"
+                        className="w-full text-left lg:text-center rounded-md ml-8 hover:bg-slate-500"
                         onClick={() => handleSelectService(service)}
                       >
                         {service}

@@ -27,7 +27,7 @@ const handleMenuClick = () =>{
     {/* ----------------LOGO-------------------------- */}
     
     {/* ------------------------- Full Sized Header-------------------- */}
-      <div className="hidden sm:block ">
+      <div className="hidden lg:block ">
           <div className="flex-grow flex-shrink-0 sm:pl-6 text-4xl">
             <div className="flex flex-row justify-end gap-x-9 flex-shrink-1 flex-wrap">
               <Link href={"/"}>
@@ -52,7 +52,7 @@ const handleMenuClick = () =>{
     {/* ------------------------- Full Sized Header-------------------- */}
 
       </div>
-      <div className="absolute top-[3.5rem] visible sm:invisible" style={{right: "1.5rem",top:"2"}}>
+      <div className="absolute top-[3.5rem] visible lg:invisible" style={{right: "1.5rem",top:"2"}}>
         <button onClick={handleMenuClick}>
           <Hamburger />
         </button>
@@ -62,8 +62,8 @@ const handleMenuClick = () =>{
 
         {/* ---------------------------- tray  ------------------------ */}
       <div className={`${menuOpen ?("visible"):("hidden ")} overflow-hidden overflow-x-hidden ` }>
-          <div onClick={handleMenuClick} className={`${menuOpen ?("visible"):("hidden ")}  bg-gray-700 w-1/2 h-screen opacity-75 absolute top-0 left-0 ${menuOpen ?("z-30"):("-z-10")}`} style={{ transition: "transform 0.5s ease-in-out", transform: `translateX(${menuOpen ? "0" : "-100%"})` }} />
-            <div className={`${menuOpen ?("visible"):("hidden ")} bg-green-100 text-black w-1/2 h-screen absolute top-0 right-0  text-4xl pl-4 pt-10 flex-col flex-wrap ${menuOpen ?("z-30"):("-z-10")} `} style={{ transition: "transform 0.5s ease-in-out", transform: `translateX(${menuOpen ? "0" : "100%"})` }}>
+          <div onClick={handleMenuClick} className={`${menuOpen ?("visible"):("hidden ")}  bg-gray-700 w-1/2 h-[85rem] opacity-75 absolute top-0 left-0 ${menuOpen ?("z-30"):("-z-10")}`} style={{ transition: "transform 0.5s ease-in-out", transform: `translateX(${menuOpen ? "0" : "-100%"})` }} />
+            <div className={`${menuOpen ?("visible"):("hidden ")} bg-green-100 text-black w-1/2 h-[85rem] absolute top-0 right-0  text-4xl pl-4 pt-10 flex-col flex-wrap ${menuOpen ?("z-30"):("-z-10")} `} style={{ transition: "transform 0.5s ease-in-out", transform: `translateX(${menuOpen ? "0" : "100%"})` }}>
               <Link href={"/"} className="block mb-4">
                 <p onClick={handleMenuClick}>
                   Home

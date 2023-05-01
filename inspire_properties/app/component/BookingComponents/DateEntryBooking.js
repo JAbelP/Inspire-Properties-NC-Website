@@ -16,7 +16,7 @@ function DateInput(props) {
       <input
         id="date"
         type="datetime-local"
-        className="border border-gray-400 px-3 py-2 w-96 rounded-md mb-4 focus:outline-none focus:border-indigo-500 h-24 text-3xl"
+        className="border border-gray-400 px-9 py-2 w-96 lg:w-[88rem]  rounded-md mb-4 focus:outline-none focus:border-greenLogo h-24 text-3xl"
         placeholder="Enter your email address"
         value={date}
         onChange={handleChange}

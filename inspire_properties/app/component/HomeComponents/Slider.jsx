@@ -21,12 +21,11 @@ const ImageSlider = ({ slides }) => {
     setCurrentIndex(slideIndex);
   };
 
-
   return (
     <div className="relative h-full w-full">
       <div className="absolute top-1/2 transform -translate-y-1/2 left-0 z-10">
         <button
-          className="text-white text-8xl px-4 py-2 rounded-md focus:outline-none"
+          className="text-white text-8xl px-4 py-2 round  ed-md focus:outline-none "
           onClick={goToPrevious}
         >
           &larr;
@@ -40,9 +39,13 @@ const ImageSlider = ({ slides }) => {
           &rarr;
         </button>
       </div>
-      <div className="w-full h-full  bg-cover bg-center" 
-             style={{ backgroundImage: `url(${slides[currentIndex].path})` }}>
-        </div>
+      <div
+        className="w-full h-full bg-cover bg-center"
+        style={{
+          backgroundImage: `url(${slides[currentIndex].path})`,
+          transition: "background-image 0.5s ease-in-out",
+        }}
+      ></div>
       <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 z-10">
         <div className="flex space-x-3">
           {slides.map((slide, slideIndex) => (
@@ -56,17 +59,20 @@ const ImageSlider = ({ slides }) => {
               onClick={() => goToSlide(slideIndex)}
             ></button>
           ))}
+          <Link href={"/Book"}>
+            <button className="bg-greenLogo hover:bg-green-400
+              absolute bottom-24 left-96 p-4 px-8 
+              rounded-md border-4
+              w-80
+              h-32
+              text-4xl
+            border-black hover:border-green-600 ">
+              {slides[currentIndex].button}
+            </button>
+          </Link>
         </div>
-
-      </div>   
-        <Link href={"/Book"}>
-          <button className="bg-greenLogo hover:bg-green-400
-            absolute bottom-24 right-52 p-4 px-8 rounded-md border-4
-            text-4xl
-          border-black hover:border-green-600 ">
-            Book Us Today
-          </button>
-        </Link>
+      </div>
+     
     </div>
   );
 };
