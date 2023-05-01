@@ -14,7 +14,7 @@ function HCaptchaComponent({ onVerify }) {
      sitekey={ "3401880a-95fe-4481-86fa-a258397649b5" } 
      onVerify={handleVerify}
       />
-  </div>
+    </div>
   )
 }
 
