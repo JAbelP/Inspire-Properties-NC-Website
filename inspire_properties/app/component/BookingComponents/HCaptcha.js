@@ -11,7 +11,7 @@ function HCaptchaComponent({ onVerify }) {
     <div className='pt-2'>
     {/* Render the hCaptcha component */}
     <HCaptcha
-     sitekey={ process.env.NEXT_PUBLIC_HCAPTCHA_SITEKEY } 
+     sitekey={ "3401880a-95fe-4481-86fa-a258397649b5" } 
      onVerify={handleVerify}
       />
   </div>

@@ -39,7 +39,6 @@ function SubmissionPage() {
         return () => {
             off(clientRef);
         };
-
     }, []);
 
     useEffect(() => {
