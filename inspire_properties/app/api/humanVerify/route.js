@@ -1,7 +1,7 @@
 
 export async function POST(request) {
   const body = await request.json();
-  const s = process.env.NEXT_PUBLIC_HCAPTCHA_SECRETKEY;
+  const s = process.env.HCAPTCHA_SECRETKEY;
   try {
     const response = await fetch('https://hcaptcha.com/siteverify', {
       method:"POST",

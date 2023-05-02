@@ -25,21 +25,42 @@ function SubmissionPage() {
     const router = useRouter();
 
     let db = null
-    //getting database information
-    useEffect(() => {
-        db = getDatabase();
-        const clientRef = ref(db, '/Clients');
-        onValue(clientRef, (snapshot) => {
-            const DataBasedata = snapshot.val();
-            setDataBasedata(DataBasedata);  
-            // You can access the data from the snapshot object and do whatever you want with it
+
+    //------------------------------------ THIS IS HOW YOU GET THE RESPONSE FROM YOUR API CALL-----------------------------------
+    // useEffect( () => {
+    //     async function fetchData(){
+    //       const response = await fetch('/api/databaseClient');
+    //       const data = await response.json();
+    //       console.log(data, " This is the call ");
+    //       return data;
+    //     }
+    //     fetchData();
+    // }, []);
+    //------------------------------------ THIS IS HOW YOU GET THE RESPONSE FROM YOUR API CALL-----------------------------------
+    
+    // THIS WAS CODE HOW I USED TO DO IT BEFORE API ROUTES THIS IS A BAD EXAMPLE
+    // useEffect(() => {
+    //     const dbbTest = async() =>{
+    //       const response = await fetch('/api/databaseClient')
+    //       const temp = await response.json();
+    //       return temp;
+    //     } 
+    //     console.log(dbbTest(), " the call worked bby ")
+    //     db = getDatabase();
+    //     const clientRef = ref(db, '/Clients');
+    //     onValue(clientRef, (snapshot) => {
+    //         const DataBasedata = snapshot.val();
+    //         setDataBasedata(DataBasedata);  
+    //         // You can access the data from the snapshot object and do whatever you want with it
             
-        });
-        // Clean up the listener when component unmounts
-        return () => {
-            off(clientRef);
-        };
-    }, []);
+    //     });
+    //     // Clean up the listener when component unmounts
+    //     return () => {
+    //         off(clientRef);
+    //     };
+    // }, []);
+    // THIS WAS CODE HOW I USED TO DO IT BEFORE API ROUTES THIS IS A BAD EXAMPLE
+
 
     useEffect(() => {
       console.log('isHuman:', isHuman);
@@ -56,6 +77,7 @@ function SubmissionPage() {
         body:JSON.stringify(send)
       })
       if(response.ok){
+        
         setIsHuman(true);
         return;
       }
@@ -168,16 +190,16 @@ function SubmissionPage() {
         //This needs to be fixed to take in the name and date.
         if(clientDate === undefined){
 
-        //writeData(clientName,clientEmail,clientPhone,clientAddress,clientServicesAmount);
-        //sendEmail(clientName,clientEmail,clientPhone,clientAddress, clientServicesAmount)
+        writeData(clientName,clientEmail,clientPhone,clientAddress,clientServicesAmount);
+        sendEmail(clientName,clientEmail,clientPhone,clientAddress, clientServicesAmount)
       }
       else{
-        //writeData(clientName,clientEmail,clientPhone,clientAddress,clientServicesAmount,clientDate);
-        //sendEmail(clientName,clientEmail,clientPhone,clientAddress, clientServicesAmount,clientDate)
+        writeData(clientName,clientEmail,clientPhone,clientAddress,clientServicesAmount,clientDate);
+        sendEmail(clientName,clientEmail,clientPhone,clientAddress, clientServicesAmount,clientDate)
       }
         return (
-            pass
-            //router.push('/Book/Success')
+            
+            router.push('/Book/Success')
           );
 
 
@@ -246,7 +268,7 @@ function SubmissionPage() {
      * 
      * 
      */
-    const writeData = (name, email, phone, address, services, dateAndTime = new Date()) => {
+    const writeData = async (name, email, phone, address, services, dateAndTime = new Date()) => {
       // If dateAndTime is a string, convert it to a Date object
       if (typeof dateAndTime === 'string') {
         dateAndTime = new Date(dateAndTime);
@@ -262,101 +284,34 @@ function SubmissionPage() {
       // Create a new Date object with the desired format
       const formattedDateAndTime = new Date(year, month, day, hours, minutes).toString();
     
-        if (dataBasedata !== null) {
-          const index = dataBasedata.findIndex(
-              (item) =>
-                (item?.clientEmail === email && item?.clientPhone === phone)     ||
-                (item?.clientEmail === email && item?.clientAddress === address) ||
-                (item?.clientEmail === email && item?.clientName === name)       ||
-                (item?.clientPhone === phone && item?.name === name)             ||
-                (item?.clientName === name && item?.address === address )        ||
-                (item?.clientPhone === phone && item?.address === address)
-              );
-          const db = getDatabase();
-          let clientID = dataBasedata.length;
-          const clientRef = ref(db, '/Clients');
-            
-          if (index !== -1) {
-            // If data exists, update it
-            const newData = [...dataBasedata];
-            newData[index] = {
-              ...newData[index],
-              clientName: name,
-              clientEmail: email,
-              clientPhone: phone,
-              clientAddress: address,
-              clientDate: formattedDateAndTime,
-              services: [...newData[index].services, ...services]
-            //   clientID: index + 1,
-            };
-            const filteredData = newData.filter((item) => item !== undefined);
-            setDataBasedata(newData);
-            if (filteredData.length > 0) {
-              set(clientRef, newData); // Update data in the database
-            } else {
-              console.error("Data is undefined, cannot update in the database.");
-            }
-          } else {
-            // If data doesn't exist, add it
-            setDataBasedata((prevData) => [
-              ...prevData,
-              {
-                clientName: name,
-                clientEmail: email,
-                clientPhone: phone,
-                clientAddress: address,
-                services: services,
-                clientDate: formattedDateAndTime,
-                clientID: clientID + 1,
-              },
-            ]);
-            set(
-              clientRef,
-              [
-                ...dataBasedata,
-                {
-                  clientName: name,
-                  clientEmail: email,
-                  clientPhone: phone,
-                  clientAddress: address,
-                  services: services,
-                  clientDate: formattedDateAndTime,
-                  clientID: clientID + 1,
-                },
-              ].filter((item) => item !== undefined)
-            ); // Update data in the database
+        const submit ={
+          name,
+          email,
+          phone,
+          address,
+          services,
+          dateAndTime
+        }
+
+        try{
+          const response = await fetch('/api/databaseClient',{
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(submit)
+          });
+
+          if (response.ok){
+            console.log('Email sent Successfully');
+          } else{
+            console.error('Failed writing to Database');
           }
+        } catch(error) {
+          console.error('Error writing to Database: ', error);
         }
-        else{
-            let clientID = 0;
-            const db = getDatabase();
-            const clientRef = ref(db, '/Clients');
-            set(
-              clientRef,
-              [
-                {
-                  clientName : name,
-                  clientEmail: email,
-                  clientPhone: phone,
-                  clientAddress: address,
-                  services: services,
-                  clientDate: formattedDateAndTime,
-                  clientID: clientID + 1,
-                },
-              ]
-            ); // Update data in the database
-            setDataBasedata([
-                {
-                    clientName : name,
-                    clientEmail: email,
-                    clientPhone: phone,
-                    clientAddress: address,
-                    services: services,
-                    clientDate: formattedDateAndTime,
-                    clientID: clientID + 1,
-                }
-            ]);
-        }
+
+    
     };
     
     
