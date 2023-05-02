@@ -233,7 +233,6 @@ function SubmissionPage() {
           dateAndTime:formattedDateAndTime,
           services:services
         };
-
         
         try {
           const response = await fetch('/api/jobEmail', {
@@ -292,7 +291,6 @@ function SubmissionPage() {
           services,
           dateAndTime
         }
-
         try{
           const response = await fetch('/api/databaseClient',{
             method: 'POST',

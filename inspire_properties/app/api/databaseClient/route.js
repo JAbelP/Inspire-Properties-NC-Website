@@ -1,5 +1,5 @@
 import app from '../../firebaseConfig';
-import { getDatabase, ref, onValue } from 'firebase/database';
+import { getDatabase, ref, onValue, set  } from 'firebase/database';
 
 export async function GET() {
   const db = getDatabase();
@@ -11,7 +11,8 @@ export async function GET() {
       if (databaseData) {
         resolve(databaseData);
       } else {
-        reject(new Error('Database query returned no data.'));
+        console.log('Database query returned no data.');
+        resolve([]);
       }
     }, {
       onlyOnce: true
