@@ -2,7 +2,7 @@
 import { Inter } from 'next/font/google';
 import Slider from './component/HomeComponents/Slider';
 import TestFireBaseComponent from './component/HomeComponents/testFireBaseComponent';
-import MyHeader from "./component/Header";
+import MyHeader from './component/Header';
 import Myfooter from './component/Footer';
 
 
