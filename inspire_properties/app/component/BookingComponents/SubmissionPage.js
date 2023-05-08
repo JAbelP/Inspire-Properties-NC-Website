@@ -255,7 +255,7 @@ function SubmissionPage() {
 
 
 
-    /**
+     /**
      *  Write to real time firebase database.
      * 
      * @param {string} name 
@@ -266,7 +266,7 @@ function SubmissionPage() {
      * @param {dateTime} dateAndtime 
      * 
      * 
-     */
+     **/
     const writeData = async (name, email, phone, address, services, dateAndTime = new Date()) => {
       // If dateAndTime is a string, convert it to a Date object
       if (typeof dateAndTime === 'string') {
@@ -301,7 +301,7 @@ function SubmissionPage() {
           });
 
           if (response.ok){
-            console.log('Email sent Successfully');
+            console.log('Wrote to Database Successfully');
           } else{
             console.error('Failed writing to Database');
           }

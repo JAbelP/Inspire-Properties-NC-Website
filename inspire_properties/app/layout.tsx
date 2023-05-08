@@ -17,15 +17,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className='bg-white min-h-screen flex flex-col'>
-        <MyHeader/>
-        <main className='flex-grow'>
+      <body>
         {children}
-        </main >
-        <footer>
-          <Myfooter />
-      </footer >        
-      </body>
+      </body>     
     </html>
   )
 }
