@@ -2,6 +2,9 @@
 import { Inter } from 'next/font/google';
 import Slider from './component/HomeComponents/Slider';
 import TestFireBaseComponent from './component/HomeComponents/testFireBaseComponent';
+import MyHeader from "./component/Header";
+import Myfooter from './component/Footer';
+
 
 export default function Home() {
 
@@ -16,12 +19,19 @@ export default function Home() {
   ]
 
   return (
-    <div>
-      <div className="w-full h-[40rem] bg-gray-300  overflow-hidden">
-        <Slider slides={slides} />
+    <body className='bg-white min-h-screen flex flex-col'>
+      <MyHeader/>
+      <main className='flex-grow'>
+      <div>
+        <div className="w-full h-[40rem] bg-gray-300  overflow-hidden">
+          <Slider slides={slides} />
+        </div>
       </div>
-    </div>
- 
+      </main>
+      <footer>
+        <Myfooter/>
+      </footer>
+    </body>
 
     )
 }
