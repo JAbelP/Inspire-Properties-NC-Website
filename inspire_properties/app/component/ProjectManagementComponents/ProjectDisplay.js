@@ -120,10 +120,21 @@ const addEmployeeToDate = (projectID, selectedDate) => {
         // Close the modal
         setOpenDateModal(false);
       };
-
-      const handleEmployeeDropDownChange = (event) =>{
+      const handleEmployeeDropDownChange = (event) => {
         setSelectedEmployeeOnDropDown(event.target.value);
-      }
+      
+        // Find the employee in the employee list based on the selected employee on the dropdown
+        const currEmployee = employeeList.find((employee) => employee.employeeName === event.target.value);
+      
+        // If the selected employee is not found, log an error and return
+        if (!currEmployee) {
+          console.log("Selected employee not found");
+          return;
+        }
+      
+        // Update the expected hours for the selected employee
+        setInputValue(currEmployee.expectedHours || '');
+      };
 
 // const updateDateSpent = (projectID, date, hours, money) => {
 //   let totalMoneySpent = 0;
@@ -198,39 +209,34 @@ const addEmployeeToDate = (projectID, selectedDate) => {
 //     }
 
 
-/**
- * 
- * @param {*} projectID 
- * @param {*} date 
- * @param {*} hour 
- * @param {*} money 
- */
-const updateDateSpent = (projectID,date,hour,money) =>{
-    const updatedProjectList = projectList.map((project) =>{
-        if(project.id === projectID){
-            const updatedProject = {...project };
-            let updateDateIndex =  -1;
-            updatedProject.data.dates = updatedProject.data.dates.map((d,index) => {
-                
-                if (d.date === date){
-                    updateDateIndex = index;
-                    const updatedDate = {...d,spentHours:hour, spentMoney:money};
-                    return updatedDate;
-                }
-                return d;
-            });
-            if (updateDateIndex === -1 ){
-                console.log(`Date ${date} not found in project ${projectID}`);
-                return project;
-            }
-            return updatedProject;
-        }
-        return project;
+function updateDateSpent(project, date, employee, hours, money) {
+    if (!project[date]) {
+      project[date] = {};
+    }
+  
+    // Update spent hours and money for the given date and employee
+    if (!project[date][employee]) {
+      project[date][employee] = {
+        spentHours: 0,
+        spentMoney: 0,
+        expectedHours: 0
+      };
+    }
+  
+    project[date][employee].spentHours += hours;
+    project[date][employee].spentMoney += money;
+  
+    // Calculate expected hours by adding up the total hours per project per date for each employee
+    const employees = Object.keys(project[date]);
+    employees.forEach(emp => {
+      const totalHours = Object.values(project[date][emp]).reduce((total, empData) => total + empData.spentHours, 0);
+      project[date][emp].expectedHours = totalHours;
     });
-    setProjectList(updatedProjectList);
-    updateProjectSpent(projectID);
-}
-
+  
+    return project;
+  }
+  
+  
 
 
 // const updateProjectSpent = (projectID)=>{
@@ -369,7 +375,7 @@ const updateProjectSpent = (projectID) => {
                                 {`${project?.data?.totalHoursSpent}`}
                             </div>
                             <div className='flex flex-row'> 
-                            <p> Spent Hours: </p>
+                            <p>Expected Hours: </p>
                                 {`${project?.data?.expectedHours}`}
                             </div>
                         </div>
