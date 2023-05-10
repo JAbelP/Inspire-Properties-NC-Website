@@ -10,7 +10,7 @@ function ProjectDisplay() {
         "expectedHours":"1200000"}}
     ]);
 
-    const [ employeeList, setEmployeelist ] = useState([{employeeName:"Abel", employeePayRate:17, payType:"Hourly"}])
+    const [ employeeList, setEmployeelist ] = useState([{employeeName:"Abel", employeePayRate:17, payType:"Hourly"},{employeeName:"John", employeePayRate:7.25, payType:"Hourly"}])
 
     const [ openDateModal, setOpenDateModal ] = useState(false);
     const [ selectedProjectId, setSelectedProjectId] = useState('')
@@ -136,144 +136,96 @@ const addEmployeeToDate = (projectID, selectedDate) => {
         setInputValue(currEmployee.expectedHours || '');
       };
 
-// const updateDateSpent = (projectID, date, hours, money) => {
-//   let totalMoneySpent = 0;
-//   let totalHoursSpent = 0;
-
-//   const updatedProjectList = projectList.map((project) => {
-//     if (project.id === projectID) {
-//       const updatedProject = { ...project };
-//       let updatedDateIndex = -1;
-//       updatedProject.data.dates = updatedProject.data.dates.map((d, index) => {
-//         if (d.date === date) {
-//           updatedDateIndex = index;
-//           const updatedDate = { ...d, spentHours: hours, spentMoney: money };
-//           totalMoneySpent += money;
-//           totalHoursSpent += hours;
-//           updatedProject.data.dates[index] = updatedDate;
-//         }
-//         return d;
-//       });
-
-//       if (updatedDateIndex === -1) {
-//         console.log(`Date ${date} not found in project ${projectID}`);
-//         return project;
-//       }
-//       debugger;
-//       if(updatedProject.data.spentBudget !==null && updatedProject.data.spentBudget !== undefined){
-//         const spentBudgetFloat = parseFloat(updatedProject.data.spentBudget);
-//         const totalSpentFloat = parseFloat(totalMoneySpent);
-//         console.log(typeof(spentBudgetFloat));
-//         console.log(spentBudgetFloat);
-//         console.log(typeof(totalSpentFloat));
-//         console.log(totalSpentFloat);
-//         updatedProject.data.spentBudget = totalSpentFloat+spentBudgetFloat;
-//       }else{
-//         const totalSpentFloat = parseFloat(totalMoneySpent);
-//         updatedProject.data.spentBudget = totalSpentFloat;
-//       }
-//       if(updatedProject.data.date.spentHours !==null && updatedProject.data.date.spentHours !== undefined ){
-//         updatedProject.data.date.spentHours += totalHoursSpent;
-//       }
-//       else{
-//           updatedProject.data.date.spentHours = totalHoursSpent;
-//       }
-//       return updatedProject;
-//     }
-//     return project;
-//   });
-
-//   setProjectList(updatedProjectList);
-// };
 
 
-//     const updateProjectSpent=(projectID)=>{
-//         let totalMoneySpentOnProject = 0;
-//         let totalHoursSpentOnProject = 0;
-//         const updatedProjectList = projectList.map((project)=>{
-//             if(project.id === projectID) {
-//                 let updatedProject = {...project}
-//                 updatedProject.data.dates.map((DATE) =>{
-//                     totalHoursSpentOnProject = DATE.spentHours + totalHoursSpentOnProject;
-//                     totalMoneySpentOnProject = DATE.spentMoney+totalHoursSpentOnProject;
-//                 })
-//                 updatedProject = {id:project.id,...updatedProject.data,
-//                      totalSpentHours:totalHoursSpentOnProject,
-//                      totalSpentMoney:totalMoneySpentOnProject
-//                     }
-//                 return updatedProject;
-//             }
-//             return project;
-//         })
-//         setProjectList(updatedProjectList);
-//     }
+function updateDateSpent(projectID, date, hours, money,employeeIndex) {
+    /**
+     * Goals
+     * this needs to iterate through each date within a given Project 
+     * add all the values together for each date 
+     */
 
+    //Itterate through the Project list and if the ID matches that is the project we want.
+    const updatedProjectListReturn = projectList.map((project) =>{
 
-function updateDateSpent(project, date, employee, hours, money) {
-    if (!project[date]) {
-      project[date] = {};
-    }
-  
-    // Update spent hours and money for the given date and employee
-    if (!project[date][employee]) {
-      project[date][employee] = {
-        spentHours: 0,
-        spentMoney: 0,
-        expectedHours: 0
-      };
-    }
-  
-    project[date][employee].spentHours += hours;
-    project[date][employee].spentMoney += money;
-  
-    // Calculate expected hours by adding up the total hours per project per date for each employee
-    const employees = Object.keys(project[date]);
-    employees.forEach(emp => {
-      const totalHours = Object.values(project[date][emp]).reduce((total, empData) => total + empData.spentHours, 0);
-      project[date][emp].expectedHours = totalHours;
-    });
-  
-    return project;
-  }
-  
-  
+            if(project.id === projectID){
+                //now that we have a matching project
+                //we need to find the matching date
+                //What I am going to do is go through each date,
+                //Then I am going to go through each employee and add their
+                //total money and hours
 
+                //I will then loop through each employee add that up 
+                const preUpdatedProjectReturn = project.data.dates.map((Date) =>{
+                    if(Date.date === date){
+                        let tempDate = null;
 
-// const updateProjectSpent = (projectID)=>{
-//     debugger;
-//         let totalHoursSpentOnProject = 0;
-//         let totalMoneySpentOnProject = 0;
-//         let projectIndex = 0;
-//         console.log("Type of: ",typeof(projectList),"projectList: ",projectList)
-//         projectList.map((project,index) =>{
-//             if(projectID === project.id){
-//                 projectIndex = index
-//                 project.data.dates.map((date) =>{
-//                     if(date.spentHours !== null && date.spentHours !== undefined){
-//                         totalHoursSpentOnProject += date.spentHours
-//                     }
-//                     if(date.spentMoney !== null && date.spentMoney !== undefined){
-//                         totalMoneySpentOnProject += date.spentMoney
-//                     }
-//                 });
-                
-//                 const newData = {...project.data,
-//                                     totalMoneySpent:totalMoneySpentOnProject,
-//                                     totalHoursSpent:totalHoursSpentOnProject,
+                        const tempEmployeeList = Date.employee.map((employee, index) => {
+                            if (index === employeeIndex) {
+                              const updatedEmployee = {
+                                ...employee,
+                                totalEmployeeHours: hours,
+                                totalEmployeeMoney: money,
+                              };
+                              return updatedEmployee;
+                            }
+                            return employee;
+                          });
+
+                        const totalEmployeeHours = tempEmployeeList.reduce(
+                            (total, employee) => {
+                                if(
+                                    employee.totalEmployeeHours !==undefined
+                                     && employee.totalEmployeeHours !==NaN 
+                                     &&employee.totalEmployeeHours !==null
+                                  )
+                                {return total + employee?.totalEmployeeHours}
+                                return total;
                                     
-//                                 }
-//                 console.log(newData);
-//                 const updateProjectList = [...projectList];
-//                 updateProjectList[projectIndex] = newData;
-//                 setProjectList(updateProjectList);
-//             console.log("Type of: ",typeof(projectList),"projectList: ",projectList)
+                            },
+                            0
+                          );
+                          const totalEmployeeMoney = tempEmployeeList.reduce(
+                              (total, employee) => 
+                              {            
+                            if(
+                                employee.totalEmployeeHours !==undefined
+                                 && employee.totalEmployeeHours !==NaN 
+                                 &&employee.totalEmployeeHours !==null
+                              )
+                              {
+                                return  parseFloat(total)+ parseFloat(employee?.totalEmployeeMoney);
+                            }
+                                return parseFloat(total);
+                            },
+                              0
+                            );
+                            
+
+                        tempDate = {...Date,employee:tempEmployeeList,totalDateHours:totalEmployeeHours, totalDateMoney:totalEmployeeMoney}
+                        return tempDate;    
+                    }
+                    return Date;
+                })
+                const updatedProjectReturn = { id: projectID, 
+                    data: {...project.data, 
+                                dates:preUpdatedProjectReturn} };
+                
+                return updatedProjectReturn;
+
+            }
+
+            //if it doesn't match the project ID just return it since it is a new updatedProjectList
+            console.log("This is project", project);
+            return project;
+    })
+    setProjectList(updatedProjectListReturn);
+    
+
+  }
 
 
-//             }
-
-//         })
-
-// }
+  
 
 const updateProjectSpent = (projectID) => {
     let totalHoursSpentOnProject = 0;
@@ -292,7 +244,6 @@ const updateProjectSpent = (projectID) => {
               totalMoneySpentOnProject += date.spentMoney;
             }
           });
-          debugger;
           // Calculate total expected hours
           totalExpectedHours = project.data.dates.reduce((total, date) => {
             const dateExpectedHours = date.employee.reduce(
@@ -325,6 +276,7 @@ const updateProjectSpent = (projectID) => {
         {           
          projectList.map((project) => (
                 <div key={project.id}
+                {...console.log(project)}
                     className='mx-4 my-4 px-4 py-4 bg-white'
                 >
                     <div className='text-4xl'>
@@ -337,7 +289,7 @@ const updateProjectSpent = (projectID) => {
                                 <div className='pl-4'>
                                     {date.employee.map((employee, index) => (
                                         <div key={index}>
-                                        <EmployeeTable employee = {employee} calculate={(hours,money)=>updateDateSpent(project.id,date.date,hours,money)}/>
+                                        <EmployeeTable employee = {employee} calculate={(hours,money)=>updateDateSpent(project.id,date.date,hours,money,index)}/>
                                         </div>
                                     ))}
                                 </div>
