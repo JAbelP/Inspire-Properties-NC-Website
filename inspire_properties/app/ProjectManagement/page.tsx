@@ -1,5 +1,6 @@
 import React from 'react'
 import ProjectHeader from '../component/ProjectManagementComponents/Header'
+import ProjectDisplay from '../component/ProjectManagementComponents/ProjectDisplay'
 
 function ProjectManagementPage() {
   return (
@@ -7,6 +8,7 @@ function ProjectManagementPage() {
         <main>
             <div className='text-black'>
                 <ProjectHeader/>
+                <ProjectDisplay />
                 Hello World
             </div>
         </main>

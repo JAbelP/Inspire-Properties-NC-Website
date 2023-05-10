@@ -29,16 +29,10 @@ export async function GET(){
     try{
     // const temp = collection(db,'Projects');
     // const projectsSnapshot = await getDocs(temp);
-    // const projectslist = projectsSnapshot.docs.map(doc => ({id: doc.id, data: doc.data()}))
+    // const projectlist = projectsSnapshot.docs.map(doc => ({id: doc.id, data: doc.data()}))
+    const projectlist =
+    [{"id":"8ohuYhPeL3H2BGEvnynK","data":{"projectLocation":"Inspire Properties","projectName":"Abel","expectedBudget":"36000","expectedHours":"1200000"}}]
 
-    const projectlist = {
-                    id:1234,
-                        data:{
-                            projectName: "Project one",
-                            projectLocation: "Home",
-                            expectedHours: 10,
-                            expectedBudget:60
-                            }}
 
     return new Response(JSON.stringify(projectlist),{
         status:200

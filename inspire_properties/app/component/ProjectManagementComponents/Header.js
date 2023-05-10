@@ -1,18 +1,21 @@
 "use client"
 import React, {useState} from 'react'
 import EmployeeModal from "../ProjectManagementComponents/ProjectManagementModals/EmployeeModal";
+import ProjectModal from "../ProjectManagementComponents/ProjectManagementModals/ProjectModal";
 
 function ProjectHeader() {
-    const [employeeModal, setEmployeeModal] = useState(true);
-
-
-
-
-
+    const [ employeeModal, setEmployeeModal ] = useState(false);
+    const [ projectModal, setProjectModal ] = useState(false);
 
     const handleEmployeeModal = () => {
 
         setEmployeeModal(prevState => !prevState);
+
+    }
+
+    const handleProjectModal = () => {
+
+        setProjectModal(prevState => !prevState);
 
     }
 
@@ -24,9 +27,12 @@ function ProjectHeader() {
          > Employee </button>
          
         <button className='hover:bg-red-400 px-3 rounded-md border-double border-4 
-        border-black'> Project </button>
+        border-black' 
+        onClick={handleProjectModal}> Project </button>
 
         <EmployeeModal openModal={employeeModal} closeModal = { handleEmployeeModal }/>
+        <ProjectModal openModal={projectModal} closeModal = { handleProjectModal }/>
+
 
     </div>
   )

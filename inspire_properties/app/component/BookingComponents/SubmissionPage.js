@@ -62,9 +62,6 @@ function SubmissionPage() {
     // THIS WAS CODE HOW I USED TO DO IT BEFORE API ROUTES THIS IS A BAD EXAMPLE
 
 
-    useEffect(() => {
-      console.log('isHuman:', isHuman);
-    }, [isHuman]);
 
     /**
      * token to verify if human

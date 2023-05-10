@@ -2,9 +2,9 @@ import React ,{useState}from 'react'
 
 function EmployeeModal(props) {
 
-    const [employeeName,setEmployeeName] =useState('')
-    const [employeeRate,setEmployeeRate] =useState('')
-    const [employeePayType,setEmployeePayType] = useState('')
+    const [employeeName,setEmployeeName] = useState('')
+    const [employeePayRate,setEmployeePayRate] = useState('')
+    const [payType,setPayType] = useState('')
 
     const typeOfPay = {
         Hourly:"Hourly",
@@ -17,28 +17,44 @@ function EmployeeModal(props) {
     }
     
     async function handleSubmit() {
-        if(employeeName !== '' && employeeRate !== ''){
+        if ( employeeName !== '' && employeePayRate !== '' && payType !=='null' ){
+          const sendBody = {
+            employeeName,
+            employeePayRate,
+            payType
+          };
 
-            const submitEmployee = await fetch('/api/')
+          console.log(payType, " this is paytype")
 
-            props.closeModal
+          console.log(JSON.stringify(sendBody), "this is sendBody")
+      
+          const submitEmployee = await fetch('/api/databaseEmployee',{
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(sendBody)
+          });
+      
+          closeModal();
+        } else {
+          alert(" please fill in the information ");
         }
-        else
-        {
-            alert(" please fill in the information ")
-        }
-    }
+      } 
+     
+    
 
     function handleEmployeeNameChange(event) {
         setEmployeeName(event.target.value);
     }
 
-    function handleEmployeeRateChange(event) {
-        setEmployeeRate(event.target.value);
+    function handleEmployeePayRateChange(event) {
+        setEmployeePayRate(event.target.value);
     }
 
-    function handleEmployeePayTypeChange(event){
-        setEmployeePayType(event.target.value);
+    const handleEmployeePayTypeChange =(event) =>{
+        console.log("This is right so far")
+        setPayType(event.target.value);
     }
   return (
         <div className={`${props.openModal ?("visible"):("hidden ")}  absolute top-1/3 left-1/3 text-lg w-96 `}>
@@ -63,24 +79,25 @@ function EmployeeModal(props) {
                         id="Rate Of Pay"
                         type='number'
                         placeholder='Rate Of Pay'
-                        value = {employeeRate}
-                        onChange= {handleEmployeeRateChange}
+                        value = {employeePayRate}
+                        onChange= {handleEmployeePayRateChange}
                     ></input>
                 </div>
                 <div className='flex flex-row gap-x-3'>
                     <p>Type Of Pay:</p>
                     <select 
-                    className='pl-2'
-                    id='Type Of Pay'
-                    value={employeePayType}
-                    onChange={handleEmployeePayTypeChange}>
-                        {Object.values(typeOfPay).map(payType =>(
-                            <option key={payType} value={payType}>
-                                {payType}
-                            </option>
+                        className='pl-2'
+                        id='Type Of Pay'
+                        value={payType}
+                        onChange={handleEmployeePayTypeChange}>
+                        <option value='null'> Select a Type</option>
+                        {Object.keys(typeOfPay).map((key) =>(
+                        <option key={key} value={key}>
+                            {typeOfPay[key]}
+                        </option>
                         ))}
                     </select>
-                </div>
+                    </div>
             </div>
         <div className='flex flex-row justify-between mx-4 py-2 r'>
             <button className='bg-green-500 p-1 rounded-md' onClick={handleSubmit}>Submit</button>
