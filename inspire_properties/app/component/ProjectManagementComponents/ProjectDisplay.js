@@ -220,52 +220,39 @@ function updateDateSpent(projectID, date, hours, money,employeeIndex) {
             return project;
     })
     setProjectList(updatedProjectListReturn);
-    
+    updateProjectSpent(projectID,updatedProjectListReturn);
 
   }
 
 
   
 
-const updateProjectSpent = (projectID) => {
-    let totalHoursSpentOnProject = 0;
-    let totalMoneySpentOnProject = 0;
-    let totalExpectedHours = 0; // Initialize total expected hours
   
-    setProjectList((prevProjectList) =>
-      prevProjectList.map((project, index) => {
-        if (projectID === project.id) {
-          const projectIndex = index;
-          project.data.dates.forEach((date) => {
-            if (date.spentHours !== null && date.spentHours !== undefined) {
-              totalHoursSpentOnProject += date.spentHours;
-            }
-            if (date.spentMoney !== null && date.spentMoney !== undefined) {
-              totalMoneySpentOnProject += date.spentMoney;
-            }
-          });
-          // Calculate total expected hours
-          totalExpectedHours = project.data.dates.reduce((total, date) => {
-            const dateExpectedHours = date.employee.reduce(
-              (dateTotal, employee) => dateTotal + parseInt(employee.expectedHours || 0),
-              0
-            );
-            return total + dateExpectedHours;
-          }, 0);
-  
-          const newData = {
-            ...project.data,
-            totalMoneySpent: totalMoneySpentOnProject,
-            totalHoursSpent: totalHoursSpentOnProject,
-            expectedHours: totalExpectedHours, // Set the total expected hours
-          };
-  
-          return { ...project, data: newData };
+
+const updateProjectSpent = (projectID, ProjectT) => {
+    const tempProjectList = ProjectT.map((proj) =>{
+        console.log(proj)
+        if(proj.id === projectID ){
+            const projectHoursSpent = proj.data.dates.reduce(
+                (total,projCost)=>{
+                    return total+projCost.totalDateHours;
+                },
+                0
+            )
+            const projectMoneySpent = proj.data.dates.reduce(
+                (total,projCost)=>{
+                    return total+projCost.totalDateMoney;
+                },
+                0
+            )
+            const returnProj = {...proj,data:{...proj.data,ProjectHourSpent:projectHoursSpent,ProjectMoneySpent:projectMoneySpent}}
+            return returnProj;
+
         }
+        return proj;
+    })
+    setProjectList(tempProjectList);
   
-        return project;
-      })
-    );
   };
 
 
@@ -277,7 +264,7 @@ const updateProjectSpent = (projectID) => {
          projectList.map((project) => (
                 <div key={project.id}
                 {...console.log(project)}
-                    className='mx-4 my-4 px-4 py-4 bg-white'
+                    className='mx-4 my-4 px-4 py-4 bg-white rounded-md'
                 >
                     <div className='text-4xl'>
                         {project?.data?.projectName}
@@ -323,17 +310,23 @@ const updateProjectSpent = (projectID) => {
                         <div className='flex flex-row justify-evenly'> 
                         <div className='flex flex-col'>
                             <div className='flex flex-row'> 
-                            <p>Expected Hours: </p>
-                                {`${project?.data?.totalHoursSpent}`}
+                            <p>Worked Hours: </p>
+                                {`${(project?.data?.ProjectHourSpent === undefined)?(0):(project?.data?.ProjectHourSpent)}`}
                             </div>
                             <div className='flex flex-row'> 
                             <p>Expected Hours: </p>
                                 {`${project?.data?.expectedHours}`}
                             </div>
                         </div>
-                        <div className='flex flex-row'> 
-                            <p>Expceted Budget: </p>
-                            {project?.data?.expectedBudget}
+                        <div className='flex flex-col'>
+                            <div className='flex flex-row'> 
+                            <p>Spent: </p>
+                                {`${(project?.data?.ProjectMoneySpent === undefined)?(0):(project?.data?.ProjectMoneySpent)}`}
+                            </div>
+                            <div className='flex flex-row'> 
+                                <p>Expceted Budget: </p>
+                                {project?.data?.expectedBudget}
+                            </div>
                         </div>
                     </div>
                 </div>
