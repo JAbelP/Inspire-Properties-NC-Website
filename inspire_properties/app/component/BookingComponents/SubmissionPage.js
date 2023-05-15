@@ -45,7 +45,6 @@ function SubmissionPage() {
     //       const temp = await response.json();
     //       return temp;
     //     } 
-    //     console.log(dbbTest(), " the call worked bby ")
     //     db = getDatabase();
     //     const clientRef = ref(db, '/Clients');
     //     onValue(clientRef, (snapshot) => {

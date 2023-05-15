@@ -14,7 +14,6 @@ function DateModal(props) {
     }
 
     function handleSubmit() {
-        console.log(props.alreadySelectedDates)
         if (props.alreadySelectedDates.find((date) => date === dateSelected)) {
             alert("This date already exists on this Project");
         } else {

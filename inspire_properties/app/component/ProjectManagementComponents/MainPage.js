@@ -8,24 +8,26 @@ function MainPage() {
   const [ employeeList, setEmployeelist] = useState();
 
   /**
-   * This use Effect gets the data from the database and populates the ProjectList
+   * populates projectList with data from database Project
    */
   useEffect(() => {
     async function fetchProjectData(){
       const response = await fetch('/api/databaseProject');
       const data = await response.json();
-      console.log(data, " Response from database")
       setProjectList(data);
 
     }
 
+    /**
+     * populates employee list with data from database employee
+     */
     async function fetchEmployeeData(){
       const response = await fetch('/api/databaseEmployee');
       const data = await response.json();
-      console.log(data," :EmployeeList");
       setEmployeelist(data);
 
     }
+
     fetchProjectData();
     fetchEmployeeData();
   }, [])

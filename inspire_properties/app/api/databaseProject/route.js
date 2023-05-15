@@ -9,8 +9,6 @@ import db from "../../firebaseConfig";
 export async function POST(req){
     const body = await req.text();
     const {projectName,projectLocation,expectedHours,expectedBudget} = JSON.parse(body);
-    console.log("Project Name: ",projectName," Project Location: ",projectLocation," Expceted Hours: ",expectedHours," Expected Budget: ",expectedBudget," Body: ", body);
-
     try{
     const temp = collection(db,'Projects');
     const docRef = await addDoc(temp,{
@@ -56,13 +54,11 @@ export async function GET(){
 export async function PUT(req){
     const body = await req.text();
     const {id,data} = JSON.parse(body);
-    console.log(data)
     try{
 
         const temp = collection(db,'Projects');
         const projectRef = doc(temp,id);
         await setDoc(projectRef, data);
-        console.log("Here")
         return new Response (`${body.id} has been updated with ${body.updatedData}`,{status:200})        
     }
     catch(error){

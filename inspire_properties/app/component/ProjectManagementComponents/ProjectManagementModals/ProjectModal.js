@@ -7,27 +7,52 @@ function ProjectModal(props) {
     const [projectExpectedHours, setProjectExpectedHours] = useState('');
     const [projectLocation, setProjectLocation] = useState('');
 
+    /**
+     * This closes the modal
+     */
     function handleCancel(){
         props.closeModal();
     }
 
-
+    /**
+     * updates the project Name
+     * @param {event} event 
+     */
     function handleProjectNameChange(event){
         setProjectName(event.target.value);
     }
-
+    /**
+     * updates the expected Budget
+     * @param {event} event 
+     */
     function handleProjectExpectedBudgetChange(event){
         setExpectedBudget(event.target.value)
     }
 
+    /**
+     * updates the project expected hours
+     * @param {event} event 
+     */
     function handleProjectExpectedHours(event){
         setProjectExpectedHours(event.target.value)
     }
 
+    /**
+     * updates project Location
+     * @param {event} event 
+     */
     function handleProjectLocation(event){
         setProjectLocation(event.target.value)
     }
 
+    /**
+     * updates the database and the local project list
+     * closes modal
+     * @param {string} projectName 
+     * @param {number} projectExpectedBudget 
+     * @param {number} projectExpectedHours 
+     * @param {string} projectLocation 
+     */
     async function updateProjectList(projectName,projectExpectedBudget,projectExpectedHours,projectLocation){
         const sendBody = {projectName,projectLocation,expectedHours:projectExpectedHours,expectedBudget:projectExpectedBudget,}
         const POSTed = await fetch('/api/databaseProject',{
@@ -36,16 +61,8 @@ function ProjectModal(props) {
         })
         const rGotted = await fetch('/api/databaseProject')
         const gotted = await rGotted.json();
-
-        console.log("Gotted",gotted);
-
-
         props.setProjectList(gotted);
         props.closeModal();
-
-        
-        //now I need to update the ProjectList        
-        //need to do the API call here to PUT the information
     }
 
 

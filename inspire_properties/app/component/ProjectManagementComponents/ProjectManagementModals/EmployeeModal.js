@@ -24,9 +24,7 @@ function EmployeeModal(props) {
             payType
           };
 
-          console.log(payType, " this is paytype")
 
-          console.log(JSON.stringify(sendBody), "this is sendBody")
       
           const submitEmployee = await fetch('/api/databaseEmployee',{
             method: 'POST',
@@ -55,7 +53,6 @@ function EmployeeModal(props) {
     }
 
     const handleEmployeePayTypeChange =(event) =>{
-        console.log("This is right so far")
         setPayType(event.target.value);
     }
   return (
