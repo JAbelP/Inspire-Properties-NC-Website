@@ -1,9 +1,15 @@
 import {getFireStore, collection, getDocs, addDoc,doc, setDoc} from "firebase/firestore";
 import db from "../../firebaseConfig";
 
+/**
+ * 
+ * @param {*} req 
+ * @returns 
+ */
 export async function POST(req){
     const body = await req.text();
     const {projectName,projectLocation,expectedHours,expectedBudget} = JSON.parse(body);
+    console.log("Project Name: ",projectName," Project Location: ",projectLocation," Expceted Hours: ",expectedHours," Expected Budget: ",expectedBudget," Body: ", body);
 
     try{
     const temp = collection(db,'Projects');
@@ -27,12 +33,10 @@ export async function POST(req){
 export async function GET(){
 
     try{
-    // const temp = collection(db,'Projects');
-    // const projectsSnapshot = await getDocs(temp);
-    // const projectlist = projectsSnapshot.docs.map(doc => ({id: doc.id, data: doc.data()}))
-    const projectlist =
-    [{"id":"8ohuYhPeL3H2BGEvnynK","data":{"projectLocation":"Inspire Properties","projectName":"Abel","expectedBudget":"36000","expectedHours":"1200000"}}]
-
+    const temp = collection(db,'Projects');
+    const projectsSnapshot = await getDocs(temp);
+    const projectlist = projectsSnapshot.docs.map(doc => ({id: doc.id, data: doc.data()}))
+    
 
     return new Response(JSON.stringify(projectlist),{
         status:200
@@ -44,7 +48,11 @@ export async function GET(){
         })
     }
 }
-
+/**
+ * 
+ * @param {body} req - This should have just the updated data  
+ * @returns response
+ */
 export async function PUT(req){
     const body = await req.text();
     try{

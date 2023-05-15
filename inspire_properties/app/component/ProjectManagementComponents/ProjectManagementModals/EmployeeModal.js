@@ -28,13 +28,13 @@ function EmployeeModal(props) {
 
           console.log(JSON.stringify(sendBody), "this is sendBody")
       
-          const submitEmployee = await fetch('/api/databaseEmployee',{
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(sendBody)
-          });
+        //   const submitEmployee = await fetch('/api/databaseEmployee',{
+        //     method: 'POST',
+        //     headers: {
+        //       'Content-Type': 'application/json'
+        //     },
+        //     body: JSON.stringify(sendBody)
+        //   });
       
           closeModal();
         } else {
@@ -57,9 +57,9 @@ function EmployeeModal(props) {
         setPayType(event.target.value);
     }
   return (
-        <div className={`${props.openModal ?("visible"):("hidden ")}  absolute top-1/3 left-1/3 text-lg w-96 `}>
-        <div className='bg-red-800 pl-4 text-2xl pb-2 rounded-t-lg '> Employee</div>
-        <div className='bg-gray-400  '>
+        <div className={`${props.isOpen ?("visible"):("hidden ")}  absolute top-1/3 left-1/3 text-lg w-96 `}>
+        <div className='bg-red-600 pl-4 text-left text-2xl pb-2 rounded-t-lg '> Employee</div>
+        <div className='bg-slate-200  '>
             <div className='flex flex-col gap-y-3 pt-3 pl-2'>
                 <div className='flex flex-row gap-x-3'>
                     <p>Name:</p>

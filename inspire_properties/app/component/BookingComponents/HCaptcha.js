@@ -4,7 +4,6 @@ import HCaptcha from '@hcaptcha/react-hcaptcha';
 
 
 function HCaptchaComponent({ onVerify }) {
-  console.log('im here')
     const handleVerify = (token) =>{
         onVerify(token);
     }

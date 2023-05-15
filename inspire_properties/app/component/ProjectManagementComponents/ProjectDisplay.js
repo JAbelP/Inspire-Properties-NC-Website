@@ -3,12 +3,8 @@ import React, {useEffect, useState} from 'react'
 import DateModal from "../ProjectManagementComponents/ProjectManagementModals/DateModal";
 import EmployeeTable from "../ProjectManagementComponents/EmployeeTable";
 
-function ProjectDisplay() {
-    const [ projectList, setProjectList ] = useState([
-        {"id":"8ohuYhPeL3H2BGEvnynK",
-        "data":{"projectLocation":"Inspire Properties","projectName":"Abel","expectedBudget":"36000",
-        "expectedHours":"1200000"}}
-    ]);
+function ProjectDisplay(props) {
+
 
     const [ employeeList, setEmployeelist ] = useState([{employeeName:"Abel", employeePayRate:17, payType:"Hourly"},{employeeName:"John", employeePayRate:7.25, payType:"Hourly"}])
 
@@ -17,19 +13,12 @@ function ProjectDisplay() {
     const [ selectedEmployeeOnDropDown, setSelectedEmployeeOnDropDown] = useState('')
     const [inputValue, setInputValue] = useState('');
 
-    // useEffect(() => {
-      
-    
-    //   const fetchingProjectList=  async() => {
-    //         const data = await fetch('api/databaseProject');
-    //         const json = await data.json();
-    //         setProjectList(json);
-    //   }
 
-    //   fetchingProjectList();
+    const setProjectList = async(projectList) =>{
+        props.setProjectList()
+        
 
-    // }, [])
-
+    }
     
     
     const addADate = (projectId) =>{
@@ -52,7 +41,7 @@ const addEmployeeToDate = (projectID, selectedDate) => {
     }
   
     // Create an updated project list by mapping through the project list
-    const updatedProjectList = projectList.map((project) => {
+    const updatedProjectList = props.projectList.map((project) => {
       // Find the project with the specified ID
       if (project.id === projectID) {
         // Create a copy of the project object to update it
@@ -88,20 +77,20 @@ const addEmployeeToDate = (projectID, selectedDate) => {
     });
   
     // Update the project list with the updated project list
-    setProjectList(updatedProjectList);
+    props.setProjectList(updatedProjectList);
     setSelectedEmployeeOnDropDown('')
   };
 
   
     const submitADate = (date) => {
         // Find the project with the matching ID
-        const projectIndex = projectList.findIndex((project) => project.id === selectedProjectId);
+        const projectIndex = props.projectList.findIndex((project) => project.id === selectedProjectId);
         if (projectIndex === -1) {
           return; // Project not found, do nothing
         }
       
         // Clone the project object to avoid mutating state directly
-        const updatedProject = { ...projectList[projectIndex] };
+        const updatedProject = { ...props.projectList[projectIndex] };
       
         // Initialize the 'dates' property as an empty array if it does not exist
         if (!updatedProject.data.dates) {
@@ -112,11 +101,11 @@ const addEmployeeToDate = (projectID, selectedDate) => {
         updatedProject.data.dates.push({date:date,employee:[],extraExpenses:[]});
       
         // Clone the project list and replace the updated project
-        const updatedProjectList = [...projectList];
+        const updatedProjectList = [...props.projectList];
         updatedProjectList[projectIndex] = updatedProject;
       
         // Update the project list state
-        setProjectList(updatedProjectList);
+        props.setProjectList(updatedProjectList);
         // Close the modal
         setOpenDateModal(false);
       };
@@ -139,14 +128,9 @@ const addEmployeeToDate = (projectID, selectedDate) => {
 
 
 function updateDateSpent(projectID, date, hours, money,employeeIndex) {
-    /**
-     * Goals
-     * this needs to iterate through each date within a given Project 
-     * add all the values together for each date 
-     */
 
     //Itterate through the Project list and if the ID matches that is the project we want.
-    const updatedProjectListReturn = projectList.map((project) =>{
+    const updatedProjectListReturn = props.projectList.map((project) =>{
 
             if(project.id === projectID){
                 //now that we have a matching project
@@ -157,6 +141,7 @@ function updateDateSpent(projectID, date, hours, money,employeeIndex) {
 
                 //I will then loop through each employee add that up 
                 const preUpdatedProjectReturn = project.data.dates.map((Date) =>{
+                    debugger;
                     if(Date.date === date){
                         let tempDate = null;
 
@@ -216,10 +201,9 @@ function updateDateSpent(projectID, date, hours, money,employeeIndex) {
             }
 
             //if it doesn't match the project ID just return it since it is a new updatedProjectList
-            console.log("This is project", project);
             return project;
     })
-    setProjectList(updatedProjectListReturn);
+    props.setProjectList(updatedProjectListReturn);
     updateProjectSpent(projectID,updatedProjectListReturn);
 
   }
@@ -235,7 +219,11 @@ const updateProjectSpent = (projectID, ProjectT) => {
         if(proj.id === projectID ){
             const projectHoursSpent = proj.data.dates.reduce(
                 (total,projCost)=>{
-                    return total+projCost.totalDateHours;
+                    if(projCost.totalDateHours !==undefined
+                        && projCost.totalDateHours !==NaN
+                        && projCost.totalDateHours !==null)
+                  {  return total+projCost.totalDateHours;}
+                  return total;
                 },
                 0
             )
@@ -251,7 +239,7 @@ const updateProjectSpent = (projectID, ProjectT) => {
         }
         return proj;
     })
-    setProjectList(tempProjectList);
+    props.setProjectList(tempProjectList);
   
   };
 
@@ -261,9 +249,8 @@ const updateProjectSpent = (projectID, ProjectT) => {
     <div>
         <div>
         {           
-         projectList.map((project) => (
+         props.projectList?.map((project) => (
                 <div key={project.id}
-                {...console.log(project)}
                     className='mx-4 my-4 px-4 py-4 bg-white rounded-md'
                 >
                     <div className='text-4xl'>
