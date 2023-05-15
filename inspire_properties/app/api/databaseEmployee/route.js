@@ -26,18 +26,9 @@ export async function POST(req){
 export async function GET(){
 
     try{
-    // const temp = collection(db,'Employee');
-    // const employeeSnapshot = await getDocs(temp);
-    // const employeelist = employeeSnapshot.docs.map(doc => ({id: doc.id, data: doc.data()}))
-
-    employeelist = {
-                    id:1234,
-                        data:{
-                            PayType:"Hourly",
-                            employeeName:"Abel",
-                            employeePayRate:17
-
-                            }}
+    const temp = collection(db,'Employees');
+    const employeeSnapshot = await getDocs(temp);
+    const employeelist = employeeSnapshot.docs.map(doc => ({id: doc.id, data: doc.data()}))
 
     return new Response(JSON.stringify(employeelist),{
         status:200

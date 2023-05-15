@@ -55,11 +55,14 @@ export async function GET(){
  */
 export async function PUT(req){
     const body = await req.text();
+    const {id,data} = JSON.parse(body);
+    console.log(data)
     try{
 
-        temp = collection(db,'Projects');
-        const projectRef = doc(temp,body.id);
-        await setDoc(projectRef, {data:body.updatedData});
+        const temp = collection(db,'Projects');
+        const projectRef = doc(temp,id);
+        await setDoc(projectRef, data);
+        console.log("Here")
         return new Response (`${body.id} has been updated with ${body.updatedData}`,{status:200})        
     }
     catch(error){

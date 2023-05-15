@@ -28,14 +28,16 @@ function EmployeeModal(props) {
 
           console.log(JSON.stringify(sendBody), "this is sendBody")
       
-        //   const submitEmployee = await fetch('/api/databaseEmployee',{
-        //     method: 'POST',
-        //     headers: {
-        //       'Content-Type': 'application/json'
-        //     },
-        //     body: JSON.stringify(sendBody)
-        //   });
-      
+          const submitEmployee = await fetch('/api/databaseEmployee',{
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(sendBody)
+          });
+          const newEmployeeList= await fetch('/api/databaseEmployee')
+          const data = await newEmployeeList.json();
+           props.setEmployeelist(data);
           closeModal();
         } else {
           alert(" please fill in the information ");

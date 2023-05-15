@@ -8,7 +8,7 @@ function EmployeeTable(props) {
 
   const handleInputChange = (event) => {
     const hours = parseFloat(event.target.value) || 0;
-    const money = (props.employee.employeePayRate * hours).toFixed(2);
+    const money = (props.employee.data.employeePayRate * hours).toFixed(2);
     setInputValue(hours);
     setTotalHoursSpent(hours);
     setTotalMoneySpent(money);
@@ -17,7 +17,7 @@ function EmployeeTable(props) {
 
   return (
     <div className='my-2 flex flex-row gap-x-8'>
-      <p>{props.employee.employeeName}</p>
+      <p>{props.employee.data.employeeName}</p>
       <input
         className='w-16 pl-3'
         placeholder='Hours'

@@ -51,6 +51,8 @@ function ManageHeader(props) {
         <EmployeeModal
           closeModal ={openEmployeeModalFunction}
           isOpen={openEmployeeModal}
+          employeeList={props.employeeList} 
+          setEmployeelist={props.setEmployeelist}
           />
 
     </div>

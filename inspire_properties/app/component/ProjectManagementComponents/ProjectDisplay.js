@@ -6,8 +6,6 @@ import EmployeeTable from "../ProjectManagementComponents/EmployeeTable";
 function ProjectDisplay(props) {
 
 
-    const [ employeeList, setEmployeelist ] = useState([{employeeName:"Abel", employeePayRate:17, payType:"Hourly"},{employeeName:"John", employeePayRate:7.25, payType:"Hourly"}])
-
     const [ openDateModal, setOpenDateModal ] = useState(false);
     const [ selectedProjectId, setSelectedProjectId] = useState('')
     const [ selectedEmployeeOnDropDown, setSelectedEmployeeOnDropDown] = useState('')
@@ -28,11 +26,17 @@ function ProjectDisplay(props) {
 
 
 
-
-// This function adds an employee to a specific date in a project
+/**
+ * adds employee to the data array of the project
+ * 
+ * 
+ * @param {string} projectID 
+ * @param {date} selectedDate 
+ * @returns 
+ */
 const addEmployeeToDate = (projectID, selectedDate) => {
     // Find the employee in the employee list based on the selected employee on the dropdown
-    const currEmployee = employeeList.find((employee) => employee.employeeName === selectedEmployeeOnDropDown);
+    const currEmployee = props.employeeList.find((employee) => employee.data.employeeName === selectedEmployeeOnDropDown);
   
     // If the selected employee is not found, log an error and return
     if (!currEmployee) {
@@ -41,7 +45,7 @@ const addEmployeeToDate = (projectID, selectedDate) => {
     }
   
     // Create an updated project list by mapping through the project list
-    const updatedProjectList = props.projectList.map((project) => {
+    const updatedProjectList = props.projectList.map( (project) => {
       // Find the project with the specified ID
       if (project.id === projectID) {
         // Create a copy of the project object to update it
@@ -67,22 +71,35 @@ const addEmployeeToDate = (projectID, selectedDate) => {
           console.log(`Date ${selectedDate} not found in project ${projectID}`);
           return project;
         }
-  
+        // update the database
+        putFunction(updatedProject);
         // Return the updated project object
         return updatedProject;
+        
       }
   
       // Return the project object as is if its ID doesn't match the specified ID
       return project;
     });
-  
     // Update the project list with the updated project list
     props.setProjectList(updatedProjectList);
     setSelectedEmployeeOnDropDown('')
   };
 
+  const putFunction = async(updatedProject) => {
+    const response = await fetch('/api/databaseProject', {
+      method: 'PUT',
+      body: JSON.stringify(updatedProject),
+    });
   
-    const submitADate = (date) => {
+    if (response.status === 200) {
+      return response.json();
+    } else {
+      throw new Error(`Error updating project: ${response.status}`);
+    }
+  };
+
+  const submitADate = (date) => {
         // Find the project with the matching ID
         const projectIndex = props.projectList.findIndex((project) => project.id === selectedProjectId);
         if (projectIndex === -1) {
@@ -108,12 +125,13 @@ const addEmployeeToDate = (projectID, selectedDate) => {
         props.setProjectList(updatedProjectList);
         // Close the modal
         setOpenDateModal(false);
-      };
-      const handleEmployeeDropDownChange = (event) => {
+  };
+
+  const handleEmployeeDropDownChange = (event) => {
         setSelectedEmployeeOnDropDown(event.target.value);
       
         // Find the employee in the employee list based on the selected employee on the dropdown
-        const currEmployee = employeeList.find((employee) => employee.employeeName === event.target.value);
+        const currEmployee = props.employeeList.find((employee) => employee.data.employeeName === event.target.value);
       
         // If the selected employee is not found, log an error and return
         if (!currEmployee) {
@@ -123,9 +141,7 @@ const addEmployeeToDate = (projectID, selectedDate) => {
       
         // Update the expected hours for the selected employee
         setInputValue(currEmployee.expectedHours || '');
-      };
-
-
+  };
 
 function updateDateSpent(projectID, date, hours, money,employeeIndex) {
 
@@ -141,7 +157,6 @@ function updateDateSpent(projectID, date, hours, money,employeeIndex) {
 
                 //I will then loop through each employee add that up 
                 const preUpdatedProjectReturn = project.data.dates.map((Date) =>{
-                    debugger;
                     if(Date.date === date){
                         let tempDate = null;
 
@@ -261,7 +276,7 @@ const updateProjectSpent = (projectID, ProjectT) => {
                             <div key={index} className='bg-gray-300 mb-2 pl-3 rounded-md'>
                                 <p>{date.date}</p>
                                 <div className='pl-4'>
-                                    {date.employee.map((employee, index) => (
+                                    {date?.employee?.map((employee, index) => (
                                         <div key={index}>
                                         <EmployeeTable employee = {employee} calculate={(hours,money)=>updateDateSpent(project.id,date.date,hours,money,index)}/>
                                         </div>
@@ -275,17 +290,12 @@ const updateProjectSpent = (projectID, ProjectT) => {
                                         className='ml-3 my-2'
                                         value={selectedEmployeeOnDropDown}
                                         onChange={handleEmployeeDropDownChange}
-
-                                        >
-                                        <option 
-                                            value={"select an employee"}
-                                            
-                                        > select an employee</option>
-                                        {employeeList.map((employee,index) => (
-                                            <option key={employee.employeeName} value={employee.employeeName}>
-                                                {employee.employeeName}
+                                    >
+                                        <option value={"select an employee"}> select an employee</option>
+                                        {Array.isArray(props.employeeList) && props.employeeList.map((employee, index) => (
+                                            <option key={employee.data.employeeName} value={employee.data.employeeName}>
+                                                {employee.data.employeeName}
                                             </option>
-
                                         ))}
                                     </select>
                                 </div>
