@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 
 function DateModal(props) {
+    // props: openModal closeModal onSubmit alreadySelectedDates setAlreadySelectedDates
     const [dateSelected, setDateSelected] = useState('');
 
     function handleDateSelectedChange(event){
@@ -8,13 +9,21 @@ function DateModal(props) {
     }
 
     function closeModal(){
+        props.setAlreadySelectedDates([])
         props.closeModal();
     }
 
-    function handleSubmit(){
-        props.onSubmit(dateSelected);
-        setDateSelected('')
-    }
+    function handleSubmit() {
+        console.log(props.alreadySelectedDates)
+        if (props.alreadySelectedDates.find((date) => date === dateSelected)) {
+            alert("This date already exists on this Project");
+        } else {
+            props.onSubmit(dateSelected);
+            setDateSelected('');
+            props.setAlreadySelectedDates([])
+        }
+      }
+      
 
   return (
     <div className={`${props.openModal ? ("visible"):("hidden")} absolute top-1/3 left-1/3 text-lg w-auto `}>
@@ -28,7 +37,7 @@ function DateModal(props) {
                         ></input>
                         <div className='flex flex-row justify-between   mt-2'>
                         <button className='bg-green-500 p-1 rounded-md
-                        ' onClick={() => props.onSubmit(dateSelected)} disabled={dateSelected? (false):(true)}> Submit</button>
+                        ' onClick={handleSubmit} disabled={dateSelected? (false):(true)}> Submit</button>
                         <button className='bg-red-500 p-1 rounded-md' 
                         onClick={closeModal}> Cancel</button>
 

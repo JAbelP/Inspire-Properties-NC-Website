@@ -1,6 +1,4 @@
 import React from 'react'
-import ProjectHeader from '../component/ProjectManagementComponents/Header'
-import ProjectDisplay from '../component/ProjectManagementComponents/ProjectDisplay'
 import MainPage from "../component/ProjectManagementComponents/MainPage";
 
 function ProjectManagementPage() {

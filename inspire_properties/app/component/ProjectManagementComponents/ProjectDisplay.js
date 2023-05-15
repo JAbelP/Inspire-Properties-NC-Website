@@ -4,12 +4,13 @@ import DateModal from "../ProjectManagementComponents/ProjectManagementModals/Da
 import EmployeeTable from "../ProjectManagementComponents/EmployeeTable";
 
 function ProjectDisplay(props) {
-
+  // props:projectList, setProjectList,employeeList, setEmployeeList
 
     const [ openDateModal, setOpenDateModal ] = useState(false);
     const [ selectedProjectId, setSelectedProjectId] = useState('')
     const [ selectedEmployeeOnDropDown, setSelectedEmployeeOnDropDown] = useState('')
     const [inputValue, setInputValue] = useState('');
+    const [ alreadySelectedDates,setAlreadySelectedDates ]=useState([])
 
 
     const setProjectList = async(projectList) =>{
@@ -19,11 +20,16 @@ function ProjectDisplay(props) {
     }
     
     
-    const addADate = (projectId) =>{
-        setSelectedProjectId(projectId)
-        setOpenDateModal(prevState => !prevState)
+    const addADate = (projectId) => {
+      setSelectedProjectId(projectId);
+      setOpenDateModal(prevState => !prevState);
+    
+      const project = props.projectList.find(project => project.id === projectId);
+      const datesAlreadySelected = project?.data?.dates?.map(date => date.date) || [];
+    
+      setAlreadySelectedDates(datesAlreadySelected);
     }
-
+    
 
 
 /**
@@ -223,11 +229,6 @@ function updateDateSpent(projectID, date, hours, money,employeeIndex) {
 
   }
 
-
-  
-
-  
-
 const updateProjectSpent = (projectID, ProjectT) => {
     const tempProjectList = ProjectT.map((proj) =>{
         console.log(proj)
@@ -293,7 +294,7 @@ const updateProjectSpent = (projectID, ProjectT) => {
                                     >
                                         <option value={"select an employee"}> select an employee</option>
                                         {Array.isArray(props.employeeList) && props.employeeList.map((employee, index) => (
-                                            <option key={employee.data.employeeName} value={employee.data.employeeName}>
+                                            <option key={employee.data.id} value={employee.data.employeeName}>
                                                 {employee.data.employeeName}
                                             </option>
                                         ))}
@@ -303,7 +304,7 @@ const updateProjectSpent = (projectID, ProjectT) => {
                             </div>
                         ))}
                         <button className='bg-green-600 p-1 rounded-md' onClick={() =>addADate(project.id)}> add a Date </button>
-                        <DateModal openModal={openDateModal} closeModal={() => setOpenDateModal(false)} onSubmit={submitADate}/>
+                        <DateModal openModal={openDateModal} closeModal={() => setOpenDateModal(false)} onSubmit={submitADate} alreadySelectedDates={alreadySelectedDates} setAlreadySelectedDates={setAlreadySelectedDates}/>
                         <div className='flex flex-row justify-evenly'> 
                         <div className='flex flex-col'>
                             <div className='flex flex-row'> 

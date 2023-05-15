@@ -5,10 +5,7 @@ import ProjectModal from '../ProjectManagementComponents/ProjectManagementModals
 import EmployeeModal from '../ProjectManagementComponents/ProjectManagementModals/EmployeeModal';
 
 function ManageHeader(props) {
-  // Props has 
-  // setProjectList
-  // &
-  // projectList
+  // Props: setProjectList, projectList
 
   //This opens the modals
   const [openProjectModal, setOpenProjectModal] = useState(false);
@@ -17,8 +14,6 @@ function ManageHeader(props) {
 
   /**
    * This updates the project list
-   * but it is worth noting that you might be PUTTING data
-   * or POSTING Data
    * @param {array} Data 
    */
   const updateProjectList =(Data)=>{
@@ -26,10 +21,16 @@ function ManageHeader(props) {
     props.setProjectList(Data);
   }
 
+  /**
+   * This opens the Project Modal 
+   */
   const openProjectModalFunction = () => {
     setOpenProjectModal(!openProjectModal);
   }
 
+  /**
+   * This opens the Employee Modal
+   */
   const openEmployeeModalFunction = () => {
     setOpenEmployeeModal(!openEmployeeModal)
   }
