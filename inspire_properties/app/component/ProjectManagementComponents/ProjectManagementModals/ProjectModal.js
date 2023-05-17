@@ -1,3 +1,4 @@
+"use client"
 import React, { useState } from 'react'
 
 function ProjectModal(props) {
@@ -6,26 +7,64 @@ function ProjectModal(props) {
     const [projectExpectedHours, setProjectExpectedHours] = useState('');
     const [projectLocation, setProjectLocation] = useState('');
 
+    /**
+     * This closes the modal
+     */
     function handleCancel(){
-        props.handleModalCancel();
+        props.closeModal();
     }
 
-
+    /**
+     * updates the project Name
+     * @param {event} event 
+     */
     function handleProjectNameChange(event){
         setProjectName(event.target.value);
     }
-
+    /**
+     * updates the expected Budget
+     * @param {event} event 
+     */
     function handleProjectExpectedBudgetChange(event){
         setExpectedBudget(event.target.value)
     }
 
+    /**
+     * updates the project expected hours
+     * @param {event} event 
+     */
     function handleProjectExpectedHours(event){
         setProjectExpectedHours(event.target.value)
     }
 
+    /**
+     * updates project Location
+     * @param {event} event 
+     */
     function handleProjectLocation(event){
         setProjectLocation(event.target.value)
     }
+
+    /**
+     * updates the database and the local project list
+     * closes modal
+     * @param {string} projectName 
+     * @param {number} projectExpectedBudget 
+     * @param {number} projectExpectedHours 
+     * @param {string} projectLocation 
+     */
+    async function updateProjectList(projectName,projectExpectedBudget,projectExpectedHours,projectLocation){
+        const sendBody = {projectName,projectLocation,expectedHours:projectExpectedHours,expectedBudget:projectExpectedBudget,}
+        const POSTed = await fetch('/api/databaseProject',{
+            method:'POST',
+            body:JSON.stringify(sendBody)
+        })
+        const rGotted = await fetch('/api/databaseProject')
+        const gotted = await rGotted.json();
+        props.setProjectList(gotted);
+        props.closeModal();
+    }
+
 
   return (
     <div className={`w-fit absolute bottom-1/3 left-1/3 ${props.isOpen ?("visible"):("hidden")}  `}>
@@ -89,6 +128,7 @@ function ProjectModal(props) {
             </div>
             <div className=' flex  justify-between mx-4 pb-3'>
                 <button 
+                    onClick={()=>updateProjectList(projectName,projectExpectedBudget,projectExpectedHours,projectLocation)}
                     className='bg-greenLogo p-1 rounded-md'
                     >
                          Submit

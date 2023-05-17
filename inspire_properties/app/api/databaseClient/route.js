@@ -42,7 +42,6 @@
         
 //         // Access the databaseData object here and do what you need to do with it
 //         console.log(databaseData, "   This is from Fire base");
-//         console.log(body, " this is from the body");
 
 
 //         if (databaseData !== null) {
@@ -145,11 +144,9 @@ import db from "../../firebaseConfig"
 
 export async function POST(req, res) {
   const body = await req.text();
-  // console.log(body,"This is the body");
   const { name, email, phone, address, dateAndTime, services } = JSON.parse(body);
   const databaseDataResponse = await GET();
   const databaseData = await databaseDataResponse.json();
-  console.log(databaseData, " This is database Data");
   const isItAPut = databaseData.filter((databaseEntry) =>(
        databaseEntry.data?.email === email && databaseEntry.data.phone === phone ||
         databaseEntry.data?.email === email && databaseEntry.data.address === address ||
