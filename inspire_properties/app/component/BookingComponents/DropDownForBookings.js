@@ -5,6 +5,7 @@ import TextBox from "./MoreInformationBooking";
 function DropdownMenu( props ) {
     const [isOpen, setIsOpen] = useState(false);
     const [selectedService, setSelectedService] = useState(props.selectedService);
+    const [addText, setAddText] = useState('');
     
    //updates the selected service
     useEffect(() => {
@@ -82,7 +83,10 @@ function DropdownMenu( props ) {
             ))}
           </div>
         </div>
-        <TextBox/>
+        <TextBox
+          addText={addText}
+          setAddText={setAddText}
+        />
       </div>
     );
   }
