@@ -22,6 +22,7 @@ function SubmissionPage() {
     const [ clientServicesAmount, setClientServicesAmount ] = useState(['-----Please Select a Service-----']);
     const [dataBasedata, setDataBasedata] = useState([]);
     const [isHuman, setIsHuman] = useState(false);
+    const [ successfulButtonSubmit, setSuccessfulButtonSubmit] = useState(true);
     const router = useRouter();
 
     let db = null
@@ -45,7 +46,6 @@ function SubmissionPage() {
     //       const temp = await response.json();
     //       return temp;
     //     } 
-    //     console.log(dbbTest(), " the call worked bby ")
     //     db = getDatabase();
     //     const clientRef = ref(db, '/Clients');
     //     onValue(clientRef, (snapshot) => {
@@ -62,9 +62,6 @@ function SubmissionPage() {
     // THIS WAS CODE HOW I USED TO DO IT BEFORE API ROUTES THIS IS A BAD EXAMPLE
 
 
-    useEffect(() => {
-      console.log('isHuman:', isHuman);
-    }, [isHuman]);
 
     /**
      * token to verify if human
@@ -156,6 +153,14 @@ function SubmissionPage() {
         setClientServicesAmount(updatedServices)
     }
 
+    const canSubmitBeClicked = () =>{
+      //it should be clickable if humanVerify is true and 
+      if(isHuman && successfulButtonSubmit){
+        setSuccessfulButtonSubmit(false);
+        return true;
+      }
+      return false;
+    }
     /**
      * validates if all inputs where filled in.
      * @returns null
@@ -255,7 +260,7 @@ function SubmissionPage() {
 
 
 
-    /**
+     /**
      *  Write to real time firebase database.
      * 
      * @param {string} name 
@@ -266,7 +271,7 @@ function SubmissionPage() {
      * @param {dateTime} dateAndtime 
      * 
      * 
-     */
+     **/
     const writeData = async (name, email, phone, address, services, dateAndTime = new Date()) => {
       // If dateAndTime is a string, convert it to a Date object
       if (typeof dateAndTime === 'string') {
@@ -301,7 +306,7 @@ function SubmissionPage() {
           });
 
           if (response.ok){
-            console.log('Email sent Successfully');
+            console.log('Wrote to Database Successfully');
           } else{
             console.error('Failed writing to Database');
           }
@@ -354,7 +359,7 @@ function SubmissionPage() {
                 ))}
 
             <HCaptchaComponent onVerify={handleHcaptchaVerify} />
-            <button className='bg-greenLogo p-4 m-4' onClick={handleSubmit} disabled={(isHuman?(false):(true))}> submit </button>
+            <button className='bg-greenLogo p-4 m-4' onClick={handleSubmit} disabled={(canSubmitBeClicked?(false):(true))}> submit </button>
             </div>
         </div>
     )
