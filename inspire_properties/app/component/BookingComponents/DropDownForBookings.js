@@ -18,13 +18,6 @@ function DropdownMenu( props ) {
       setIsOpen((prevState) => !prevState);
     }
   
-    /**
-     * function goes back to the parent (SubmissionPage)
-     * @param {array} temp 
-     */
-    function changeServiceAtIndex(temp){
-      props.changeServiceAtIndex(temp)
-    }
 
     /**
      * selects current service 
@@ -35,7 +28,7 @@ function DropdownMenu( props ) {
       setIsOpen(false); // Close the dropdown after selecting a service
       const tempArray = props.clientServicesAmount;
       tempArray[props.index] = service;
-      changeServiceAtIndex(tempArray)
+      props.changeServiceAtIndex(tempArray)
     }
   
     return (

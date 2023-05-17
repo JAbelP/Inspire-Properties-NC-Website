@@ -16,7 +16,7 @@ const handleMenuClick = () =>{
 
   return (
     <div>
-      <div className="flex flex-row justify-between items-start mt-10 sm:pr-10 text-2xl text-black bg-white h-25">
+      <div className="flex flex-row justify-between items-start pt-8 sm:pr-10 text-2xl text-black bg-white h-25">
     {/* ----------------LOGO-------------------------- */}
         <div>
           <Link href={"/"}>
@@ -52,13 +52,12 @@ const handleMenuClick = () =>{
     {/* ------------------------- Full Sized Header-------------------- */}
 
       </div>
-      <div className="absolute top-[3.5rem] visible lg:invisible" style={{right: "1.5rem",top:"2"}}>
+      <div className="absolute top-[3.5rem] visible lg:invisible" style={{right: "1.5rem",top:"38px"}}>
         <button onClick={handleMenuClick}>
           <Hamburger />
         </button>
       </div>
 
-\
 
         {/* ---------------------------- tray  ------------------------ */}
       <div className={`${menuOpen ?("visible"):("hidden ")} overflow-hidden overflow-x-hidden ` }>

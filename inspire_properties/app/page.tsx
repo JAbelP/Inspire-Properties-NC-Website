@@ -19,7 +19,7 @@ export default function Home() {
   ]
 
   return (
-    <body className='bg-white min-h-screen flex flex-col'>
+    <div className='bg-white min-h-screen flex flex-col'>
       <MyHeader/>
       <main className='flex-grow'>
       <div>
@@ -30,8 +30,9 @@ export default function Home() {
       </main>
       <footer>
         <Myfooter/>
+        hello world
       </footer>
-    </body>
+    </div>
 
     )
 }

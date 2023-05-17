@@ -22,6 +22,7 @@ function SubmissionPage() {
     const [ clientServicesAmount, setClientServicesAmount ] = useState(['-----Please Select a Service-----']);
     const [dataBasedata, setDataBasedata] = useState([]);
     const [isHuman, setIsHuman] = useState(false);
+    const [ successfulButtonSubmit, setSuccessfulButtonSubmit] = useState(true);
     const router = useRouter();
 
     let db = null
@@ -152,6 +153,14 @@ function SubmissionPage() {
         setClientServicesAmount(updatedServices)
     }
 
+    const canSubmitBeClicked = () =>{
+      //it should be clickable if humanVerify is true and 
+      if(isHuman && successfulButtonSubmit){
+        setSuccessfulButtonSubmit(false);
+        return true;
+      }
+      return false;
+    }
     /**
      * validates if all inputs where filled in.
      * @returns null
@@ -350,7 +359,7 @@ function SubmissionPage() {
                 ))}
 
             <HCaptchaComponent onVerify={handleHcaptchaVerify} />
-            <button className='bg-greenLogo p-4 m-4' onClick={handleSubmit} disabled={(isHuman?(false):(true))}> submit </button>
+            <button className='bg-greenLogo p-4 m-4' onClick={handleSubmit} disabled={(canSubmitBeClicked?(false):(true))}> submit </button>
             </div>
         </div>
     )

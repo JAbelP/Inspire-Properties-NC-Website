@@ -6,7 +6,7 @@ export default function Book() {
   
 
   return (
-    <body className='bg-white min-h-screen flex flex-col'>
+    <div  className='bg-gray-600 min-h-screen flex flex-col'>
       <MyHeader/>
       <main className='flex-grow'>
         <div>
@@ -16,7 +16,6 @@ export default function Book() {
       <footer>
         <Myfooter/>
       </footer>
-    </body>
-
+      </div>
     )
 }
