@@ -19,7 +19,8 @@ function SubmissionPage() {
     const [ clientAddress, setClientAddress ] = useState('');
     const [ clientName, setClientName ] = useState('');
     const [ clientDate, setClientDate ] = useState(new Date());
-    const [ clientServicesAmount, setClientServicesAmount ] = useState(['-----Please Select a Service-----']);
+    const [ , setClientServicesAmount ] = useState(['-----Please Select a Service-----']);
+    const [ clientNewServiceAmount,setNewServiceAmount ] = useState([{Service:'-----Please Select a Service-----',AdditionalInfo:""}])
     const [dataBasedata, setDataBasedata] = useState([]);
     const [isHuman, setIsHuman] = useState(false);
     const [ successfulButtonSubmit, setSuccessfulButtonSubmit] = useState(true);
@@ -128,7 +129,7 @@ function SubmissionPage() {
      * add a service component
      */
     const addServiceButton = () => {
-        let tempService = clientServicesAmount
+        let tempService = clientNewServiceAmount.Service
         tempService = [...tempService,"-----Please Select a Service-----"]
         setClientServicesAmount(tempService);
     }
@@ -148,7 +149,7 @@ function SubmissionPage() {
      */
     const deleteServiceButton = (index) => {
         // Make a copy of the current services array in state
-        const updatedServices = [...clientServicesAmount];
+        const updatedServices = [...clientNewServiceAmount.Service];
         updatedServices.splice(index,1)
         setClientServicesAmount(updatedServices)
     }
@@ -195,12 +196,12 @@ function SubmissionPage() {
         //This needs to be fixed to take in the name and date.
         if(clientDate === undefined){
 
-        writeData(clientName,clientEmail,clientPhone,clientAddress,clientServicesAmount);
-        sendEmail(clientName,clientEmail,clientPhone,clientAddress, clientServicesAmount)
+        writeData(clientName,clientEmail,clientPhone,clientAddress,clientNewServiceAmount.Service);
+        sendEmail(clientName,clientEmail,clientPhone,clientAddress, clientNewServiceAmount.Service)
       }
       else{
-        writeData(clientName,clientEmail,clientPhone,clientAddress,clientServicesAmount,clientDate);
-        sendEmail(clientName,clientEmail,clientPhone,clientAddress, clientServicesAmount,clientDate)
+        writeData(clientName,clientEmail,clientPhone,clientAddress,clientNewServiceAmount.Service,clientDate);
+        sendEmail(clientName,clientEmail,clientPhone,clientAddress, clientNewServiceAmount.Service,clientDate)
       }
         return (
             
@@ -338,13 +339,13 @@ function SubmissionPage() {
                 <DateInput handleDate={handleClientDate} />
               </div>
                 </div>
-                {clientServicesAmount.map((service, index) => (
+                {clientNewServiceAmount.Service.map((service, index) => (
                     <div key={`service-${index} `}>
                     <div className='flex flex-col items-center'>
-                        <DropdownMenu selectedService={service} services={servicesWeOffer} index={index} clientServicesAmount={clientServicesAmount} changeServiceAtIndex={changeServiceAtIndex} />
+                        <DropdownMenu selectedService={service} services={servicesWeOffer} index={index} clientServicesAmount={clientNewServiceAmount.Service} changeServiceAtIndex={changeServiceAtIndex} />
                     </div>                        
                         <div className='flex'>
-                            {index === (clientServicesAmount.length - 1) && (
+                            {index === (clientNewServiceAmount.Service.length - 1) && (
                                 <button className='bg-greenLogo p-3' onClick={addServiceButton}> Add a service </button>
                             )}
                             {   index !== 0 &&
