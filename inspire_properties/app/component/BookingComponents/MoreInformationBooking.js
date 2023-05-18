@@ -1,13 +1,19 @@
 "use client";
-
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 function TextBox(props) {
-  // props addText setAddText
+  const [selectedServiceAdd, setSelectedServiceAdd] = useState('');
 
+  useEffect(() => {
+    setSelectedServiceAdd(props.selectedServiceAndAdd.AdditionalInfo);
+    console.log("More Information Use Effect: ", props.selectedServiceAndAdd);
+  }, [props.selectedServiceAndAdd.AdditionalInfo]);
 
   function handleChange(event) {
-    props.setAddText(event.target.value);
+    setSelectedServiceAdd(event.target.value);
+    const tempArray = { ...props.selectedServiceAndAdd };
+    tempArray.AdditionalInfo = event.target.value;
+    props.changeServiceAtIndex(tempArray);
   }
 
   return (
@@ -19,7 +25,7 @@ function TextBox(props) {
         id="text"
         className="border border-gray-400 px-3 py-2 w-auto h-32 rounded-md mb-4 focus:outline-none focus:border-indigo-500"
         placeholder="Enter your text"
-        value={props.addText}
+        value={selectedServiceAdd}
         onChange={handleChange}
       />
     </div>
