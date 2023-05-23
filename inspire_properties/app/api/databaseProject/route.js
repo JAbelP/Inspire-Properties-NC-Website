@@ -1,5 +1,5 @@
 import {getFireStore, collection, getDocs, addDoc,doc, setDoc} from "firebase/firestore";
-import db from "../../firebaseConfig";
+import {db} from "../../firebaseConfig";
 
 /**
  * 
