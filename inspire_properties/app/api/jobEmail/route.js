@@ -5,8 +5,8 @@ export async function POST(request) {
   try {
 
     
-    const body = await request.json(); // Parse request body as JSON
 
+    console.log(body.services);
 
     const message = `
       Name: ${body.name}\r\n
@@ -14,7 +14,7 @@ export async function POST(request) {
       Phone: ${body.phone}\r\n
       Address: ${body.address}\r\n
       Date: ${body.dateAndTime}\r\n
-      Services: ${body.services}
+      Services: ${JSON.stringify(body.services)}
     `;
 
     const data = {

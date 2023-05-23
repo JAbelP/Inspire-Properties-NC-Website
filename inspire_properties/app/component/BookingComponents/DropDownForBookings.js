@@ -28,7 +28,6 @@ function DropdownMenu( props ) {
       setSelectedServiceAndAdd(props.selectedServiceAndAdd);
       setSelectedServiceAdd(props.selectedServiceAndAdd.AdditionalInfo);
       setSelectedService(props.selectedServiceAndAdd.Service);
-      console.log("DropDown Use Effect: ",props.selectedServiceAndAdd)
     }, 
         //Whenever the Top most layer updates please do ::A1
         [props.clientNewServiceAmount]);

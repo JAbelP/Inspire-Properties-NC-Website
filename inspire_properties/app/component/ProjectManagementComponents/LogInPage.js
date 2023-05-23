@@ -24,7 +24,6 @@ function LoginPage(){
 
     const handleSignup = async () => {
         try{
-            debugger;
             await createUserWithEmailAndPassword(auth, email, password);
             //clear the input fields after successful signup
             setEmail('');

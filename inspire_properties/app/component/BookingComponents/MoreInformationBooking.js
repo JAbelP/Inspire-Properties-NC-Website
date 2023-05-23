@@ -6,7 +6,6 @@ function TextBox(props) {
 
   useEffect(() => {
     setSelectedServiceAdd(props.selectedServiceAndAdd.AdditionalInfo);
-    console.log("More Information Use Effect: ", props.selectedServiceAndAdd);
   }, [props.selectedServiceAndAdd.AdditionalInfo]);
 
   function handleChange(event) {
