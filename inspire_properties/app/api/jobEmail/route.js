@@ -31,7 +31,8 @@ export async function POST(request) {
     });
   } catch (error) {
     console.error('Error parsing request body:', error);
-    return new Response('Error parsing request body', {
+
+    return new Response(`Error parsing request body ${error}`, {
       status: 500
     });
   }
