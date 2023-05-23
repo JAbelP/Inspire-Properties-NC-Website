@@ -40,12 +40,12 @@ const handleMenuClick = () =>{
                   <HeaderButton label={"Book Us"} />
                 </Link>
               </div>
-              <div>
+              {/* <div>
                 <HeaderButton label={"Our Services"} />
               </div>
               <div>
                 <HeaderButton label={"Finance"} />
-              </div>
+              </div> */}
             </div>
           </div>
       </div>
