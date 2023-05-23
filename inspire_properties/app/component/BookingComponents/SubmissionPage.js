@@ -19,7 +19,8 @@ function SubmissionPage() {
     const [ clientAddress, setClientAddress ] = useState('');
     const [ clientName, setClientName ] = useState('');
     const [ clientDate, setClientDate ] = useState(new Date());
-    const [ clientServicesAmount, setClientServicesAmount ] = useState(['-----Please Select a Service-----']);
+    const [ , setClientServicesAmount ] = useState(['-----Please Select a Service-----']);
+    const [ clientNewServiceAmount,setClientNewServiceAmount ] = useState([{Service:'-----Please Select a Service-----',AdditionalInfo:""}])
     const [dataBasedata, setDataBasedata] = useState([]);
     const [isHuman, setIsHuman] = useState(false);
     const [ successfulButtonSubmit, setSuccessfulButtonSubmit] = useState(true);
@@ -128,9 +129,9 @@ function SubmissionPage() {
      * add a service component
      */
     const addServiceButton = () => {
-        let tempService = clientServicesAmount
-        tempService = [...tempService,"-----Please Select a Service-----"]
-        setClientServicesAmount(tempService);
+        let tempService = clientNewServiceAmount
+        tempService = [...tempService,{Service:'-----Please Select a Service-----',AdditionalInfo:""}]
+        setClientNewServiceAmount(tempService);
     }
 
     /**
@@ -138,8 +139,10 @@ function SubmissionPage() {
      * replaces the service at the index
      * @param {array} temp 
      */
-    const changeServiceAtIndex = (temp) =>{
-        setClientServicesAmount(temp)
+    const changeServiceAtIndex = (index,temp) =>{
+      let tempList = [...clientNewServiceAmount]
+      tempList[index] = temp
+      setClientNewServiceAmount(tempList)
     }
 
     /**
@@ -148,9 +151,9 @@ function SubmissionPage() {
      */
     const deleteServiceButton = (index) => {
         // Make a copy of the current services array in state
-        const updatedServices = [...clientServicesAmount];
+        const updatedServices = [...clientNewServiceAmount];
         updatedServices.splice(index,1)
-        setClientServicesAmount(updatedServices)
+        setClientNewServiceAmount(updatedServices)
     }
 
     const canSubmitBeClicked = () =>{
@@ -195,12 +198,12 @@ function SubmissionPage() {
         //This needs to be fixed to take in the name and date.
         if(clientDate === undefined){
 
-        writeData(clientName,clientEmail,clientPhone,clientAddress,clientServicesAmount);
-        sendEmail(clientName,clientEmail,clientPhone,clientAddress, clientServicesAmount)
+        writeData(clientName,clientEmail,clientPhone,clientAddress,clientNewServiceAmount);
+        sendEmail(clientName,clientEmail,clientPhone,clientAddress, clientNewServiceAmount)
       }
       else{
-        writeData(clientName,clientEmail,clientPhone,clientAddress,clientServicesAmount,clientDate);
-        sendEmail(clientName,clientEmail,clientPhone,clientAddress, clientServicesAmount,clientDate)
+        writeData(clientName,clientEmail,clientPhone,clientAddress,clientNewServiceAmount,clientDate);
+        sendEmail(clientName,clientEmail,clientPhone,clientAddress, clientNewServiceAmount,clientDate)
       }
         return (
             
@@ -338,13 +341,13 @@ function SubmissionPage() {
                 <DateInput handleDate={handleClientDate} />
               </div>
                 </div>
-                {clientServicesAmount.map((service, index) => (
+                {clientNewServiceAmount?.map((serviceAndAdd, index) => (
                     <div key={`service-${index} `}>
                     <div className='flex flex-col items-center'>
-                        <DropdownMenu selectedService={service} services={servicesWeOffer} index={index} clientServicesAmount={clientServicesAmount} changeServiceAtIndex={changeServiceAtIndex} />
+                        <DropdownMenu clientNewServiceAmount={clientNewServiceAmount} selectedServiceAndAdd={serviceAndAdd} services={servicesWeOffer} index={index}  changeServiceAtIndex={(temp)=>changeServiceAtIndex(index,temp)} />
                     </div>                        
                         <div className='flex'>
-                            {index === (clientServicesAmount.length - 1) && (
+                            {index === (clientNewServiceAmount.length - 1) && (
                                 <button className='bg-greenLogo p-3' onClick={addServiceButton}> Add a service </button>
                             )}
                             {   index !== 0 &&

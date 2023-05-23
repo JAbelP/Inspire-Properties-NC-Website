@@ -37,7 +37,6 @@ function ProjectDisplay(props) {
  * @returns 
  */
 const addEmployeeToDate = (projectID, selectedDate,selectedEmployeeOnDropDown) => {
-  debugger;
     // Find the employee in the employee list based on the selected employee on the dropdown
     const currEmployee = props.employeeList.find((employee) => employee.data.employeeName === selectedEmployeeOnDropDown);
   

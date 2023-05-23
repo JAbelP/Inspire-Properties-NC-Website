@@ -3,13 +3,38 @@ import { useState, useEffect  } from "react";
 import TextBox from "./MoreInformationBooking";
 
 function DropdownMenu( props ) {
+  //props
+  
+  //selectedService
+  //selectedServiceAndAdd
+  //selectedServiceAndAdd.Service
+  //selectedServiceAndAdd.AdditionalInfo
+
+  //clientServicesAmount
+  //index
+  //changeServiceAtIndex
+  //services
+  //selectedService={serviceAndAdd.Service}
+  //selectedServiceAndAdd={serviceAndAdd}
     const [isOpen, setIsOpen] = useState(false);
-    const [selectedService, setSelectedService] = useState(props.selectedService);
+    const [selectedServiceAndAdd, setSelectedServiceAndAdd] = useState(props.selectedServiceAndAdd);
+    const [selectedService, setSelectedService] = useState(props.selectedServiceAndAdd.Service);
+    const [selectedServiceAdd, setSelectedServiceAdd] = useState(props.selectedServiceAndAdd.AdditionalInfo);
+    const [addText, setAddText] = useState('');
     
    //updates the selected service
     useEffect(() => {
-      setSelectedService(props.selectedService);
-    }, [props.selectedService]);
+      //set this particular value equal to the parent components most's recent value ::A2
+      setSelectedServiceAndAdd(props.selectedServiceAndAdd);
+      setSelectedServiceAdd(props.selectedServiceAndAdd.AdditionalInfo);
+      setSelectedService(props.selectedServiceAndAdd.Service);
+      console.log("DropDown Use Effect: ",props.selectedServiceAndAdd)
+    }, 
+        //Whenever the Top most layer updates please do ::A1
+        [props.clientNewServiceAmount]);
+    useEffect(() =>{
+
+    },[])
     
     /**
      * toggles drop down
@@ -18,7 +43,11 @@ function DropdownMenu( props ) {
       setIsOpen((prevState) => !prevState);
     }
   
-
+    const passFunction=(message)=>{
+      let tempArray = props.selectedServiceAndAdd;
+      tempArray=message;
+      props.changeServiceAtIndex(tempArray);
+    }
     /**
      * selects current service 
      * @param {string} service 
@@ -26,8 +55,8 @@ function DropdownMenu( props ) {
     function handleSelectService(service) {
       setSelectedService(service);
       setIsOpen(false); // Close the dropdown after selecting a service
-      const tempArray = props.clientServicesAmount;
-      tempArray[props.index] = service;
+      const tempArray = props.selectedServiceAndAdd;
+      tempArray.Service = service;
       props.changeServiceAtIndex(tempArray)
     }
   
@@ -82,7 +111,11 @@ function DropdownMenu( props ) {
             ))}
           </div>
         </div>
-        <TextBox/>
+        <TextBox
+          selectedServiceAndAdd={selectedServiceAndAdd}
+          changeServiceAtIndex={passFunction}
+          clientNewServiceAmount={props.clientNewServiceAmount}
+        />
       </div>
     );
   }
