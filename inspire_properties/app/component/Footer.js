@@ -5,7 +5,8 @@ import {Facebook, Marker, Phone} from './icons'
 
 function MyFooter() {
   return (
-    <div className='bg-black flex flex-col gap-y-5 items-center pb-4 sm:flex-row sm:pt-5'>
+    <div className='bg-greenLogo h-full'>
+    <div className='bg-black flex flex-col gap-y-5 items-center pb-4 sm:flex-row sm:pt-5 h-max'>
         <div className=' flex flex-col items-center sm:w-1/3'>
             <Marker className="" />
             <p className='text-2xl text-center sm:px-40'>
@@ -31,6 +32,8 @@ function MyFooter() {
         <div className='place-self-start items-center sm:w-1/3 pl-28' >
                 More Information
         </div>
+    </div>
+
     </div>)
 }
 
