@@ -26,8 +26,8 @@ function DateModal(props) {
 
   return (
     <div className={`${props.openModal ? ("visible"):("hidden")} absolute top-1/3 left-1/3 text-lg w-auto `}>
-        <div className='bg-red-800 pl-4 text-2xl pb-2 rounded-t-lg '>Select a date</div>
-                <div className='bg-gray-400 h-auto px-4 pt-2 pb-3'>
+        <div className='bg-red-600  pl-4 text-2xl pb-2 rounded-t-lg text-white border-2 border-x-black border-t-black border-b-0'>Select a date</div>
+                <div className='bg-gray-300 h-auto px-4 pt-2 pb-3 border-2 border-x-black border-b-black border-t-0'>
                     <input
                         className = 'pl-2'
                         type = 'date'
@@ -35,9 +35,9 @@ function DateModal(props) {
                         onChange = {handleDateSelectedChange}
                         ></input>
                         <div className='flex flex-row justify-between   mt-2'>
-                        <button className='bg-green-500 p-1 rounded-md
+                        <button className='bg-greenLogo p-1 rounded-md
                         ' onClick={handleSubmit} disabled={dateSelected? (false):(true)}> Submit</button>
-                        <button className='bg-red-500 p-1 rounded-md' 
+                        <button className='bg-red-900 text-white p-1 rounded-md' 
                         onClick={closeModal}> Cancel</button>
 
                         </div>

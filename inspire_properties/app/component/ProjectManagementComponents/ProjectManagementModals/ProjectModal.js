@@ -37,6 +37,14 @@ function ProjectModal(props) {
      * This closes the modal
      */
     function handleCancel(){
+        setProjectName('');
+        setExpectedBudget('');
+        setProjectExpectedHours('');
+        setProjectLocation('');
+        setProjectNameFilled(true);
+        setProjectExpectedBudgetFilled(true);
+        setProjectExpectedHoursFilled(true);
+        setProjectLocationFilled(true);
         props.closeModal();
     }
 
