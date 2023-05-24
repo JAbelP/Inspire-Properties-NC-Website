@@ -68,10 +68,10 @@ function ProjectModal(props) {
 
   return (
     <div className={`w-fit absolute bottom-1/3 left-1/3 ${props.isOpen ?("visible"):("hidden")}  `}>
-        <div className='bg-red-600 w-full text-left pl-4 py-2 rounded-t-md'>
+        <div className='bg-red-600 w-full text-left pl-4 py-2 rounded-t-md border-2 border-x-black border-t-black border-b-0'>
             New Project
         </div>
-        <div className='bg-slate-200 text-black text-left'>
+        <div className='bg-gray-300 text-black text-left border-2 border-x-black border-b-black border-t-0'>
             <div className='py-2 pl-4 '>
                 <div className='flex flex-row'>
                     <label htmlFor='Project Name' className='mr-3 my-3'> Project name: </label>
