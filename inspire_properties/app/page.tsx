@@ -28,9 +28,8 @@ export default function Home() {
         </div>
       </div>
       </main>
-      <footer>
+      <footer className='inline-block'>
         <Myfooter/>
-        hello world
       </footer>
     </div>
 

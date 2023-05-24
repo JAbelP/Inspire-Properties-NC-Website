@@ -1,7 +1,7 @@
 "use client"
 import React, {useEffect, useState} from 'react'
-import DateModal from "../ProjectManagementComponents/ProjectManagementModals/DateModal";
-import EmployeeTable from "../ProjectManagementComponents/EmployeeTable";
+import DateModal from "../ProjectManagementModals/DateModal";
+import EmployeeTable from "./EmployeeTable";
 
 function ProjectDisplay(props) {
   // props:projectList, setProjectList,employeeList, setEmployeeList
@@ -94,6 +94,7 @@ const addEmployeeToDate = (projectID, selectedDate,selectedEmployeeOnDropDown) =
  * @returns 
  */
   const putFunction = async(updatedProject) => {
+    console.log("putFunction");
     const response = await fetch('/api/databaseProject', {
       method: 'PUT',
       body: JSON.stringify(updatedProject),
@@ -268,12 +269,12 @@ const updateProjectSpent = (projectID, ProjectT) => {
 
 
   return (
-    <div>
+    <div className='text-black'>
         <div>
         {           
          props.projectList?.map((project) => (
                 <div key={project.id}
-                    className='mx-4 my-4 px-4 py-4 bg-white rounded-md'
+                    className='mx-4 my-4 px-4 py-4 bg-slate-500 rounded-md border-4 border-black'
                 >
                     <div className='text-4xl'>
                         {project?.data?.projectName}

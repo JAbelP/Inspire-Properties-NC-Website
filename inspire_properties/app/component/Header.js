@@ -40,19 +40,19 @@ const handleMenuClick = () =>{
                   <HeaderButton label={"Book Us"} />
                 </Link>
               </div>
-              <div>
+              {/* <div>
                 <HeaderButton label={"Our Services"} />
               </div>
               <div>
                 <HeaderButton label={"Finance"} />
-              </div>
+              </div> */}
             </div>
           </div>
       </div>
     {/* ------------------------- Full Sized Header-------------------- */}
 
       </div>
-      <div className="absolute top-[3.5rem] visible lg:invisible" style={{right: "1.5rem",top:"38px"}}>
+      <div className="absolute top-[3.5rem] visible lg:invisible z-30" style={{right: "1.5rem",top:"38px"} }>
         <button onClick={handleMenuClick}>
           <Hamburger />
         </button>
@@ -60,9 +60,33 @@ const handleMenuClick = () =>{
 
 
         {/* ---------------------------- tray  ------------------------ */}
-      <div className={`${menuOpen ?("visible"):("hidden ")} overflow-hidden overflow-x-hidden ` }>
-          <div onClick={handleMenuClick} className={`${menuOpen ?("visible"):("hidden ")}  bg-gray-700 w-1/2 h-[85rem] opacity-75 absolute top-0 left-0 ${menuOpen ?("z-30"):("-z-10")}`} style={{ transition: "transform 0.5s ease-in-out", transform: `translateX(${menuOpen ? "0" : "-100%"})` }} />
-            <div className={`${menuOpen ?("visible"):("hidden ")} bg-green-100 text-black w-1/2 h-[85rem] absolute top-0 right-0  text-4xl pl-4 pt-10 flex-col flex-wrap ${menuOpen ?("z-30"):("-z-10")} `} style={{ transition: "transform 0.5s ease-in-out", transform: `translateX(${menuOpen ? "0" : "100%"})` }}>
+            <div className= {`fixed w-1/2 h-full bg-greenLogo right-0 top-0 duration-300 z-20 transition-transform transform ${menuOpen?("-translate-x-0"):("translate-x-full")} text-center text-5xl pt-36`}>
+              <ul>
+
+                <li className="pb-10">
+                  <Link href={"/"}>
+                    <p onClick={handleMenuClick}>Home</p>
+                  </Link>
+                </li>
+
+                <li>
+                  <Link href={"/Book"}>
+                    <p onClick={handleMenuClick}>Book Us</p>
+                  </Link>
+                </li>
+              </ul>
+            </div>
+            <div onClick={handleMenuClick} className={`fixed w-1/2 h-full bg-green-950 opacity-75 left-0 top-0 duration-300 z-20 transition-transform transform ${menuOpen?("translate-x-0"):("-translate-x-full")} text-center text-5xl pt-36`}>
+
+            </div>
+
+      {/* <div className={`${menuOpen ?("visible"):("hidden ")} overflow-hidden overflow-x-hidden ` }>
+
+          <div onClick={handleMenuClick} className={`${menuOpen ?("visible"):("hidden ")} 
+           bg-gray-700 w-1/2 opacity-75 fixed top-0 left-0 ${menuOpen ?("z-30"):("-z-10")}`} 
+           style={{ transition: "transform 0.5s ease-in-out", transform: `translateX(${menuOpen ? "0" : "-100%"})` }} />
+
+            <div className={`${menuOpen ?("visible"):("hidden ")} fixed bg-green-100 text-black w-1/2 h-screen absolute top-0 right-0  text-4xl pl-4 pt-10 flex-col flex-wrap ${menuOpen ?("z-30"):("-z-10")} `} style={{ transition: "transform 0.5s ease-in-out", transform: `translateX(${menuOpen ? "0" : "100%"})` }}>
               <Link href={"/"} className="block mb-4">
                 <p onClick={handleMenuClick}>
                   Home
@@ -74,7 +98,7 @@ const handleMenuClick = () =>{
                 </p>
               </Link>
             </div>
-      </div>
+      </div> */}
         {/* ---------------------------- tray  ------------------------ */}
 
     </div>
