@@ -306,6 +306,11 @@ const updateProjectSpent = (projectID, ProjectT) => {
                         ))}
                         <button className='bg-green-600 p-1 rounded-md' onClick={() =>addADate(project.id)}> add a Date </button>
                         <DateModal openModal={openDateModal} closeModal={() => setOpenDateModal(false)} onSubmit={submitADate} alreadySelectedDates={alreadySelectedDates} setAlreadySelectedDates={setAlreadySelectedDates}/>
+                        <div>
+                        <button className='bg-green-600 p-1 rounded-md mt-4'>
+                        PeePeePooPoo
+                        </button>
+                        </div>
                         <div className='flex flex-row justify-evenly'> 
                         <div className='flex flex-col'>
                             <div className='flex flex-row'> 
