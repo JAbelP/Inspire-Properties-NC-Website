@@ -108,7 +108,7 @@ function EmployeeModal(props) {
                      (<p className=' text-red-600 text-left text-xs border-2 
                     border-red-600 rounded-md
                     w-fit p-1
-                    '> please enter a Name</p>)}
+                    '> Please Enter a Name</p>)}
 
                 </>
 
@@ -130,7 +130,7 @@ function EmployeeModal(props) {
                      (<p className=' text-red-600 text-left text-xs border-2 
                     border-red-600 rounded-md
                     w-fit p-1
-                    '> please enter an Rate Of Pay</p>)}
+                    '> Please Enter a Rate Of Pay</p>)}
                 </>
 
                 <>
@@ -159,7 +159,7 @@ function EmployeeModal(props) {
                     '> please enter a Type of Pay</p>)}
                 </>
             </div>
-        <div className='flex flex-row justify-between mx-4 py-2 r'>
+        <div className='flex flex-row justify-between mx-4 py-2 '>
             <button className='bg-green-500 p-1 rounded-md' onClick={handleSubmit}>Submit</button>
             <button className='bg-red-900 p-1 rounded-md text-white' onClick={closeModal}>Cancel</button>
         </div>

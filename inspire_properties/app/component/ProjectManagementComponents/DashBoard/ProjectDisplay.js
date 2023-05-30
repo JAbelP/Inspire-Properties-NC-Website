@@ -1,6 +1,7 @@
 "use client"
 import React, {useEffect, useState} from 'react'
 import DateModal from "../ProjectManagementModals/DateModal";
+import ExpenseModal from "../ProjectManagementModals/ExpenseModal";
 import EmployeeTable from "./EmployeeComponents/EmployeeTable";
 import AddEmployeeComponent from "./EmployeeComponents/AddEmployeeComponent";
 
@@ -8,6 +9,9 @@ function ProjectDisplay(props) {
   // props:projectList, setProjectList,employeeList, setEmployeeList
 
     const [ openDateModal, setOpenDateModal ] = useState(false);
+    const [ openExpenseModal, setOpenExpenseModal ] = useState(false);
+
+
     const [ selectedProjectId, setSelectedProjectId] = useState('')
     const [inputValue, setInputValue] = useState('');
     const [ alreadySelectedDates,setAlreadySelectedDates ]=useState([])
@@ -18,6 +22,7 @@ function ProjectDisplay(props) {
      * @param {string} projectId 
      */
     const addADate = (projectId) => {
+      //[HUH?] Why am I selecting the Project Id? 
       setSelectedProjectId(projectId);
       setOpenDateModal(prevState => !prevState);
     
@@ -27,6 +32,10 @@ function ProjectDisplay(props) {
       setAlreadySelectedDates(datesAlreadySelected);
     }
     
+    const addAnExpense = () => {
+      setOpenExpenseModal(prevState =>!prevState);
+
+    }
 
 
 /**
@@ -307,9 +316,10 @@ const updateProjectSpent = (projectID, ProjectT) => {
                         <button className='bg-green-600 p-1 rounded-md' onClick={() =>addADate(project.id)}> add a Date </button>
                         <DateModal openModal={openDateModal} closeModal={() => setOpenDateModal(false)} onSubmit={submitADate} alreadySelectedDates={alreadySelectedDates} setAlreadySelectedDates={setAlreadySelectedDates}/>
                         <div>
-                        <button className='bg-green-600 p-1 rounded-md mt-4'>
-                        PeePeePooPoo
+                        <button className='bg-green-600 p-1 rounded-md mt-2' onClick={() =>addAnExpense()}>
+                        Add Expense
                         </button>
+                        <ExpenseModal/>
                         </div>
                         <div className='flex flex-row justify-evenly'> 
                         <div className='flex flex-col'>
