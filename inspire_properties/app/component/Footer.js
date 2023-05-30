@@ -63,7 +63,6 @@ function MyFooter() {
         </p>
         <p className='whitespace-pre-line'>120 Weather Street Suit D Youngsville NC 27596 </p>
         <div className='flex justify-center'>
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3226.4065584274927!2d-78.50076602445387!3d36.03478251047203!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89ac52c07418d279%3A0xbbdd4a97b59d562a!2s120%20Weathers%20St%2C%20Youngsville%2C%20NC%2027596!5e0!3m2!1sen!2sus!4v1684865974001!5m2!1sen!2sus" width="400" height="300" style={{border:0}} allowFullScreen="" loading="lazy" referrerPolicy="no-referrer-when-downgrade"></iframe>
         </div>
      </div>
      

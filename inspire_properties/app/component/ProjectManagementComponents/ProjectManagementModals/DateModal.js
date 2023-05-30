@@ -3,26 +3,40 @@ import React, { useState } from 'react'
 function DateModal(props) {
     // props: openModal closeModal onSubmit alreadySelectedDates setAlreadySelectedDates
     const [dateSelected, setDateSelected] = useState('');
+    // cosmetic useStates
+    const [ dateFilled, setDateFilled ] = useState(true);
 
     function handleDateSelectedChange(event){
         setDateSelected(event.target.value);
     }
 
     function closeModal(){
+        setDateFilled(true);
         props.setAlreadySelectedDates([])
         props.closeModal();
     }
 
     function handleSubmit() {
-        if (props.alreadySelectedDates.find((date) => date === dateSelected)) {
-            alert("This date already exists on this Project");
-        } else {
-            props.onSubmit(dateSelected);
-            setDateSelected('');
-            props.setAlreadySelectedDates([])
+        console.log("Date selected: ",dateSelected);
+        if(dateSelected === ''){
+            setDateFilled(false);
+        }
+        else
+        {
+            if (props.alreadySelectedDates.find((date) => date === dateSelected)) {
+                alert("This date already exists on this Project");
+            } else {
+                props.onSubmit(dateSelected);
+                setDateSelected('');
+                //TODO: this isn't changing the alreadySelectedDates? do we need this or do we need to add 
+                props.setAlreadySelectedDates([])
+            }
         }
       }
-      
+    
+    function handleDateClicked(){
+        setDateFilled(true);
+    }
 
   return (
     <div className={`${props.openModal ? ("visible"):("hidden")} absolute top-1/3 left-1/3 text-lg w-auto `}>
@@ -33,13 +47,20 @@ function DateModal(props) {
                         type = 'date'
                         value = {dateSelected}
                         onChange = {handleDateSelectedChange}
-                        ></input>
-                        <div className='flex flex-row justify-between   mt-2'>
-                        <button className='bg-greenLogo p-1 rounded-md
-                        ' onClick={handleSubmit} disabled={dateSelected? (false):(true)}> Submit</button>
-                        <button className='bg-red-900 text-white p-1 rounded-md' 
-                        onClick={closeModal}> Cancel</button>
+                        onClick = {handleDateClicked}
+                        ></input>{dateFilled? (""):(          
+                                          
+                                        <div className='mt-1 text-red-600  text-xs border-2 border-red-600 rounded-md
+                                            w-fit p-1'>
+                            Please Select a date
+                            </div>)}
 
+                        <div className='flex flex-row justify-between   mt-2'>
+                                <button className='bg-greenLogo p-1 rounded-md text-black
+                                ' onClick={handleSubmit} > Submit</button>
+                                <button className='bg-red-900 text-white p-1 rounded-md' 
+                                onClick={closeModal}> Cancel</button>
+                        
                         </div>
                 </div>
     </div>
