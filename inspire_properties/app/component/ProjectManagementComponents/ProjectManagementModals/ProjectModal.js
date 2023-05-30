@@ -7,10 +7,45 @@ function ProjectModal(props) {
     const [projectExpectedHours, setProjectExpectedHours] = useState('');
     const [projectLocation, setProjectLocation] = useState('');
 
+    //--------------------------Cosmetic States--------------------------//
+    const [ projectNameFilled, setProjectNameFilled ] = useState(true);
+    const [ projectExpectedBudgetFilled, setProjectExpectedBudgetFilled ] = useState(true);
+    const [ projectExpectedHoursFilled, setProjectExpectedHoursFilled ] = useState(true);
+    const [ projectLocationFilled, setProjectLocationFilled ] = useState(true);
+    //--------------------------Cosmetic States--------------------------//
+
+
+//--------------------------Cosmetic Functions--------------------------//
+
+
+    function handleProjectNameFilledClick(){
+        setProjectNameFilled(true);
+    }
+    function handleProjectExpectedBudgetFilledClick(){
+        setProjectExpectedBudgetFilled(true);
+    }
+    function handleProjectExpectedHoursFilledClick(){
+        setProjectExpectedHoursFilled(true);
+    }
+    function handleProjectLocationFilledClick(){
+        setProjectLocationFilled(true);
+    }
+
+//--------------------------Cosmetic Functions--------------------------//
+
+
     /**
      * This closes the modal
      */
     function handleCancel(){
+        setProjectName('');
+        setExpectedBudget('');
+        setProjectExpectedHours('');
+        setProjectLocation('');
+        setProjectNameFilled(true);
+        setProjectExpectedBudgetFilled(true);
+        setProjectExpectedHoursFilled(true);
+        setProjectLocationFilled(true);
         props.closeModal();
     }
 
@@ -54,6 +89,21 @@ function ProjectModal(props) {
      * @param {string} projectLocation 
      */
     async function updateProjectList(projectName,projectExpectedBudget,projectExpectedHours,projectLocation){
+        if(projectName === ''){
+            setProjectNameFilled(false);
+        }
+        if(projectExpectedBudget === ''){
+            setProjectExpectedBudgetFilled(false);
+        }
+        if(projectExpectedHours === ''){
+            setProjectExpectedHoursFilled(false);
+        }
+        if(projectLocation === ''){
+            setProjectLocationFilled(false);
+        }
+
+
+        if(projectName !=='' && projectExpectedBudget !=='' && projectExpectedHours !=='' && projectLocation !==''){
         const sendBody = {projectName,projectLocation,expectedHours:projectExpectedHours,expectedBudget:projectExpectedBudget,}
         const POSTed = await fetch('/api/databaseProject',{
             method:'POST',
@@ -64,6 +114,7 @@ function ProjectModal(props) {
         props.setProjectList(gotted);
         props.closeModal();
     }
+    }
 
 
   return (
@@ -73,6 +124,7 @@ function ProjectModal(props) {
         </div>
         <div className='bg-gray-300 text-black text-left border-2 border-x-black border-b-black border-t-0'>
             <div className='py-2 pl-4 '>
+                <>
                 <div className='flex flex-row'>
                     <label htmlFor='Project Name' className='mr-3 my-3'> Project name: </label>
                     <input
@@ -82,22 +134,39 @@ function ProjectModal(props) {
                         placeholder='Project Name'
                         value={projectName}
                         onChange={handleProjectNameChange}
+                        onClick={handleProjectNameFilledClick}
                     />
                 </div>
+                {   projectNameFilled ? (""):(         
+                        <p className=' text-red-600 text-left text-xs border-2 
+                        border-red-600 rounded-md
+                        w-fit p-1
+                    '> please enter a Project name</p>)}
 
+                </>
 
-                <div className='flex flex-row '>
-                    <label htmlFor='Expected Budget' className='mr-3 my-3 '> Expected Budget: </label>
-                    <input
-                        className='my-2 pl-3 mr-8'
-                        id='Expected Budget'
-                        type='number'
-                        placeholder='Expected Budget'
-                        value={projectExpectedBudget}
-                        onChange={handleProjectExpectedBudgetChange}
-                    />
-                </div>
+                <>
+                    <div className='flex flex-row '>
+                        <label htmlFor='Expected Budget' className='mr-3 my-3 '> Expected Budget: </label>
+                        <input
+                            className='my-2 pl-3 mr-8'
+                            id='Expected Budget'
+                            type='number'
+                            placeholder='Expected Budget'
+                            value={projectExpectedBudget}
+                            onChange={handleProjectExpectedBudgetChange}
+                            onClick={handleProjectExpectedBudgetFilledClick}
+                        />
+                    </div>
+                    { projectExpectedBudgetFilled?  (""):                  
+                     (<p className=' text-red-600 text-left text-xs border-2 
+                    border-red-600 rounded-md
+                    w-fit p-1
+                    '> please enter an Expected Budget</p>)}
 
+                </>
+
+                <>
                 <div className='flex flex-row'>
                     <label htmlFor='Expected Hours' className='mr-3 my-3'> Expected Hours: </label>
                     <input
@@ -107,10 +176,18 @@ function ProjectModal(props) {
                         placeholder='Expected Hours'
                         value={projectExpectedHours}
                         onChange={handleProjectExpectedHours}
+                        onClick={handleProjectExpectedHoursFilledClick}
                     />
                 </div>
+                {projectExpectedHoursFilled ? (""):(
+                <p className=' text-red-600 text-left text-xs border-2 
+                    border-red-600 rounded-md
+                    w-fit p-1
+                    '> please enter an Expected hours</p>)
+                }
+                </>
 
-
+                <>
                 <div className='flex flex-row'>
                     <label htmlFor='Project Location' className='mr-3 my-3'> Project Location: </label>
                     <input
@@ -120,8 +197,20 @@ function ProjectModal(props) {
                         placeholder='Project Location'
                         value={projectLocation}
                         onChange={handleProjectLocation}
+                        onClick={handleProjectLocationFilledClick}
                     />
                 </div>
+                {projectLocationFilled?(""):(              
+                      <p className=' text-red-600 text-left text-xs border-2 
+                    border-red-600 rounded-md
+                    w-fit p-1
+                    '> please enter an Expected hours</p>
+
+                )
+                
+                }
+                </>
+
 
 
 

@@ -79,26 +79,6 @@ const handleMenuClick = () =>{
             <div onClick={handleMenuClick} className={`fixed w-1/2 h-full bg-green-950 opacity-75 left-0 top-0 duration-300 z-20 transition-transform transform ${menuOpen?("translate-x-0"):("-translate-x-full")} text-center text-5xl pt-36`}>
 
             </div>
-
-      {/* <div className={`${menuOpen ?("visible"):("hidden ")} overflow-hidden overflow-x-hidden ` }>
-
-          <div onClick={handleMenuClick} className={`${menuOpen ?("visible"):("hidden ")} 
-           bg-gray-700 w-1/2 opacity-75 fixed top-0 left-0 ${menuOpen ?("z-30"):("-z-10")}`} 
-           style={{ transition: "transform 0.5s ease-in-out", transform: `translateX(${menuOpen ? "0" : "-100%"})` }} />
-
-            <div className={`${menuOpen ?("visible"):("hidden ")} fixed bg-green-100 text-black w-1/2 h-screen absolute top-0 right-0  text-4xl pl-4 pt-10 flex-col flex-wrap ${menuOpen ?("z-30"):("-z-10")} `} style={{ transition: "transform 0.5s ease-in-out", transform: `translateX(${menuOpen ? "0" : "100%"})` }}>
-              <Link href={"/"} className="block mb-4">
-                <p onClick={handleMenuClick}>
-                  Home
-                </p>
-              </Link>
-              <Link href={"/Book"} className="block mb-4">
-                <p onClick={handleMenuClick}>
-                  Book Us
-                </p>
-              </Link>
-            </div>
-      </div> */}
         {/* ---------------------------- tray  ------------------------ */}
 
     </div>

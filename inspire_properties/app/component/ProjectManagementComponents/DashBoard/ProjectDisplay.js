@@ -1,7 +1,8 @@
 "use client"
 import React, {useEffect, useState} from 'react'
 import DateModal from "../ProjectManagementModals/DateModal";
-import EmployeeTable from "./EmployeeTable";
+import EmployeeTable from "./EmployeeComponents/EmployeeTable";
+import AddEmployeeComponent from "./EmployeeComponents/AddEmployeeComponent";
 
 function ProjectDisplay(props) {
   // props:projectList, setProjectList,employeeList, setEmployeeList
@@ -280,21 +281,26 @@ const updateProjectSpent = (projectID, ProjectT) => {
                         {project?.data?.projectName}
                         <p className='text-xl'> {`@ ${project?.data?.projectLocation}`}</p>
                     </div>
-                        {project?.data?.dates?.map((date,index) =>(
-                            <div key={`date-${index}`} className='bg-gray-300 mb-2 pl-3 rounded-md'>
+                        {project?.data?.dates?.map((date,dIndex) =>(
+                            <div key={`date-${dIndex}`} className='bg-gray-300 mb-2 pl-3 rounded-md'>
                                 <p>{date.date}</p>
                                 <div className='pl-4'>
-                                    {date?.employee?.map((employee, index) => (
+                                    {date.employee.map((employee, index) => (
                                         <div key={index}>
+
                                         <EmployeeTable 
                                           employee={employee} 
                                           calculate={(hours, money) => updateDateSpent(project.id, date.date, hours, money, index)} 
                                           addEmployeeToDate={(selectedEmployee) => addEmployeeToDate(project.id, date.date, selectedEmployee)}
                                           employeeList={props.employeeList}
-                                          isLast={index === date.employee.length - 1}
+                                          isLast={ index === date.employee.length - 1}
                                         />
                                         </div>
                                     ))}
+                                    <AddEmployeeComponent
+                                        employeeList={props.employeeList}
+                                        addEmployeeToDate={(selectedEmployee) => addEmployeeToDate(project.id, date.date, selectedEmployee)}
+                                    />
                                 </div>
                             </div>
                         ))}

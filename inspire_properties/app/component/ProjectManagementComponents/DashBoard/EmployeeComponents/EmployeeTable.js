@@ -17,6 +17,7 @@ function EmployeeTable(props) {
     setTotalMoneySpent(money);
     props.calculate(hours, money);
   };
+  
 
   const handleEmployeeDropDownChange = (event) =>{
     setSelectedEmployeeOnDropDown(event.target.value);
@@ -44,23 +45,7 @@ function EmployeeTable(props) {
         />
         <p>{totalMoneySpent}</p>
       </div>
-      <div className={`flex flex-row ${props.isLast ? ("visible"):("hidden")}`} >
-        <button >
-          <p className='bg-greenLogo rounded-full px-2 border-black border-2' onClick={() =>props.addEmployeeToDate(selectedEmployeeOnDropDown)}>+</p>
-        </button>
-        <select 
-          className='ml-3 my-2'
-          value={selectedEmployeeOnDropDown}
-          onChange={handleEmployeeDropDownChange}
-        >
-        <option value={"select an employee"}> select an employee</option>
-          {Array.isArray(props.employeeList) && props.employeeList.map((employee, index) => (
-            <option key={employee.data.id} value={employee.data.employeeName}>
-              {employee.data.employeeName}
-            </option>
-          ))}
-        </select>
-      </div>
+
     </div>
   );
 }
