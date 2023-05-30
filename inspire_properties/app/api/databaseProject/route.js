@@ -15,7 +15,8 @@ export async function POST(req){
         projectName,
         projectLocation,
         expectedHours,
-        expectedBudget
+        expectedBudget,
+        extraExpenses:[]
     });
     return new Response(JSON.stringify(docRef), {
         status: 200

@@ -1,10 +1,11 @@
 import React from 'react'
 
 function ExpenseModal(props) {
-    //Props
-    //closeModal()
-    //isOpen
-
+    /**Props
+    *closeModal()
+    *isOpen
+    *projectId
+    **/
     const [ExpenseName, setExpenseName] = React.useState('');
     const [ExpensePrice, setExpensePrice] = React.useState('');
 
@@ -38,10 +39,17 @@ function ExpenseModal(props) {
     }
 
 
-    async function handleSubmit(){
+     function handleSubmit(){
+
+
         if(ExpenseName !=='' && ExpensePrice !== '')
         {
-            
+
+            const body = {
+                ExpenseName,
+                ExpensePrice
+            }
+            props.onSubmit(body);
 
             closeModal();
         }
@@ -111,7 +119,7 @@ function ExpenseModal(props) {
                 </>    
             </div>
             <div className='flex flex-row justify-between mx-4 py-2 '>
-                <button className='bg-green-500 p-1 rounded-md' onClick={handleSubmit}> Submit</button>
+                <button className='bg-green-500 p-1 rounded-md' onClick={handleSubmit}> Submit </button>
                 <button className='bg-red-900 p-1 rounded-md text-white' onClick={closeModal}>Cancel</button>
             </div>
         </div>

@@ -34,10 +34,11 @@ function ProjectDisplay(props) {
       setAlreadySelectedDates(datesAlreadySelected);
     }
     
-    const addAnExpense = () => {
+    const addAnExpense = (projectId) => {
+      setSelectedProjectId(projectId);
       setOpenExpenseModal(prevState =>!prevState);
-
     }
+
 
 
 /**
@@ -119,6 +120,7 @@ const addEmployeeToDate = (projectID, selectedDate,selectedEmployeeOnDropDown) =
     }
   };
 
+
   /**
    * adds a date to a project
    * (NOTE: DOES NOT UPDATE DATABASE ENCOURAGE USER TO PUT IN EMPLOYEE || EXTRA EXPENSE)
@@ -141,7 +143,7 @@ const addEmployeeToDate = (projectID, selectedDate,selectedEmployeeOnDropDown) =
         }
       
         // Push the new date into the 'dates' array
-        updatedProject.data.dates.push({date:date,employee:[],extraExpenses:[]});
+        updatedProject.data.dates.push({date:date,employee:[]});
       
         // Clone the project list and replace the updated project
         const updatedProjectList = [...props.projectList];
@@ -153,21 +155,30 @@ const addEmployeeToDate = (projectID, selectedDate,selectedEmployeeOnDropDown) =
         setOpenDateModal(false);
   };
 
-  const handleEmployeeDropDownChange = (event) => {
-        setSelectedEmployeeOnDropDown(event.target.value);
-      
-        // Find the employee in the employee list based on the selected employee on the dropdown
-        const currEmployee = props.employeeList.find((employee) => employee.data.employeeName === event.target.value);
-      
-        // If the selected employee is not found, log an error and return
-        if (!currEmployee) {
-          console.log("Selected employee not found");
-          return;
-        }
-      
-        // Update the expected hours for the selected employee
-        setInputValue(currEmployee.expectedHours || '');
-  };
+  const submitAnExpense = (expense) => {
+    // debugger;
+    const projectIndex = props.projectList.findIndex((project) => project.id === selectedProjectId);
+    if (projectIndex === -1) {
+      return; // Project not found, do nothing
+    }
+
+   // Clone the project object to avoid mutating state directly
+   const updatedProject = {...props.projectList[projectIndex] };
+   if(!updatedProject.data.extraExpenses) {
+    updatedProject.data.extraExpenses = []; 
+  }
+
+  updatedProject.data.extraExpenses.push(expense);
+
+  const updatedProjectList = [...props.projectList];
+  updatedProjectList[projectIndex] = updatedProject;
+
+  putFunction(updatedProject);
+
+  props.setProjectList(updatedProjectList);
+  setOpenExpenseModal(false);
+}
+
 
 function updateDateSpent(projectID, date, hours, money,employeeIndex) {
 
@@ -318,10 +329,13 @@ const updateProjectSpent = (projectID, ProjectT) => {
                         <button className='bg-green-600 p-1 rounded-md' onClick={() =>addADate(project.id)}> add a Date </button>
                         <DateModal openModal={openDateModal} closeModal={() => setOpenDateModal(false)} onSubmit={submitADate} alreadySelectedDates={alreadySelectedDates} setAlreadySelectedDates={setAlreadySelectedDates}/>
                         <div>
-                        <button className='bg-green-600 p-1 rounded-md mt-2' onClick={() =>addAnExpense()}>
-                        Add Expense
-                        </button>
-                        <ExpenseModal closeModal={() =>setOpenExpenseModal(false)} isOpen={openExpenseModal}/>
+
+
+                          <button className='bg-green-600 p-1 rounded-md mt-2' onClick={() =>addAnExpense(project.id)}>
+                            Add Expense
+                          </button>
+                          <ExpenseModal closeModal={() => setOpenExpenseModal(false)} isOpen={openExpenseModal} onSubmit={submitAnExpense} />
+
                         </div>
                         <div className='flex flex-row justify-evenly'> 
                         <div className='flex flex-col'>

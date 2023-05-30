@@ -5,8 +5,8 @@ import React, {useState,useEffect} from 'react'
 
 
 function DashboardPage() {
-    const [projectList, setProjectList] = React.useState();
-    const [employeeList, setEmployeeList] = React.useState();
+    const [projectList, setProjectList] = useState();
+    const [employeeList, setEmployeeList] = useState();
 
     useEffect(() => {
         async function fetchProjectData(){
@@ -26,17 +26,7 @@ function DashboardPage() {
     },
     []);
 
-// {isAuth ? 
-//   (    
-//     <div className='text-black'>
-//     {/* This is the header we are passing in the list and the ability to set the project list */}
-//       <ManageHeader projectList = {projectList} setProjectList={setProjectList} employeeList={employeeList} setEmployeelist={setEmployeelist}/>
-//       <ProjectDisplay projectList={projectList} setProjectList={setProjectList} employeeList={employeeList} setEmployeelist={setEmployeelist}/>
-//     </div>)
-//   :
-//   (
-//     <LogInPage />
-//   )
+
   
   return (
     <div>
