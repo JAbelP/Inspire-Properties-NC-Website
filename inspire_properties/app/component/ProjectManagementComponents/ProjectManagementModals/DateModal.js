@@ -13,6 +13,7 @@ function DateModal(props) {
     function closeModal(){
         setDateFilled(true);
         props.setAlreadySelectedDates([])
+        setDateSelected('')
         props.closeModal();
     }
 

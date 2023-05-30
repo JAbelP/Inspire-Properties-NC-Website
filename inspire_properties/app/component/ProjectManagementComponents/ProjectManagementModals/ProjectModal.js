@@ -7,11 +7,12 @@ function ProjectModal(props) {
     const [projectExpectedHours, setProjectExpectedHours] = useState('');
     const [projectLocation, setProjectLocation] = useState('');
 
-    //Cosmetic useStates
+    //--------------------------Cosmetic States--------------------------//
     const [ projectNameFilled, setProjectNameFilled ] = useState(true);
     const [ projectExpectedBudgetFilled, setProjectExpectedBudgetFilled ] = useState(true);
     const [ projectExpectedHoursFilled, setProjectExpectedHoursFilled ] = useState(true);
     const [ projectLocationFilled, setProjectLocationFilled ] = useState(true);
+    //--------------------------Cosmetic States--------------------------//
 
 
 //--------------------------Cosmetic Functions--------------------------//
