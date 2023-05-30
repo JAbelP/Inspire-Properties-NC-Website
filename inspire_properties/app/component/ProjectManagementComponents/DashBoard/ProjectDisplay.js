@@ -8,8 +8,10 @@ import AddEmployeeComponent from "./EmployeeComponents/AddEmployeeComponent";
 function ProjectDisplay(props) {
   // props:projectList, setProjectList,employeeList, setEmployeeList
 
-    const [ openDateModal, setOpenDateModal ] = useState(false);
-    const [ openExpenseModal, setOpenExpenseModal ] = useState(false);
+  //--------------------------Modals--------------------------//
+  const [ openDateModal, setOpenDateModal ] = useState(false);
+  const [ openExpenseModal, setOpenExpenseModal ] = useState(false);
+  //--------------------------Modals--------------------------//
 
 
     const [ selectedProjectId, setSelectedProjectId] = useState('')
@@ -319,7 +321,7 @@ const updateProjectSpent = (projectID, ProjectT) => {
                         <button className='bg-green-600 p-1 rounded-md mt-2' onClick={() =>addAnExpense()}>
                         Add Expense
                         </button>
-                        <ExpenseModal/>
+                        <ExpenseModal closeModal={() =>setOpenExpenseModal(false)} isOpen={openExpenseModal}/>
                         </div>
                         <div className='flex flex-row justify-evenly'> 
                         <div className='flex flex-col'>

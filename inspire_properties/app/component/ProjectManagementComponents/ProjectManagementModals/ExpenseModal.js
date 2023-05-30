@@ -1,6 +1,10 @@
 import React from 'react'
 
-function ExpenseModal() {
+function ExpenseModal(props) {
+    //Props
+    //closeModal()
+    //isOpen
+
     const [ExpenseName, setExpenseName] = React.useState('');
     const [ExpensePrice, setExpensePrice] = React.useState('');
 
@@ -24,19 +28,26 @@ function ExpenseModal() {
 
 
     //--------------------------Cosmetic Functions--------------------------//
+
     function closeModal() {
         setExpenseName('');
         setExpensePrice('');
         setExpenseNameFilled(true);
         setExpensePriceFilled(true);
+        props.closeModal();
     }
+
+
     async function handleSubmit(){
-        if(ExpenseName !=='' && ExpensePrice !== ''){
+        if(ExpenseName !=='' && ExpensePrice !== '')
+        {
+            
 
-
-
+            closeModal();
         }
-        else{
+
+        else
+        {
             if(ExpenseName ===''){
                 setExpenseNameFilled(false);
             }
@@ -55,7 +66,7 @@ function ExpenseModal() {
     }
 
   return (
-    <div className='absolute top-1/3 left-1/3 text-lg w-auto '>
+    <div className={`${props.isOpen ? ("visible"):("hidden")} absolute top-1/3 left-1/3 text-lg w-auto `}>
         <div className='bg-red-600  pl-4 text-2xl pb-2 rounded-t-lg text-white border-2 border-x-black border-t-black border-b-0'>
             Add An Expense
         </div>
