@@ -4,6 +4,7 @@ import DateModal from "../ProjectManagementModals/DateModal";
 import ExpenseModal from "../ProjectManagementModals/ExpenseModal";
 import EmployeeTable from "./EmployeeComponents/EmployeeTable";
 import AddEmployeeComponent from "./EmployeeComponents/AddEmployeeComponent";
+import ExpenseDisplayComponent from "./ExpenseComponents/ExpenseDisplayComponent"
 
 function ProjectDisplay(props) {
   // props:projectList, setProjectList,employeeList, setEmployeeList
@@ -34,6 +35,9 @@ function ProjectDisplay(props) {
       setAlreadySelectedDates(datesAlreadySelected);
     }
     
+    /**
+     * opens the expesnse Modal
+     */
     const addAnExpense = (projectId) => {
       setSelectedProjectId(projectId);
       setOpenExpenseModal(prevState =>!prevState);
@@ -155,8 +159,12 @@ const addEmployeeToDate = (projectID, selectedDate,selectedEmployeeOnDropDown) =
         setOpenDateModal(false);
   };
 
+  /**
+   * adds an expense to a project
+   * @param {expense} expense 
+   * @returns 
+   */
   const submitAnExpense = (expense) => {
-    // debugger;
     const projectIndex = props.projectList.findIndex((project) => project.id === selectedProjectId);
     if (projectIndex === -1) {
       return; // Project not found, do nothing
@@ -173,13 +181,27 @@ const addEmployeeToDate = (projectID, selectedDate,selectedEmployeeOnDropDown) =
   const updatedProjectList = [...props.projectList];
   updatedProjectList[projectIndex] = updatedProject;
 
+  debugger;
+  //updates the spend and Worked hours
+  updatedProject?.data?.extraExpenses?.array.forEach(element => {
+    console.log(element);
+    
+  });
+
   putFunction(updatedProject);
 
   props.setProjectList(updatedProjectList);
   setOpenExpenseModal(false);
 }
 
-
+/**
+ * 
+ * @param {num} projectID - id of the project to be updated 
+ * @param {date} date - date to be added to the project 
+ * @param {num} hours - total hours spent on date 
+ * @param {num} money - total money spent on date  
+ * @param {num} employeeIndex -which employee's hours are we updating
+ */
 function updateDateSpent(projectID, date, hours, money,employeeIndex) {
 
     //Itterate through the Project list and if the ID matches that is the project we want.
@@ -260,6 +282,11 @@ function updateDateSpent(projectID, date, hours, money,employeeIndex) {
 
   }
 
+  /**
+ * Updates the total hours and money spent for a project
+ * @param {Project's id} projectID 
+ * @param {List of all Projects} ProjectT 
+ */
 const updateProjectSpent = (projectID, ProjectT) => {
     const tempProjectList = ProjectT.map((proj) =>{
         if(proj.id === projectID ){
@@ -273,12 +300,20 @@ const updateProjectSpent = (projectID, ProjectT) => {
                 },
                 0
             )
-            const projectMoneySpent = proj.data.dates.reduce(
+            const projectEmployeeMoneySpent = proj.data.dates.reduce(
                 (total,projCost)=>{
                     return total+projCost.totalDateMoney;
                 },
                 0
             )
+            const projectExpenseMoneySpent = proj.data.extraExpenses.reduce(
+              (total,projCost)=>{
+                  return total+Number(projCost.ExpensePrice);
+              },
+              0
+            )
+            const projectMoneySpent = projectEmployeeMoneySpent+projectExpenseMoneySpent
+
             const returnProj = {...proj,data:{...proj.data,ProjectHourSpent:projectHoursSpent,ProjectMoneySpent:projectMoneySpent}}
             return returnProj;
 
@@ -328,9 +363,9 @@ const updateProjectSpent = (projectID, ProjectT) => {
                         ))}
                         <button className='bg-green-600 p-1 rounded-md' onClick={() =>addADate(project.id)}> add a Date </button>
                         <DateModal openModal={openDateModal} closeModal={() => setOpenDateModal(false)} onSubmit={submitADate} alreadySelectedDates={alreadySelectedDates} setAlreadySelectedDates={setAlreadySelectedDates}/>
+                        {/* Expense------------------------------------- */}
                         <div>
-
-
+                        {project?.data?.extraExpenses?.length > 0 && <ExpenseDisplayComponent expenses = {project?.data?.extraExpenses}/>}
                           <button className='bg-green-600 p-1 rounded-md mt-2' onClick={() =>addAnExpense(project.id)}>
                             Add Expense
                           </button>
