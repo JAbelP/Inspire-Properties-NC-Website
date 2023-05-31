@@ -18,20 +18,6 @@ function EmployeeTable(props) {
     props.calculate(hours, money);
   };
   
-
-  const handleEmployeeDropDownChange = (event) =>{
-    setSelectedEmployeeOnDropDown(event.target.value);
-
-    const currEmployee = props.employeeList.find((employee)=> employee.data.employeeName === event.target.value)
-
-    if(!currEmployee) {
-      console.log("Selected Employee not found");
-      return;
-    }
-    setInputDropDownValue(currEmployee.expectedHours || '')
-
-  }
-
   return (
     <div className='flex flex-col'>
 

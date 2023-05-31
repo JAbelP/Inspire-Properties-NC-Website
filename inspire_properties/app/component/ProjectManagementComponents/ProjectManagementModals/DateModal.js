@@ -18,7 +18,6 @@ function DateModal(props) {
     }
 
     function handleSubmit() {
-        console.log("Date selected: ",dateSelected);
         if(dateSelected === ''){
             setDateFilled(false);
         }

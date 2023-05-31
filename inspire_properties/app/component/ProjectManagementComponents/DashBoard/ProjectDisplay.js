@@ -1,13 +1,20 @@
 "use client"
 import React, {useEffect, useState} from 'react'
 import DateModal from "../ProjectManagementModals/DateModal";
+import ExpenseModal from "../ProjectManagementModals/ExpenseModal";
 import EmployeeTable from "./EmployeeComponents/EmployeeTable";
 import AddEmployeeComponent from "./EmployeeComponents/AddEmployeeComponent";
+import ExpenseDisplayComponent from "./ExpenseComponents/ExpenseDisplayComponent"
 
 function ProjectDisplay(props) {
   // props:projectList, setProjectList,employeeList, setEmployeeList
 
-    const [ openDateModal, setOpenDateModal ] = useState(false);
+  //--------------------------Modals--------------------------//
+  const [ openDateModal, setOpenDateModal ] = useState(false);
+  const [ openExpenseModal, setOpenExpenseModal ] = useState(false);
+  //--------------------------Modals--------------------------//
+
+
     const [ selectedProjectId, setSelectedProjectId] = useState('')
     const [inputValue, setInputValue] = useState('');
     const [ alreadySelectedDates,setAlreadySelectedDates ]=useState([])
@@ -18,6 +25,7 @@ function ProjectDisplay(props) {
      * @param {string} projectId 
      */
     const addADate = (projectId) => {
+      //[HUH?] Why am I selecting the Project Id? 
       setSelectedProjectId(projectId);
       setOpenDateModal(prevState => !prevState);
     
@@ -27,6 +35,14 @@ function ProjectDisplay(props) {
       setAlreadySelectedDates(datesAlreadySelected);
     }
     
+    /**
+     * opens the expesnse Modal
+     */
+    const addAnExpense = (projectId) => {
+      setSelectedProjectId(projectId);
+      setOpenExpenseModal(prevState =>!prevState);
+    }
+
 
 
 /**
@@ -108,6 +124,7 @@ const addEmployeeToDate = (projectID, selectedDate,selectedEmployeeOnDropDown) =
     }
   };
 
+
   /**
    * adds a date to a project
    * (NOTE: DOES NOT UPDATE DATABASE ENCOURAGE USER TO PUT IN EMPLOYEE || EXTRA EXPENSE)
@@ -130,7 +147,7 @@ const addEmployeeToDate = (projectID, selectedDate,selectedEmployeeOnDropDown) =
         }
       
         // Push the new date into the 'dates' array
-        updatedProject.data.dates.push({date:date,employee:[],extraExpenses:[]});
+        updatedProject.data.dates.push({date:date,employee:[]});
       
         // Clone the project list and replace the updated project
         const updatedProjectList = [...props.projectList];
@@ -142,22 +159,49 @@ const addEmployeeToDate = (projectID, selectedDate,selectedEmployeeOnDropDown) =
         setOpenDateModal(false);
   };
 
-  const handleEmployeeDropDownChange = (event) => {
-        setSelectedEmployeeOnDropDown(event.target.value);
-      
-        // Find the employee in the employee list based on the selected employee on the dropdown
-        const currEmployee = props.employeeList.find((employee) => employee.data.employeeName === event.target.value);
-      
-        // If the selected employee is not found, log an error and return
-        if (!currEmployee) {
-          console.log("Selected employee not found");
-          return;
-        }
-      
-        // Update the expected hours for the selected employee
-        setInputValue(currEmployee.expectedHours || '');
-  };
+  /**
+   * adds an expense to a project
+   * @param {expense} expense 
+   * @returns 
+   */
+  const submitAnExpense = (expense) => {
+    const projectIndex = props.projectList.findIndex((project) => project.id === selectedProjectId);
+    if (projectIndex === -1) {
+      return; // Project not found, do nothing
+    }
 
+   // Clone the project object to avoid mutating state directly
+   const updatedProject = {...props.projectList[projectIndex] };
+   if(!updatedProject.data.extraExpenses) {
+    updatedProject.data.extraExpenses = []; 
+  }
+
+  updatedProject.data.extraExpenses.push(expense);
+
+  const updatedProjectList = [...props.projectList];
+  updatedProjectList[projectIndex] = updatedProject;
+
+  debugger;
+  //updates the spend and Worked hours
+  updatedProject?.data?.extraExpenses?.array.forEach(element => {
+    console.log(element);
+    
+  });
+
+  putFunction(updatedProject);
+
+  props.setProjectList(updatedProjectList);
+  setOpenExpenseModal(false);
+}
+
+/**
+ * 
+ * @param {num} projectID - id of the project to be updated 
+ * @param {date} date - date to be added to the project 
+ * @param {num} hours - total hours spent on date 
+ * @param {num} money - total money spent on date  
+ * @param {num} employeeIndex -which employee's hours are we updating
+ */
 function updateDateSpent(projectID, date, hours, money,employeeIndex) {
 
     //Itterate through the Project list and if the ID matches that is the project we want.
@@ -238,6 +282,11 @@ function updateDateSpent(projectID, date, hours, money,employeeIndex) {
 
   }
 
+  /**
+ * Updates the total hours and money spent for a project
+ * @param {Project's id} projectID 
+ * @param {List of all Projects} ProjectT 
+ */
 const updateProjectSpent = (projectID, ProjectT) => {
     const tempProjectList = ProjectT.map((proj) =>{
         if(proj.id === projectID ){
@@ -251,12 +300,20 @@ const updateProjectSpent = (projectID, ProjectT) => {
                 },
                 0
             )
-            const projectMoneySpent = proj.data.dates.reduce(
+            const projectEmployeeMoneySpent = proj.data.dates.reduce(
                 (total,projCost)=>{
                     return total+projCost.totalDateMoney;
                 },
                 0
             )
+            const projectExpenseMoneySpent = proj.data.extraExpenses.reduce(
+              (total,projCost)=>{
+                  return total+Number(projCost.ExpensePrice);
+              },
+              0
+            )
+            const projectMoneySpent = projectEmployeeMoneySpent+projectExpenseMoneySpent
+
             const returnProj = {...proj,data:{...proj.data,ProjectHourSpent:projectHoursSpent,ProjectMoneySpent:projectMoneySpent}}
             return returnProj;
 
@@ -306,6 +363,15 @@ const updateProjectSpent = (projectID, ProjectT) => {
                         ))}
                         <button className='bg-green-600 p-1 rounded-md' onClick={() =>addADate(project.id)}> add a Date </button>
                         <DateModal openModal={openDateModal} closeModal={() => setOpenDateModal(false)} onSubmit={submitADate} alreadySelectedDates={alreadySelectedDates} setAlreadySelectedDates={setAlreadySelectedDates}/>
+                        {/* Expense------------------------------------- */}
+                        <div>
+                        {project?.data?.extraExpenses?.length > 0 && <ExpenseDisplayComponent expenses = {project?.data?.extraExpenses}/>}
+                          <button className='bg-green-600 p-1 rounded-md mt-2' onClick={() =>addAnExpense(project.id)}>
+                            Add Expense
+                          </button>
+                          <ExpenseModal closeModal={() => setOpenExpenseModal(false)} isOpen={openExpenseModal} onSubmit={submitAnExpense} />
+
+                        </div>
                         <div className='flex flex-row justify-evenly'> 
                         <div className='flex flex-col'>
                             <div className='flex flex-row'> 
