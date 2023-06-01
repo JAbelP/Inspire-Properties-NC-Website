@@ -1,10 +1,12 @@
 "use client"
 import React, {useEffect, useState} from 'react'
-import DateModal from "../ProjectManagementModals/DateModal";
-import ExpenseModal from "../ProjectManagementModals/ExpenseModal";
+import DateModal from "../ProjectManagementModals/CreateModals/DateModal";
+import ExpenseModal from "../ProjectManagementModals/CreateModals/ExpenseModal";
 import EmployeeTable from "./EmployeeComponents/EmployeeTable";
 import AddEmployeeComponent from "./EmployeeComponents/AddEmployeeComponent";
 import ExpenseDisplayComponent from "./ExpenseComponents/ExpenseDisplayComponent"
+import { EditIcon } from '../../icons';
+import UpdateProjectModal from "../ProjectManagementModals/UpdateModals/UpdateProjectModal";
 
 function ProjectDisplay(props) {
   // props:projectList, setProjectList,employeeList, setEmployeeList
@@ -12,6 +14,7 @@ function ProjectDisplay(props) {
   //--------------------------Modals--------------------------//
   const [ openDateModal, setOpenDateModal ] = useState(false);
   const [ openExpenseModal, setOpenExpenseModal ] = useState(false);
+  const [ openUpdateProjectModal, setOpenUpdateProjectModal ] = useState(false);
   //--------------------------Modals--------------------------//
 
 
@@ -41,6 +44,12 @@ function ProjectDisplay(props) {
     const addAnExpense = (projectId) => {
       setSelectedProjectId(projectId);
       setOpenExpenseModal(prevState =>!prevState);
+    }
+
+    const openUpdateProjectModalHandler = (projectId) => {
+      console.log('openUpdateProjectModalHandler');
+      setSelectedProjectId(projectId);
+      setOpenUpdateProjectModal(prevState =>!prevState);
     }
 
 
@@ -335,16 +344,27 @@ const updateProjectSpent = (projectID, ProjectT) => {
                     className='mx-4 my-4 px-4 py-4 bg-slate-500 rounded-md border-4 border-black'
                 >
                     <div className='text-4xl'>
-                        {project?.data?.projectName}
-                        <p className='text-xl'> {`@ ${project?.data?.projectLocation}`}</p>
+                      <div>
+                          <div className='flex flex-row'> 
+                            <button onClick={()=>openUpdateProjectModalHandler(project.id)}>
+                              <EditIcon strokeColor="black" hoverColor="gray" />
+                            </button>
+                            <UpdateProjectModal projectList = {props.projectList} projectId = {selectedProjectId} closeModal={()=>setOpenUpdateProjectModal(false)} isOpen={openUpdateProjectModal}/>
+                            {project?.data?.projectName}
+                          </div>
+                          <p className='text-xl'> {`@ ${project?.data?.projectLocation}`}</p>
+                        </div>
                     </div>
                         {project?.data?.dates?.map((date,dIndex) =>(
                             <div key={`date-${dIndex}`} className='bg-gray-300 mb-2 pl-3 rounded-md'>
+                            <div className='flex flex-row pt-3 gap-x-2'>
+                               <EditIcon strokeColor="black" hoverColor="gray"/>
+
                                 <p>{date.date}</p>
+                                </div>
                                 <div className='pl-4'>
                                     {date.employee.map((employee, index) => (
                                         <div key={index}>
-
                                         <EmployeeTable 
                                           employee={employee} 
                                           calculate={(hours, money) => updateDateSpent(project.id, date.date, hours, money, index)} 

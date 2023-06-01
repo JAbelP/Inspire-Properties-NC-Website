@@ -40,7 +40,6 @@ function LogInPage() {
 
   useEffect(() => {
     async function fetchUserData() {
-      console.log("fetchUserData")
       const response = await fetch('/api/databaseUsers');
       const data = await response.json();
       setdatabaseUser(data);
