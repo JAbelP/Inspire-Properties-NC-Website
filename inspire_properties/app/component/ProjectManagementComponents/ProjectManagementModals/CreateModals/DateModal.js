@@ -38,6 +38,8 @@ function DateModal(props) {
         setDateFilled(true);
     }
 
+
+
   return (
     <div className={`${props.openModal ? ("visible"):("hidden")} absolute top-1/3 left-1/3 text-lg w-auto `}>
         <div className='bg-red-600  pl-4 text-2xl pb-2 rounded-t-lg text-white border-2 border-x-black border-t-black border-b-0'>Select a date</div>

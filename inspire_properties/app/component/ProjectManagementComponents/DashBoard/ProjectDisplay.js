@@ -7,6 +7,7 @@ import AddEmployeeComponent from "./EmployeeComponents/AddEmployeeComponent";
 import ExpenseDisplayComponent from "./ExpenseComponents/ExpenseDisplayComponent"
 import { EditIcon } from '../../icons';
 import UpdateProjectModal from "../ProjectManagementModals/UpdateModals/UpdateProjectModal";
+import UpdateDateAndEmployeeModal from "../ProjectManagementModals/UpdateModals/UpdateDateAndEmployeesModal";
 
 function ProjectDisplay(props) {
   // props:projectList, setProjectList,employeeList, setEmployeeList
@@ -15,10 +16,12 @@ function ProjectDisplay(props) {
   const [ openDateModal, setOpenDateModal ] = useState(false);
   const [ openExpenseModal, setOpenExpenseModal ] = useState(false);
   const [ openUpdateProjectModal, setOpenUpdateProjectModal ] = useState(false);
+  const [ openUpdateDateAndEmployeeModal, setOpenUpdateDateAndEmployeeModal ] = useState(false);
   //--------------------------Modals--------------------------//
 
 
     const [ selectedProjectId, setSelectedProjectId] = useState('')
+    const [ selectedDate, setSelectedDate] = useState('')
     const [inputValue, setInputValue] = useState('');
     const [ alreadySelectedDates,setAlreadySelectedDates ]=useState([])
 
@@ -50,6 +53,12 @@ function ProjectDisplay(props) {
       console.log('openUpdateProjectModalHandler');
       setSelectedProjectId(projectId);
       setOpenUpdateProjectModal(prevState =>!prevState);
+    }
+
+    const openUpdateDateAndEmployeeModalHandler = (projectId, date) =>{
+      setSelectedProjectId(projectId);
+      setSelectedDate(date);
+      setOpenUpdateDateAndEmployeeModal(prevState =>!prevState);
     }
 
 
@@ -190,7 +199,6 @@ const addEmployeeToDate = (projectID, selectedDate,selectedEmployeeOnDropDown) =
   const updatedProjectList = [...props.projectList];
   updatedProjectList[projectIndex] = updatedProject;
 
-  debugger;
   //updates the spend and Worked hours
   updatedProject?.data?.extraExpenses?.array.forEach(element => {
     console.log(element);
@@ -358,8 +366,10 @@ const updateProjectSpent = (projectID, ProjectT) => {
                         {project?.data?.dates?.map((date,dIndex) =>(
                             <div key={`date-${dIndex}`} className='bg-gray-300 mb-2 pl-3 rounded-md'>
                             <div className='flex flex-row pt-3 gap-x-2'>
-                               <EditIcon strokeColor="black" hoverColor="gray"/>
-
+                              <button onClick={() =>openUpdateDateAndEmployeeModalHandler(project.id,date)}>
+                                <EditIcon strokeColor="black" hoverColor="gray"/>
+                              </button>
+                               <UpdateDateAndEmployeeModal  projectList = {props.projectList} projectId = {selectedProjectId} selectedDate={selectedDate} closeModal ={() => setOpenUpdateDateAndEmployeeModal(false)} isOpen={openUpdateDateAndEmployeeModal} />
                                 <p>{date.date}</p>
                                 </div>
                                 <div className='pl-4'>
@@ -370,7 +380,6 @@ const updateProjectSpent = (projectID, ProjectT) => {
                                           calculate={(hours, money) => updateDateSpent(project.id, date.date, hours, money, index)} 
                                           addEmployeeToDate={(selectedEmployee) => addEmployeeToDate(project.id, date.date, selectedEmployee)}
                                           employeeList={props.employeeList}
-                                          isLast={ index === date.employee.length - 1}
                                         />
                                         </div>
                                     ))}

@@ -22,11 +22,9 @@ function UpdateProjectModal(props) {
     useEffect(() => {
         const setProjectDetails=() =>
         {
-                console.log(props.projecId)
-                console.log("Yope");
                 return props.projectList.find((project) => 
                 project.id === props.projectId )
-            }
+        }
             const tempProj = setProjectDetails();
             setProjectName(tempProj?.data.projectName);
             setExpectedBudget(tempProj?.data.expectedBudget);
@@ -120,7 +118,7 @@ function UpdateProjectModal(props) {
         Update Project
         </div>
         <div className='px-2 bg-gray-300 text-black text-left border-2 border-x-black border-b-black border-t-0 text-base'>
-        <div className='flex flex-row'>
+            <div className='flex flex-row'>
                     <label htmlFor='Project Name' className='mr-3 my-3'> Project name: </label>
                     <p className="mr-3 my-3">{initialProjectName} -&gt;</p>
 
