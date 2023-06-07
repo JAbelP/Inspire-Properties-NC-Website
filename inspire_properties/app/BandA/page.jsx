@@ -4,7 +4,6 @@ import MyFooter from "../component/Footer";
 import Page from "../component/BeforeAndAfter/Page";
 
 
-
 function page() {
 
   return (
