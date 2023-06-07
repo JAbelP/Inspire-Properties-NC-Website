@@ -200,7 +200,7 @@ const addEmployeeToDate = (projectID, selectedDate,selectedEmployeeOnDropDown) =
   updatedProjectList[projectIndex] = updatedProject;
 
   //updates the spend and Worked hours
-  updatedProject?.data?.extraExpenses?.array.forEach(element => {
+  updatedProject?.data?.extraExpenses?.forEach(element => {
     console.log(element);
     
   });

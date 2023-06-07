@@ -1,5 +1,6 @@
 import React, {useState,useEffect} from 'react'
 import UpdateEmployeeComponent from './UpdateEmployeeComponent'
+import {Trash} from "../../../icons/trash"
 
 function UpdateDateAndEmployeesModal(props) {
     //Props
@@ -130,6 +131,40 @@ function UpdateDateAndEmployeesModal(props) {
 
   }
 
+  async function handleEmployeeDelete(employeeId, date) {
+    // [YOU LEFT OFF HERE Make sure that the items near the bottom are updated.]
+    debugger;
+    const projec = props.projectList?.find(proj => proj.id === props.projectId);
+    const datee = projec.data.dates.find(dateu => dateu.date === date);
+    console.log("datee", datee);
+    const eIndex = datee.employee.findIndex(employee => employee.id === employeeId);
+  
+    if (eIndex !== -1) {
+      datee.employee.splice(eIndex, 1);
+    }
+
+    datee.employee.forEach(employee => {
+      employee.totalEmployeeMoney = employee.totalEmployeeHours * employee.data.employeePayRate;
+    })
+    datee.totalDateHours = datee.employee.reduce((total,e) =>{
+        return total + e.totalEmployeeHours
+    },0)
+
+    const dIndex = projec.data.dates.findIndex( datee => datee.date === date) 
+    projec.data.dates[dIndex] = datee;
+
+    projec.data.ProjectHourSpent = projec.data.dates.reduce((total, a) => {
+      return total + a.totalDateHours;
+    }, 0);
+
+
+    
+  }
+
+
+  
+
+  
 
    async function handleSubmit(){
 
@@ -187,6 +222,7 @@ function UpdateDateAndEmployeesModal(props) {
                 <table>
                     <tbody>
                         <tr>
+                        <th className="pr-10"></th>
                         <th className="pr-10">Employee</th>
                         <th className="pr-10">Hours Worked</th>
                         </tr>
@@ -196,6 +232,7 @@ function UpdateDateAndEmployeesModal(props) {
                             if (date.date === props.selectedDate.date) {
                             return date.employee.map((employee) => (
                                 <tr key={employee.id}>
+                                <td><button onClick={()=>handleEmployeeDelete(employee.id,props.selectedDate.date)}><Trash /></button> </td>
                                 <td>{employee.data.employeeName}</td>
                                 <td>{employee.totalEmployeeHours?(employee.totalEmployeeHours):(0)}</td>
                                 <td>-&gt;</td>

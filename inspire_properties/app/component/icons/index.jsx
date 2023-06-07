@@ -4,3 +4,4 @@ export * from "./marker";
 export * from "./logo";
 export * from "./hambuger";
 export * from "./editIcon";
+export * from "./trash";
