@@ -12,8 +12,6 @@ function page() {
             </div>
             <script src="https://widget.gethearth.com/script.js" id="hearth-script" data-orgid="39548" data-partner="inspire-properties-llc"></script>
                 <iframe id="hearth-widget_calculator_v1"></iframe>
-
-ok
         </main>
         <footer className='inline-block'>
         <MyFooter/>
