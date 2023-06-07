@@ -18,7 +18,6 @@ function page() {
         '4.jpg',
         '5.jpg',
         '6.jpg',
-        '7.jpg',
         // Add more image filenames here
       ];
     
