@@ -40,6 +40,12 @@ const handleMenuClick = () =>{
                   <HeaderButton label={"Book Us"} />
                 </Link>
               </div>
+              <div>
+                <Link href={"/Financing"}>
+                  <HeaderButton label={"Financing"} />
+                </Link>
+              </div>
+
               {/* <div>
                 <HeaderButton label={"Our Services"} />
               </div>
@@ -60,7 +66,7 @@ const handleMenuClick = () =>{
 
 
         {/* ---------------------------- tray  ------------------------ */}
-            <div className= {`fixed w-1/2 h-full bg-greenLogo right-0 top-0 duration-300 z-20 transition-transform transform ${menuOpen?("-translate-x-0"):("translate-x-full")} text-center text-5xl pt-36`}>
+            <div className= {`fixed w-2/3 h-full bg-greenLogo right-0 top-0 duration-300 z-20 transition-transform transform ${menuOpen?("-translate-x-0"):("translate-x-full")} text-center text-5xl pt-36`}>
               <ul>
 
                 <li className="pb-10">
@@ -69,14 +75,26 @@ const handleMenuClick = () =>{
                   </Link>
                 </li>
 
-                <li>
+                <li  className="pb-10">
                   <Link href={"/Book"}>
                     <p onClick={handleMenuClick}>Book Us</p>
                   </Link>
                 </li>
+
+                <li className="pb-10">
+                  <Link href={"/Financing"}>
+                    <p onClick={handleMenuClick}>Financing</p>
+                  </Link>
+                </li>
+                
+                <li className="pb-10">
+                  <Link href={"/BandA"}>
+                    <p onClick={handleMenuClick}>Before and After</p>
+                  </Link>
+                </li>
               </ul>
             </div>
-            <div onClick={handleMenuClick} className={`fixed w-1/2 h-full bg-green-950 opacity-75 left-0 top-0 duration-300 z-20 transition-transform transform ${menuOpen?("translate-x-0"):("-translate-x-full")} text-center text-5xl pt-36`}>
+            <div onClick={handleMenuClick} className={`fixed w-1/3 h-full bg-green-950 opacity-75 left-0 top-0 duration-300 z-20 transition-transform transform ${menuOpen?("translate-x-0"):("-translate-x-full")} text-center text-5xl pt-36`}>
 
             </div>
         {/* ---------------------------- tray  ------------------------ */}
