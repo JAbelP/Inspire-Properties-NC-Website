@@ -88,7 +88,7 @@ const handleMenuClick = () =>{
                 </li>
                 
                 <li className="pb-10">
-                  <Link href={"/Financing"}>
+                  <Link href={"/BandA"}>
                     <p onClick={handleMenuClick}>Before and After</p>
                   </Link>
                 </li>
