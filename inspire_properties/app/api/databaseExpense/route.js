@@ -4,11 +4,8 @@ import {db} from "../../firebaseConfig";
 
 export async function POST(req) {
     const body = await req.text();
-    console.log("body: ", body);
-    const { projectId, extraExpense  } = JSON.parse(body);
-    console.log("project Id", projectId)
-    console.log("extra Expense", extraExpense)
-  
+   const { projectId, extraExpense  } = JSON.parse(body);
+
     try {
       const temp = collection(db, `projects/${projectId}/extraExpenses`);
       const docRef = await addDoc(temp, {

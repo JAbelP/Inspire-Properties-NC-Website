@@ -28,41 +28,7 @@ function SubmissionPage() {
 
     let db = null
 
-    //------------------------------------ THIS IS HOW YOU GET THE RESPONSE FROM YOUR API CALL-----------------------------------
-    // useEffect( () => {
-    //     async function fetchData(){
-    //       const response = await fetch('/api/databaseClient');
-    //       const data = await response.json();
-    //       console.log(data, " This is the call ");
-    //       return data;
-    //     }
-    //     fetchData();
-    // }, []);
-    //------------------------------------ THIS IS HOW YOU GET THE RESPONSE FROM YOUR API CALL-----------------------------------
-    
-    // THIS WAS CODE HOW I USED TO DO IT BEFORE API ROUTES THIS IS A BAD EXAMPLE
-    // useEffect(() => {
-    //     const dbbTest = async() =>{
-    //       const response = await fetch('/api/databaseClient')
-    //       const temp = await response.json();
-    //       return temp;
-    //     } 
-    //     db = getDatabase();
-    //     const clientRef = ref(db, '/Clients');
-    //     onValue(clientRef, (snapshot) => {
-    //         const DataBasedata = snapshot.val();
-    //         setDataBasedata(DataBasedata);  
-    //         // You can access the data from the snapshot object and do whatever you want with it
-            
-    //     });
-    //     // Clean up the listener when component unmounts
-    //     return () => {
-    //         off(clientRef);
-    //     };
-    // }, []);
-    // THIS WAS CODE HOW I USED TO DO IT BEFORE API ROUTES THIS IS A BAD EXAMPLE
-
-
+   
 
     /**
      * token to verify if human
