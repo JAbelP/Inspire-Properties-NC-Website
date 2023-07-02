@@ -21,14 +21,12 @@ function LogInPage() {
 
   useEffect(() => {
     async function fetchProjectData() {
-      console.log("fetchProjectData")
       const response = await fetch('/api/databaseProject');
       const data = await response.json();
       setProjectList(data);
     }
 
     async function fetchEmployeeData() {
-      console.log("fetchEmployeeData")
       const response = await fetch('/api/databaseEmployee');
       const data = await response.json();
       setEmployeelist(data);
@@ -55,9 +53,7 @@ function LogInPage() {
 
         const foundUser = databaseUser.find((element) => (element.uid === user.uid))
 
-        console.log("Found user:", foundUser);
         if(foundUser?.authenticated === true){
-          console.log("pushing to dashboard");
           router.push('/ProjectManagement/Dashboard');
       }
     }

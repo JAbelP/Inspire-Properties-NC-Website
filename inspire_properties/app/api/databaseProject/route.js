@@ -55,8 +55,6 @@ export async function GET(){
 export async function PUT(req){
     const body = await req.text();
     const {id,data} = JSON.parse(body);
-    console.log("BODY=---------",body,"--------------");
-    console.log("id",id,"data",data);
     try{
 
         const temp = collection(db,'Projects');

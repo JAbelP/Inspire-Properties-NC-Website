@@ -31,7 +31,7 @@ function ProjectDisplay(props) {
      * @param {string} projectId 
      */
     const addADate = (projectId) => {
-      //[HUH?] Why am I selecting the Project Id? 
+      //[WHY?] Why am I selecting the Project Id? 
       setSelectedProjectId(projectId);
       setOpenDateModal(prevState => !prevState);
     
@@ -50,20 +50,29 @@ function ProjectDisplay(props) {
     }
 
     const openUpdateProjectModalHandler = (projectId) => {
-      console.log('openUpdateProjectModalHandler');
       setSelectedProjectId(projectId);
       setOpenUpdateProjectModal(prevState =>!prevState);
     }
 
+    /**
+     * This opens the update Date and Employee modal
+     * the project id is the selected Project's ID
+     * the date is the selected dates (INDEX?[WHY?])
+     * 
+     * 
+     * @param {*} projectId 
+     * @param {*} date 
+     */
     const openUpdateDateAndEmployeeModalHandler = (projectId, date) =>{
       setSelectedProjectId(projectId);
       setSelectedDate(date);
+      //[WHY?] why am I not just setting it to positive? 
+      //[ANS:]This is so they can click the same button again and it will close the modal.
+          // MPOE(Mulitple points of Exits).
       setOpenUpdateDateAndEmployeeModal(prevState =>!prevState);
     }
 
-
-
-/**
+ /**
  * 
  * adds the employee to the selected date
  * updates the database with relevent information
@@ -71,55 +80,16 @@ function ProjectDisplay(props) {
  * @param {date} selectedDate 
  * @returns 
  */
+/** 
+ * 
+ * @param {*} projectID 
+ * @param {*} selectedDate 
+ * @param {*} selectedEmployeeOnDropDown 
+ * @returns 
+ */
+
 const addEmployeeToDate = (projectID, selectedDate,selectedEmployeeOnDropDown) => {
-    // Find the employee in the employee list based on the selected employee on the dropdown
-    const currEmployee = props.employeeList.find((employee) => employee.data.employeeName === selectedEmployeeOnDropDown);
-  
-    // If the selected employee is not found, log an error and return
-    if (!currEmployee) {
-      console.log("Selected employee not found");
-      return;
-    }
-  
-    // Create an updated project list by mapping through the project list
-    const updatedProjectList = props.projectList.map( (project) => {
-      // Find the project with the specified ID
-      if (project.id === projectID) {
-        // Create a copy of the project object to update it
-        const updatedProject = { ...project };
-        // Keep track of the index of the date being updated
-        let updatedDateIndex = -1;
-  
-        // Map through the dates in the project's data object to find the date that matches the selected date
-        updatedProject.data.dates = updatedProject.data.dates.map((date, index) => {
-          if (date.date === selectedDate) {
-            // Update the date object with the new employee added to it
-            updatedDateIndex = index;
-            const updatedDate = { ...date };
-            updatedDate.employee.push(currEmployee);
-            return updatedDate;
-          }
-          // Return the date object as is if it doesn't match the selected date
-          return date;
-        });
-  
-        // If the date index was not updated, it means the selected date was not found in the project
-        if (updatedDateIndex === -1) {
-          console.log(`Date ${selectedDate} not found in project ${projectID}`);
-          return project;
-        }
-        // update the database
-        putFunction(updatedProject);
-        // Return the updated project object
-        return updatedProject;
-        
-      }
-  
-      // Return the project object as is if its ID doesn't match the specified ID
-      return project;
-    });
-    // Update the project list with the updated project list
-    props.setProjectList(updatedProjectList);
+  console.log("Project ID: ", projectID, " selectedDate: ", selectedDate, " selectedEmployeeOnDropDown: ", selectedEmployeeOnDropDown);//
   };
 
 
@@ -129,8 +99,7 @@ const addEmployeeToDate = (projectID, selectedDate,selectedEmployeeOnDropDown) =
  * @returns 
  */
   const putFunction = async(updatedProject) => {
-    console.log("putFunction");
-    const response = await fetch('/api/databaseProject', {
+ const response = await fetch('/api/databaseProject', {
       method: 'PUT',
       body: JSON.stringify(updatedProject),
     });
@@ -161,18 +130,28 @@ const addEmployeeToDate = (projectID, selectedDate,selectedEmployeeOnDropDown) =
       
         // Initialize the 'dates' property as an empty array if it does not exist
         if (!updatedProject.data.dates) {
-          updatedProject.data.dates = [];
+          updatedProject.data.dates = [{date: date,data:[]}];
         }
       
         // Push the new date into the 'dates' array
-        updatedProject.data.dates.push({date:date,employee:[]});
+        console.log("date: ", date);
       
         // Clone the project list and replace the updated project
         const updatedProjectList = [...props.projectList];
         updatedProjectList[projectIndex] = updatedProject;
       
         // Update the project list state
-        props.setProjectList(updatedProjectList);
+        
+        debugger;
+        if(props.projectList.data === undefined) {
+          props.setProjectList(updatedProjectList);
+        }
+        else{
+          // console.log("props: ",props)
+          // const updatedList = [...props.projectList.find(proj => {proj.id === projectID}).data.data,updatedProjectList]
+          // props.setProjectList(updatedList);
+        }
+        
         // Close the modal
         setOpenDateModal(false);
   };
@@ -183,6 +162,7 @@ const addEmployeeToDate = (projectID, selectedDate,selectedEmployeeOnDropDown) =
    * @returns 
    */
   const submitAnExpense = (expense) => {
+    // debugger;
     const projectIndex = props.projectList.findIndex((project) => project.id === selectedProjectId);
     if (projectIndex === -1) {
       return; // Project not found, do nothing
@@ -199,14 +179,10 @@ const addEmployeeToDate = (projectID, selectedDate,selectedEmployeeOnDropDown) =
   const updatedProjectList = [...props.projectList];
   updatedProjectList[projectIndex] = updatedProject;
 
-  //updates the spend and Worked hours
-  updatedProject?.data?.extraExpenses?.forEach(element => {
-    console.log(element);
-    
-  });
 
   putFunction(updatedProject);
 
+  // debugger;
   props.setProjectList(updatedProjectList);
   setOpenExpenseModal(false);
 }
@@ -294,6 +270,7 @@ function updateDateSpent(projectID, date, hours, money,employeeIndex) {
             //if it doesn't match the project ID just return it since it is a new updatedProjectList
             return project;
     })
+    // debugger;
     props.setProjectList(updatedProjectListReturn);
     updateProjectSpent(projectID,updatedProjectListReturn);
 
@@ -305,7 +282,8 @@ function updateDateSpent(projectID, date, hours, money,employeeIndex) {
  * @param {List of all Projects} ProjectT 
  */
 const updateProjectSpent = (projectID, ProjectT) => {
-    const tempProjectList = ProjectT.map((proj) =>{
+    const tempProjectList = Proj
+    ectT.map((proj) =>{
         if(proj.id === projectID ){
             const projectHoursSpent = proj.data.dates.reduce(
                 (total,projCost)=>{
@@ -337,6 +315,7 @@ const updateProjectSpent = (projectID, ProjectT) => {
         }
         return proj;
     })
+    // debugger;
     props.setProjectList(tempProjectList);
   
   };
@@ -366,20 +345,20 @@ const updateProjectSpent = (projectID, ProjectT) => {
                         {project?.data?.dates?.map((date,dIndex) =>(
                             <div key={`date-${dIndex}`} className='bg-gray-300 mb-2 pl-3 rounded-md'>
                             <div className='flex flex-row pt-3 gap-x-2'>
-                              <button onClick={() =>openUpdateDateAndEmployeeModalHandler(project.id,date)}>
+                              <button onClick={() =>openUpdateDateAndEmployeeModalHandler(project.id,dIndex)}>
                                 <EditIcon strokeColor="black" hoverColor="gray"/>
                               </button>
-                               <UpdateDateAndEmployeeModal  projectList = {props.projectList} projectId = {selectedProjectId} selectedDate={selectedDate} closeModal ={() => setOpenUpdateDateAndEmployeeModal(false)} isOpen={openUpdateDateAndEmployeeModal} />
+                               <UpdateDateAndEmployeeModal  projectList = {props.projectList} projectId = {selectedProjectId} selectedDateIndex={selectedDate} closeModal ={() => setOpenUpdateDateAndEmployeeModal(false)} isOpen={openUpdateDateAndEmployeeModal} />
                                 <p>{date.date}</p>
                                 </div>
                                 <div className='pl-4'>
-                                    {date.employee.map((employee, index) => (
+                                    swag
+                                    {date.employees?.map((employee, index) => (
                                         <div key={index}>
+                                        
                                         <EmployeeTable 
                                           employee={employee} 
-                                          calculate={(hours, money) => updateDateSpent(project.id, date.date, hours, money, index)} 
-                                          addEmployeeToDate={(selectedEmployee) => addEmployeeToDate(project.id, date.date, selectedEmployee)}
-                                          employeeList={props.employeeList}
+                                          //[MHTR]calculate={(hours, money) => updateDateSpent(project.id, date.date, hours, money, index)} 
                                         />
                                         </div>
                                     ))}
@@ -391,7 +370,7 @@ const updateProjectSpent = (projectID, ProjectT) => {
                             </div>
                         ))}
                         <button className='bg-green-600 p-1 rounded-md' onClick={() =>addADate(project.id)}> add a Date </button>
-                        <DateModal openModal={openDateModal} closeModal={() => setOpenDateModal(false)} onSubmit={submitADate} alreadySelectedDates={alreadySelectedDates} setAlreadySelectedDates={setAlreadySelectedDates}/>
+                        <DateModal openModal={openDateModal} closeModal={() => setOpenDateModal(false)} onSubmit={(dateSelected)=>submitADate(dateSelected)} alreadySelectedDates={alreadySelectedDates} setAlreadySelectedDates={setAlreadySelectedDates} projectList={props.projectList}/>
                         {/* Expense------------------------------------- */}
                         <div>
                         {project?.data?.extraExpenses?.length > 0 && <ExpenseDisplayComponent expenses = {project?.data?.extraExpenses}/>}

@@ -91,7 +91,7 @@ function EmployeeModal(props) {
         <div className='bg-red-600 pl-4 text-left text-2xl pb-2 rounded-t-lg border-2 border-x-black border-t-black border-b-0 '> Employee</div>
         <div className='bg-gray-300 text-black border-2 border-x-black border-b-black border-t-0 '>
             <div className='flex flex-col gap-y-3 pt-3 pl-2'>
-            <>zz
+            <>
                 <div className='flex flex-row gap-x-3'>
                     <p>Name:</p>
                     <input
