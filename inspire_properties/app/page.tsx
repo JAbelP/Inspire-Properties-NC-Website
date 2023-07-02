@@ -4,6 +4,7 @@ import Slider from './component/HomeComponents/Slider';
 import TestFireBaseComponent from './component/HomeComponents/testFireBaseComponent';
 import MyHeader from './component/Header';
 import Myfooter from './component/Footer';
+import {MainGeneralContactUsComponent} from './component/GeneralContactUsComponents/MainGeneralContactUsComponent'
 
 
 export default function Home() {
@@ -26,6 +27,7 @@ export default function Home() {
         <div className="w-full lg:h-[40rem]  bg-gray-300  overflow-hidden">
           <Slider slides={slides} />
         </div>
+        <MainGeneralContactUsComponent/>
       </div>
       </main>
       <footer className='inline-block'>
