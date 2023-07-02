@@ -202,7 +202,7 @@ export const MainGeneralContactUsComponent = () => {
               </div>
               <button
                 type="submit"
-                className="bg-Color2darkBlue hover:bg-log text-white font-bold py-2 px-4 rounded"
+                className="bg-Color2darkBlue hover:bg-greenLogo text-white font-bold py-2 px-4 rounded"
               >
                 Submit
               </button>
