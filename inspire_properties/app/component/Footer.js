@@ -5,7 +5,7 @@ import {Facebook, Marker, Phone} from './icons'
 
 function MyFooter() {
   return (
-    <div className='bg-greenLogo h-full py-6'>
+    <div className='bg-Color4darkerGreen h-full py-6'>
         
     {/* <div className='bg-black flex flex-col gap-y-5 items-center pb-4 sm:flex-row sm:pt-5 h-max'>
         <div className=' flex flex-col items-center sm:w-1/3'>
