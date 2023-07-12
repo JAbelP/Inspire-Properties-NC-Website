@@ -28,10 +28,8 @@ export async function GET(req, res) {
 export async function POST(req, res) {
 
     const body = await req.text();
-    console.log("Body: ",body);
     const {email, uid} = JSON.parse(body);
 
-    console.log("in database Users ")
     //we need to post this information to the database (users)
     try{
         const data = await addDoc(collection(db, "Users"), {

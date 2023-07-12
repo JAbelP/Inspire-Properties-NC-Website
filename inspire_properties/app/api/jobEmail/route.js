@@ -6,8 +6,6 @@ export async function POST(request) {
 
     
 
-    console.log(body.services);
-
     const message = `
       Name: ${body.name}\r\n
       Email: ${body.email}\r\n
@@ -35,6 +33,7 @@ export async function POST(request) {
     return new Response(`Error parsing request body ${error}`, {
       status: 500
     });
+    
   }
 }
 

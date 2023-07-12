@@ -1,8 +1,8 @@
 "use client"
 import React from 'react'
 import { useState } from 'react'
-import ProjectModal from '../ProjectManagementModals/ProjectModal';
-import EmployeeModal from '../ProjectManagementModals/EmployeeModal';
+import ProjectModal from '../ProjectManagementModals/CreateModals/ProjectModal';
+import EmployeeModal from '../ProjectManagementModals/CreateModals/EmployeeModal';
 
 function ManageHeader(props) {
   // Props: setProjectList, projectList

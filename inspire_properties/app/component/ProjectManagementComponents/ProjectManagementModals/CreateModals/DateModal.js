@@ -1,10 +1,19 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 
 function DateModal(props) {
-    // props: openModal closeModal onSubmit alreadySelectedDates setAlreadySelectedDates
+    // Props
+    //openModal
+    // closeModal
+    // onSubmit
+    // alreadySelectedDates
+    // setAlreadySelectedDates
     const [dateSelected, setDateSelected] = useState('');
     // cosmetic useStates
     const [ dateFilled, setDateFilled ] = useState(true);
+
+    useEffect(() => {
+    console.log("PROPS in useEffect: ",props)
+    },[props.projectList])
 
     function handleDateSelectedChange(event){
         setDateSelected(event.target.value);
@@ -37,6 +46,8 @@ function DateModal(props) {
     function handleDateClicked(){
         setDateFilled(true);
     }
+
+
 
   return (
     <div className={`${props.openModal ? ("visible"):("hidden")} absolute top-1/3 left-1/3 text-lg w-auto `}>
