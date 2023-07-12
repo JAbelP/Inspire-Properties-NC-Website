@@ -1,6 +1,5 @@
 import './globals.css'
-import Myfooter from "./component/Footer";
-import MyHeader from "./component/Header";
+
 
 
 
@@ -15,6 +14,7 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
+  <script src="https://www.google.com/recaptcha/api.js"></script>
   return (
     <html lang="en">
       <body>

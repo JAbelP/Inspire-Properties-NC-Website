@@ -1,5 +1,5 @@
 "use client"
-import React, { useEffect, useState} from 'react'
+import React, { useState} from 'react'
 import { servicesWeOffer } from '../../../data/services-data';
 import PhoneInput from './PhoneEntryBooking';
 import EmailInput from './EmailEntryBooking';
@@ -7,8 +7,6 @@ import NameInput from './NameEntryBooking';
 import AddressInput from './AddressEntryBooking';
 import DropdownMenu from './DropDownForBookings';
 import DateInput from './DateEntryBooking';
-import { getDatabase, ref, onValue, off, set } from 'firebase/database';
-import app from '../../firebaseConfig'
 import { useRouter } from 'next/navigation';
 import HCaptchaComponent from './HCaptcha';
 
@@ -49,6 +47,10 @@ function SubmissionPage() {
         return;
       }
       
+    }
+
+    const onSubmit = async(token) => {
+      document.getElementById("demo-form").submit();
     }
 
     /**
@@ -328,7 +330,14 @@ function SubmissionPage() {
                 ))}
 
             <HCaptchaComponent onVerify={handleHcaptchaVerify} />
-            <button className='bg-greenLogo p-4 m-4' onClick={handleSubmit} disabled={(canSubmitBeClicked?(false):(true))}> submit </button>
+            <button 
+              className='bg-greenLogo p-4 m-4'
+              onClick={handleSubmit} 
+              disabled={(canSubmitBeClicked?(false):(true))}
+              data-sitekey="reCAPTCHA_site_key" 
+              data-callback='onSubmit' 
+              data-action='submit'              
+            > submit </button>
             </div>
         </div>
     )
