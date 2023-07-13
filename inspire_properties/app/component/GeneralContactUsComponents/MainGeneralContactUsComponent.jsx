@@ -60,6 +60,42 @@ export const MainGeneralContactUsComponent = () => {
       return;
     }
 
+
+    
+    grecaptcha.ready(() =>{
+      grecaptcha.execute(siteKey, {action:'submit'}).then( async token => {
+        console.log(token);
+        const bodyForGoogleResponse = {          
+          recaptchaResponse: token
+        }
+
+        try{
+            const response1 = await fetch("/api/reCaptcha", {
+              method: "POST",
+              headers: {"content-type": "application/json;charset=utf-8"},
+              body: JSON.stringify(bodyForGoogleResponse)
+            });
+            
+            if(response1.ok){
+              const json = await response1.json();
+              if(json.success){
+                // writeData(formValues.name, formValues.email, formValues.phone, formValues.address, clientNewServiceAmount, formValues.date);
+                sendEmail(formValues.name, formValues.email, formValues.phone, formValues.address, clientNewServiceAmount, formValues.date) ;
+              }
+
+            } else{
+              throw new Error(response1.statusText);
+            }
+          } catch(error){
+            console.log(error);
+          
+        }
+      }).catch((error) => {
+        console.log(error);
+      })});
+    
+
+
     setFormValues((prevValues) => ({
       ...prevValues,
       submitted: true, // Set submitted to true

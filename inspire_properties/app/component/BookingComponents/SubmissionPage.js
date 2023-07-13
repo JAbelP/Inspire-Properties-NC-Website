@@ -70,6 +70,47 @@ function SubmissionPage() {
     });
   };
 
+  const sendEmail = async (name,email, phone, address, services,dateAndTime = new Date()) => {
+    if (typeof dateAndTime === 'string') {
+      dateAndTime = new Date(dateAndTime);
+    };
+    //formatting date and all that jazz
+    const year = dateAndTime.getFullYear();
+    const month = dateAndTime.getMonth();
+    const day = dateAndTime.getDate();
+    const hours = dateAndTime.getHours();
+    const minutes = dateAndTime.getMinutes();
+
+    const formattedDateAndTime = new Date(year, month, day, hours, minutes).toString();
+
+      const emailBody = {
+        name:name,
+        email:email,
+        phone:phone,    
+        address:address,
+        dateAndTime:formattedDateAndTime,
+        services:services
+      };
+      
+      try {
+        const response = await fetch('/api/jobEmail', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(emailBody)
+        });
+
+        if (response.ok) {
+          console.log('Email sent successfully');
+        } else {
+          console.error('Failed to send email');
+        }
+      } catch (error) {
+        console.error('Error sending email:', error);
+      }
+    };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     // Proceed with form submission
@@ -97,47 +138,6 @@ function SubmissionPage() {
       return;
     }
 
-
-    const sendEmail = async (name,email, phone, address, services,dateAndTime = new Date()) => {
-      if (typeof dateAndTime === 'string') {
-        dateAndTime = new Date(dateAndTime);
-      };
-      //formatting date and all that jazz
-      const year = dateAndTime.getFullYear();
-      const month = dateAndTime.getMonth();
-      const day = dateAndTime.getDate();
-      const hours = dateAndTime.getHours();
-      const minutes = dateAndTime.getMinutes();
-
-      const formattedDateAndTime = new Date(year, month, day, hours, minutes).toString();
-
-        const emailBody = {
-          name:name,
-          email:email,
-          phone:phone,    
-          address:address,
-          dateAndTime:formattedDateAndTime,
-          services:services
-        };
-        
-        try {
-          const response = await fetch('/api/jobEmail', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(emailBody)
-          });
-  
-          if (response.ok) {
-            console.log('Email sent successfully');
-          } else {
-            console.error('Failed to send email');
-          }
-        } catch (error) {
-          console.error('Error sending email:', error);
-        }
-      };
 
     grecaptcha.ready(() =>{
       grecaptcha.execute(siteKey, {action:'submit'}).then( async token => {
