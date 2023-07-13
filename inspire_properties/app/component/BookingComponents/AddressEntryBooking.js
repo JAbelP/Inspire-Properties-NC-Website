@@ -1,11 +1,11 @@
 "use client"
 import React, { useState } from 'react';
-function AddressInput(props) {
+function AddressInput({handleAddress}) {
   const [address, setAddress] = useState('');
 
   function handleChange(event) {
     setAddress(event.target.value);
-    props.handleAddress(event.target.value)
+    handleAddress(event.target.value)
   }
 
   return (

@@ -1,11 +1,11 @@
 "use client"
 import React, { useState } from 'react';
-function EmailInput(props) {
+function EmailInput({handleEmail}) {
   const [email, setEmail] = useState('');
 
   function handleChange(event) {
     setEmail(event.target.value);
-    props.handleEmail(event.target.value);
+    handleEmail(event.target.value);
   }
 
   return (

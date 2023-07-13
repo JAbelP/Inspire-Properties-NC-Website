@@ -1,11 +1,11 @@
 "use client"
 import React, { useState } from 'react';
-function DateInput(props) {
+function DateInput({handleDate}) {
   const [date, setDate] = useState('');
 
   function handleChange(event) {
     setDate(event.target.value);
-    props.handleDate(event.target.value);
+    handleDate(event.target.value);
   }
 
   return (
