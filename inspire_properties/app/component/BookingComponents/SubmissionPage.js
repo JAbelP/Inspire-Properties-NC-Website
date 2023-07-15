@@ -93,7 +93,7 @@ function SubmissionPage() {
       };
       
       try {
-        const response = await fetch('/api/jobEmail', {
+        const response = await fetch('/api/buildAPackageEmail', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'

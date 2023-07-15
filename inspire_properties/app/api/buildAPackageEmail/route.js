@@ -16,7 +16,7 @@ export async function POST(request) {
     const data = {
       to: 'abelpinales97@gmail.com',
       from: 'abel@inspirepropertiesraleigh.com',
-      subject: 'New Quote',
+      subject: `Package Offer - (Lead) ${body.name}`,
       text: message,
       html: message.replace(/\r\n/g, '<br>')
     };
