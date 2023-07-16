@@ -1,6 +1,14 @@
 import React from 'react'
 import MyHeader from '@/app/component/Header'
 import MyFooter from '@/app/component/Footer'
+
+
+
+export const metadata = {
+  title: 'Inspire Properties - Custom Package Success!',
+  description: "Your custom property service package with Inspire Properties is complete. Our experts will now bring your vision to life. Contact us for any further assistance."
+}
+
 function SuccessPage() {
   return (
     <div>
