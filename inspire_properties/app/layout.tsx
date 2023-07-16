@@ -1,6 +1,6 @@
 import './globals.css'
-import Myfooter from "./component/Footer";
-import MyHeader from "./component/Header";
+
+
 
 
 

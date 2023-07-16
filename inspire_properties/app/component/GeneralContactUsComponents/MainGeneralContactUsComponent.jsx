@@ -1,8 +1,10 @@
 'use client'
 import React, { useState } from 'react';
+import Script from "next/script";
+
 
 export const MainGeneralContactUsComponent = () => {
-
+  const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITEKEY
   const [formValues, setFormValues] = useState({
     firstName: '',
     lastName: '',
@@ -24,7 +26,7 @@ export const MainGeneralContactUsComponent = () => {
 
       // Restrict phone number to a maximum of 14 characters
       if (updatedValue.length > 14) {
-        updatedValue = updatedValue.slice(0, 14);
+        updatedValue = updatedValue.slice(0, 14); 
       }
 
       // Format the phone number as (xxx) xxx-xxxx
@@ -45,6 +47,45 @@ export const MainGeneralContactUsComponent = () => {
     return emailRegex.test(email);
   };
 
+
+
+  const sendEmail = async (firstName, lastName, phone,  email, address, zipCode, helpText) =>{
+    debugger
+    console.log(formValues)
+    try {
+      const response = await fetch('/api/generalContactEmail', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          firstName: firstName,
+          lastName: lastName,
+          phone: phone,
+          email: email,
+          address: address,
+          zipCode: zipCode,
+          helpText: helpText,
+        }),
+      });
+      if (response.ok) {
+        setFormValues((prevValues) => ({
+          ...prevValues,
+          submitted: true, // Set submitted to true
+        }));
+        return;
+      }
+      else {
+        throw new Error(response.statusText);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+
+
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -60,10 +101,42 @@ export const MainGeneralContactUsComponent = () => {
       return;
     }
 
-    setFormValues((prevValues) => ({
-      ...prevValues,
-      submitted: true, // Set submitted to true
-    }));
+
+    
+    grecaptcha.ready(() =>{
+      grecaptcha.execute(siteKey, {action:'submit'}).then( async token => {
+        console.log(token);
+        const bodyForGoogleResponse = {          
+          recaptchaResponse: token
+        }
+
+        try{
+            const response1 = await fetch("/api/reCaptcha", {
+              method: "POST",
+              headers: {"content-type": "application/json;charset=utf-8"},
+              body: JSON.stringify(bodyForGoogleResponse)
+            });
+            
+            if(response1.ok){
+              const json = await response1.json();
+              debugger;
+              if(json.success){
+                debugger;
+                sendEmail(formValues.firstName, formValues.lastName, formValues.phone, formValues.email, formValues.address,formValues.zipCode,formValues.helpText); ;
+              }
+
+            } else{
+              throw new Error(response1.statusText);
+            }
+          } catch(error){
+            console.log(error);
+          
+        }
+      }).catch((error) => {
+        console.log(error);
+      })});
+    
+
   };
 
   // Render the thank you message if the form is submitted
@@ -85,6 +158,9 @@ export const MainGeneralContactUsComponent = () => {
 
   return (
     <div className="bg-gray-600">
+          <Script
+        src={`https://www.google.com/recaptcha/api.js?render=${siteKey}`}
+      />
       <div className="flex justify-center lg:ml-[30rem]">
         <div className="text-black p-4 w-[75rem]">
           <form onSubmit={handleSubmit} className="lg:flex">
