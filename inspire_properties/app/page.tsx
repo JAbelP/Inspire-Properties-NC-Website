@@ -6,8 +6,14 @@ import MyHeader from './component/Header';
 import Myfooter from './component/Footer';
 import {MainGeneralContactUsComponent} from './component/GeneralContactUsComponents/MainGeneralContactUsComponent'
 
+export const metadata = {
+  title: 'Inspire Properties - Property Services and Renovations Experts',
+  description: "Your trusted partner for property services and renovations. From maintenance to landscaping, plumbing to roofing, we've got you covered. Contact us today!"
+}
+
 
 export default function Home() {
+  
 
   const slides = [
     {path:"/SlideShow/1.jpg",title:"First",button:"Book With Us Today"},
