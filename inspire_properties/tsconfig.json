@@ -23,6 +23,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/api/jobEmail/route.js", "app/BandA/page.jsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/api/buildAPackageEmail/route.js", "app/BeforeAndAfter/page.jsx"],
   "exclude": ["node_modules"]
 }

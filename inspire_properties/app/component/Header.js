@@ -41,8 +41,8 @@ const handleMenuClick = () =>{
                 </Link>
               </div>
               <div>
-                <Link href={"/Financing"}>
-                  <HeaderButton label={"Financing"} />
+                <Link href={"/Services"}>
+                  <HeaderButton label={"Services"} />
                 </Link>
               </div>
 
@@ -82,8 +82,8 @@ const handleMenuClick = () =>{
                 </li>
 
                 <li className="pb-10">
-                  <Link href={"/Financing"}>
-                    <p onClick={handleMenuClick}>Financing</p>
+                  <Link href={"/Services"}>
+                    <p onClick={handleMenuClick}>Services</p>
                   </Link>
                 </li>
                 
