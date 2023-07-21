@@ -280,6 +280,7 @@ function SubmissionPage() {
               )}
               
               {index !== 0 &&
+
                 <div className='float-right mr-[4rem] mt-14 md:mr-[6rem] lg:mr-[26rem] xl:mr-[24rem] '>
                   <button className='bg-red-600 p-3 rounded-lg border-solid text-3xl border-4 border-black' onClick={() => deleteServiceButton(index)}>
                     Delete
