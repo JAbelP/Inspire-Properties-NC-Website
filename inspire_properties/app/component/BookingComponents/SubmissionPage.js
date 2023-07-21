@@ -264,13 +264,24 @@ function SubmissionPage() {
                 changeServiceAtIndex={(temp) => changeServiceAtIndex(index, temp)}
               />
             </div>
-            <div className='flex'>
+            <div>
               {index === (clientNewServiceAmount.length - 1) && (
-                <button className='bg-greenLogo p-3' onClick={handleAddServiceButton}> Add a service </button>
+                <div className='flex justify-around space-x-4'>
+                  <button className='bg-greenLogo p-3 rounded-lg border-solid text-3xl border-4 border-black' onClick={handleAddServiceButton}> Add a service </button>
+                     <button
+                      className='bg-green-700 p-3 rounded-lg border-solid text-3xl border-4 border-black'
+                      type='submit'
+                      form='Contact-Us-Form'
+                    >
+                      Submit
+                    </button>
+                </div>
+                
               )}
+              
               {index !== 0 &&
-                <div className='ml-auto'>
-                  <button className='bg-red-600 p-3' onClick={() => deleteServiceButton(index)}>
+                <div className='float-right mr-[4rem] mt-14 md:mr-[6rem] lg:mr-[26rem] '>
+                  <button className='bg-red-600 p-3 rounded-lg border-solid text-3xl border-4 border-black' onClick={() => deleteServiceButton(index)}>
                     Delete
                   </button>
                 </div>
@@ -279,15 +290,7 @@ function SubmissionPage() {
           </div>
         ))}
 
-        <div>
-          <button
-            className='bg-greenLogo p-3'
-            type='submit'
-            form='Contact-Us-Form'
-          >
-            Submit
-          </button>
-        </div>
+
       </div>
     </div>
   );
