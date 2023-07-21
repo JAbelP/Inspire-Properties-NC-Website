@@ -17,8 +17,8 @@ function TextBox(props) {
 
   return (
     <div className="flex flex-col mt-3">
-      <label htmlFor="text" className="mb-1 text-black">
-        Additional Information
+      <label htmlFor="text" className="mb-1 text-black text-3xl mt-3">
+        Additional Information:
       </label>
       <textarea
         id="text"
