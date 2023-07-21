@@ -180,9 +180,9 @@ function SubmissionPage() {
         src={`https://www.google.com/recaptcha/api.js?render=${siteKey}`}
       />
       <div className="w-full h-full bg-gray-600 text-black overflow-hidden p-4">
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col items-center px-6">
           <form onSubmit={handleSubmit} id='Contact-Us-Form'> 
-            <div className="flex flex-col">
+            <div className="flex flex-col ">
               <label htmlFor="name" className="mb-1 text-black text-3xl">
                 <span className="text-red-500">*</span> Name:
               </label>
@@ -255,7 +255,7 @@ function SubmissionPage() {
 
         {clientNewServiceAmount?.map((serviceAndAdd, index) => (
           <div key={`service-${index} `}>
-            <div className='flex flex-col items-center'>
+            <div className='flex flex-col items-center mt-6'> 
               <DropdownMenu
                 clientNewServiceAmount={clientNewServiceAmount}
                 selectedServiceAndAdd={serviceAndAdd}
@@ -280,7 +280,7 @@ function SubmissionPage() {
               )}
               
               {index !== 0 &&
-                <div className='float-right mr-[4rem] mt-14 md:mr-[6rem] lg:mr-[26rem] '>
+                <div className='float-right mr-[4rem] mt-14 md:mr-[6rem] lg:mr-[26rem] xl:mr-[24rem] '>
                   <button className='bg-red-600 p-3 rounded-lg border-solid text-3xl border-4 border-black' onClick={() => deleteServiceButton(index)}>
                     Delete
                   </button>
