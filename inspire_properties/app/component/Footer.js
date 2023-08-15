@@ -1,5 +1,5 @@
 "use client";
-import React, { useState,useRef  } from "react";
+import React, { useState, useRef } from "react";
 import { Facebook, Phone } from "./icons";
 
 function MyFooter() {
@@ -9,8 +9,8 @@ function MyFooter() {
 
   const scrollToPrivacy = () => {
     if (privacyRef.current) {
-            privacyRef.current.scrollIntoView({ behavior: "smooth" });
-      }
+      privacyRef.current.scrollIntoView({ behavior: "smooth" });
+    }
   };
 
   const toggleprivacyCollapsed = () => {
@@ -54,7 +54,8 @@ function MyFooter() {
 
         <div className="text-center ">
           <div onClick={toggleprivacyCollapsed} className="cursor-pointer">
-            <p ref={privacyRef}>Privacy Policy</p> <p className="text-blue-600">(click me)</p>
+            <p ref={privacyRef}>Privacy Policy</p>{" "}
+            <p className="text-blue-600">(click me)</p>
           </div>
           {!privacyCollapsed && (
             <div className="text-xs" ref={privacyRef}>
@@ -107,9 +108,9 @@ function MyFooter() {
               alteration, or destruction.
               <br />
               <br />
-              7. Children's Privacy Our services are not intended for children
-              under the age of 18. We do not knowingly collect or solicit
-              personal information from children.
+              7. Children&apos;s Privacy Our services are not intended for
+              children under the age of 18. We do not knowingly collect or
+              solicit personal information from children.
               <br />
               <br />
               8. Changes to this Privacy Policy We may update this Privacy
@@ -132,78 +133,81 @@ function MyFooter() {
           </div>
           {!termCollapsed && (
             <div className="text-xs">
-              Effective Date: [8/15/2023]* <br/><br/>
-              **1. Acceptance of Terms**
-              Welcome to Inspire Properties! By accessing or using our website
-              and services, you agree to comply with and be bound by these Terms
-              and Conditions. If you do not agree with these terms, please do
-              not use our website or services.
-              <br/>
-              <br/>
-               **2. Services** We provide
-              property management services, including powerwashing, landscaping,
-              and deck staining. All services are subject to availability and
-              may be modified, suspended, or terminated at any time without
-              prior notice. 
-              <br/>
-              <br/>
-              **3. User Conduct** You agree to use our website and
-              services for lawful purposes and not to: - Violate any applicable
-              laws or regulations. - Infringe upon the rights of others. -
-              Distribute harmful or malicious content. - Engage in unauthorized
-              access or use of our systems. - Interfere with the functioning of
-              our website or services. 
-              <br/>
-              <br/>
-              **4. Payment and Billing** For services
-              requiring payment, you agree to provide accurate and complete
-              payment information. Charges for services are as described on our
-              website. All payments are non-refundable unless otherwise stated.
-              <br/>
-              <br/>
+              Effective Date: [8/15/2023]* <br />
+              <br />
+              **1. Acceptance of Terms** Welcome to Inspire Properties! By
+              accessing or using our website and services, you agree to comply
+              with and be bound by these Terms and Conditions. If you do not
+              agree with these terms, please do not use our website or services.
+              <br />
+              <br />
+              **2. Services** We provide property management services, including
+              powerwashing, landscaping, and deck staining. All services are
+              subject to availability and may be modified, suspended, or
+              terminated at any time without prior notice.
+              <br />
+              <br />
+              **3. User Conduct** You agree to use our website and services for
+              lawful purposes and not to: - Violate any applicable laws or
+              regulations. - Infringe upon the rights of others. - Distribute
+              harmful or malicious content. - Engage in unauthorized access or
+              use of our systems. - Interfere with the functioning of our
+              website or services.
+              <br />
+              <br />
+              **4. Payment and Billing** For services requiring payment, you
+              agree to provide accurate and complete payment information.
+              Charges for services are as described on our website. All payments
+              are non-refundable unless otherwise stated.
+              <br />
+              <br />
               **5. Intellectual Property** The content on our website, including
               text, graphics, logos, and images, is protected by copyright and
               other intellectual property laws. You may not reproduce,
               distribute, modify, or create derivative works based on our
               content without our explicit permission.
-              <br/>
-              <br/>
-              **6. Limitation of
-              Liability** To the fullest extent permitted by law, Inspire Properties
-               shall not be liable for any indirect, incidental, special,
-              or consequential damages arising from the use or inability to use
-              our website or services.
-              <br/>
-              <br/>
-              **7. Privacy** Your use of our website
-              and services is also governed by our Privacy Policy, which can be
-              found <p onClick={() => { toggleprivacyCollapsed(); scrollToPrivacy(); }}className="text-blue-700">[here]</p>
-              <br/>
-              <br/>
-              **8. Changes to Terms
-              and Conditions** We reserve the right to modify or update these
-              Terms and Conditions at any time. You will be notified of
-              significant changes through email or our website. Your continued
-              use of our website or services after such changes constitutes your
-              acceptance of the updated terms.
-              <br/>
-              <br/>
-              **9. Termination** We may suspend
-              or terminate your access to our website and services at our sole
-              discretion, without prior notice, if you violate these Terms and
-              Conditions. 
-              <br/>
-              <br/>
-              **10. Governing Law** These Terms and Conditions shall
-              be governed by and construed in accordance with the laws of North Carolina
-              . Any disputes arising from or related to these terms
-              shall be subject to the exclusive jurisdiction of the courts in
-              North Carolina.
-              <br/>
-              <br/>
-               **11. Contact Us** If you have questions or
-              concerns about these Terms and Conditions, please contact us at:
-              Inspire 919-600-8888
+              <br />
+              <br />
+              **6. Limitation of Liability** To the fullest extent permitted by
+              law, Inspire Properties shall not be liable for any indirect,
+              incidental, special, or consequential damages arising from the use
+              or inability to use our website or services.
+              <br />
+              <br />
+              **7. Privacy** Your use of our website and services is also
+              governed by our Privacy Policy, which can be found{" "}
+              <p
+                onClick={() => {
+                  toggleprivacyCollapsed();
+                  scrollToPrivacy();
+                }}
+                className="text-blue-700"
+              >
+                [here]
+              </p>
+              <br />
+              <br />
+              **8. Changes to Terms and Conditions** We reserve the right to
+              modify or update these Terms and Conditions at any time. You will
+              be notified of significant changes through email or our website.
+              Your continued use of our website or services after such changes
+              constitutes your acceptance of the updated terms.
+              <br />
+              <br />
+              **9. Termination** We may suspend or terminate your access to our
+              website and services at our sole discretion, without prior notice,
+              if you violate these Terms and Conditions.
+              <br />
+              <br />
+              **10. Governing Law** These Terms and Conditions shall be governed
+              by and construed in accordance with the laws of North Carolina .
+              Any disputes arising from or related to these terms shall be
+              subject to the exclusive jurisdiction of the courts in North
+              Carolina.
+              <br />
+              <br />
+              **11. Contact Us** If you have questions or concerns about these
+              Terms and Conditions, please contact us at: Inspire 919-600-8888
             </div>
           )}
         </div>

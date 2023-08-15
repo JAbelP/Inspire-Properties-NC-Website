@@ -74,7 +74,7 @@ export default function Home() {
                 Home Improvement Solutions
               </h2>
               <p className="text-gray-600 mb-8">
-                Enhance your property's value and comfort with our range of home
+                Enhance your property&apos;s value and comfort with our range of home
                 improvement services. From renovations and repairs to
                 installations, we bring your vision to life with quality
                 workmanship.
