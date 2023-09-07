@@ -179,10 +179,11 @@ function SubmissionPage() {
       <Script
         src={`https://www.google.com/recaptcha/api.js?render=${siteKey}`}
       />
+
       <div className="w-full h-full bg-gray-600 text-black overflow-hidden p-4">
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col items-center px-6">
           <form onSubmit={handleSubmit} id='Contact-Us-Form'> 
-            <div className="flex flex-col">
+            <div className="flex flex-col ">
               <label htmlFor="name" className="mb-1 text-black text-3xl">
                 <span className="text-red-500">*</span> Name:
               </label>
@@ -255,7 +256,7 @@ function SubmissionPage() {
 
         {clientNewServiceAmount?.map((serviceAndAdd, index) => (
           <div key={`service-${index} `}>
-            <div className='flex flex-col items-center'>
+            <div className='flex flex-col items-center mt-6'> 
               <DropdownMenu
                 clientNewServiceAmount={clientNewServiceAmount}
                 selectedServiceAndAdd={serviceAndAdd}
@@ -264,13 +265,25 @@ function SubmissionPage() {
                 changeServiceAtIndex={(temp) => changeServiceAtIndex(index, temp)}
               />
             </div>
-            <div className='flex'>
+            <div>
               {index === (clientNewServiceAmount.length - 1) && (
-                <button className='bg-greenLogo p-3' onClick={handleAddServiceButton}> Add a service </button>
+                <div className='flex justify-around space-x-4'>
+                  <button className='bg-greenLogo p-3 rounded-lg border-solid text-3xl border-4 border-black' onClick={handleAddServiceButton}> Add a service </button>
+                     <button
+                      className='bg-green-700 p-3 rounded-lg border-solid text-3xl border-4 border-black'
+                      type='submit'
+                      form='Contact-Us-Form'
+                    >
+                      Submit
+                    </button>
+                </div>
+                
               )}
+              
               {index !== 0 &&
-                <div className='ml-auto'>
-                  <button className='bg-red-600 p-3' onClick={() => deleteServiceButton(index)}>
+
+                <div className='float-right mr-[4rem] mt-14 md:mr-[6rem] lg:mr-[26rem] xl:mr-[24rem] '>
+                  <button className='bg-red-600 p-3 rounded-lg border-solid text-3xl border-4 border-black' onClick={() => deleteServiceButton(index)}>
                     Delete
                   </button>
                 </div>
@@ -279,15 +292,7 @@ function SubmissionPage() {
           </div>
         ))}
 
-        <div>
-          <button
-            className='bg-greenLogo p-3'
-            type='submit'
-            form='Contact-Us-Form'
-          >
-            Submit
-          </button>
-        </div>
+
       </div>
     </div>
   );
