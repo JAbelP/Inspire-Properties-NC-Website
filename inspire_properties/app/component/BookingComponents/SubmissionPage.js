@@ -179,6 +179,7 @@ function SubmissionPage() {
       <Script
         src={`https://www.google.com/recaptcha/api.js?render=${siteKey}`}
       />
+
       <div className="w-full h-full bg-gray-600 text-black overflow-hidden p-4">
         <div className="flex flex-col items-center px-6">
           <form onSubmit={handleSubmit} id='Contact-Us-Form'> 

@@ -3,8 +3,10 @@ import React, { useState } from 'react';
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import Link from 'next/link';
+import Image from 'next/image';
 
-const ImageSlider = ({ slides }) => {
+const 
+ImageSlider = ({ slides }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const goToPrevious = () => {
@@ -73,7 +75,7 @@ const ImageSlider = ({ slides }) => {
             ></button>
           ))}
           <Link href="/Book">
-            <button className="bg-greenLogo hover:bg-green-400 absolute bottom-24 left-96 p-4 px-8 rounded-md border-4 w-80 h-32 text-4xl border-black hover:border-green-600">
+            <button className="bg-greenLogo hover:bg-green-400 absolute bottom-24 left-96 p-4 px-8 rounded-md border-4 w-80 h-32 text-4xl border-black hover:border-green-600 hover:text-black">
               {slides[currentIndex].button}
             </button>
           </Link>
